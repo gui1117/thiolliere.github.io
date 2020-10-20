@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `pallet` attr in crate `frame_support`."><meta name="keywords" content="rust, rustlang, rust-lang, pallet"><title>frame_support::pallet - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc attr"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../frame_support/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><div class="sidebar-elems"><p class='location'><a href='index.html'>frame_support</a></p><script>window.sidebarCurrent = {name: 'pallet', ty: 'attr', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/frame_support_procedural/lib.rs.html#309-311' title='goto source code'>[src]</a></span><span class='in-band'>Attribute Macro <a href='index.html'>frame_support</a>::<wbr><a class="attr" href=''>pallet</a></span></h1><pre class='rust attr'>#[pallet]</pre><div class='docblock'><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/frame_support_procedural/lib.rs.html#312-314' title='goto source code'>[src]</a></span><span class='in-band'>Attribute Macro <a href='index.html'>frame_support</a>::<wbr><a class="attr" href=''>pallet</a></span></h1><pre class='rust attr'>#[pallet]</pre><div class='docblock'><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
 <p>It is define by a module item:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
@@ -27,11 +27,13 @@ frame_system:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">frame_system</span>::<span class="ident">Config</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optionally_some_other_supertraits</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">frame_system</span>::<span class="ident">Config</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optionally_some_other_supertraits</span>
+<span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span>
+{
 ...
 }</pre></div>
 <p>I.e. a regular trait definition named <code>Config</code>, with supertrait <code>frame_system::Config</code>,
-optionally other supertrait but no where clause.</p>
+optionally other supertrait and where clause.</p>
 <p>The associated type <code>Event</code> is reserved, if defined it must bounds <code>From&lt;Event&gt;</code> and
 <code>IsType&lt;&lt;Self as frame_system::Config&gt;::Event&gt;</code>, see <code>#[pallet::event]</code> for more information.</p>
 <p>To put <code>Get</code> associated type into metadatas, use the attribute <code>#[pallet::constant]</code>, e.g.:</p>
@@ -49,8 +51,6 @@ optionally other supertrait but no where clause.</p>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">disable_frame_system_supertrait_check</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">pallet_timestamp</span>::<span class="ident">Config</span> {}</pre></div>
-<p>NOTE: At this moment macro doesn't support where clause on trait, but where clause can be
-used on some of the usage of this trait.</p>
 <h3 id="macro-expansion" class="section-header"><a href="#macro-expansion">Macro expansion:</a></h3>
 <p>The macro expand pallet constant metadata with the information given by <code>#[pallet::constant]</code>.</p>
 <h1 id="pallet-struct-placeholder-palletpallet-mandatory" class="section-header"><a href="#pallet-struct-placeholder-palletpallet-mandatory">Pallet struct placeholder: <code>#[pallet::pallet]</code> mandatory</a></h1>
@@ -78,7 +78,7 @@ for <code>Pallet</code> allowing to access the storage from pallet struct.</p>
 	<span class="ident">frame_support</span>::<span class="ident">CloneNoBound</span>,
 	<span class="ident">frame_support</span>::<span class="ident">EqNoBound</span>,
 	<span class="ident">frame_support</span>::<span class="ident">PartialEqNoBound</span>,
-	<span class="ident">frame_support</span>::<span class="ident">DebugStripped</span>,
+	<span class="ident">frame_support</span>::<span class="ident">RuntimeDebugNoBound</span>,
 )]</span></pre></div>
 <p>If attribute generate_store then macro create the trait <code>Store</code> and implement it on <code>Pallet</code>.</p>
 <h1 id="interface-palletinterface-mandatory" class="section-header"><a href="#interface-palletinterface-mandatory">Interface: <code>#[pallet::interface]</code> mandatory</a></h1>
@@ -160,13 +160,13 @@ removed in next block).</p>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">event</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">metadata</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Metadata</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeOtherType</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">Metadata</span>, ..)]</span> <span class="comment">// Optional</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generate_deposit</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visbility</span> <span class="kw">fn</span> <span class="ident">deposit_event</span>)]</span> <span class="comment">// Optional</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> {
 	<span class="doccomment">/// Some doc</span>
 	<span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeName</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeType</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">YetanotherType</span>, ...),
 	...
 }</pre></div>
 <p>I.e. an enum (with named or unnamed fields variant), named Event, with generic: none or <code>T</code> or
-<code>T: Config</code>, and without where clause.</p>
+<code>T: Config</code>, and optional where clause.</p>
 <p>Each field must implement <code>Clone</code>, <code>Eq</code>, <code>PartialEq</code>, <code>Encode</code>, <code>Decode</code>, and <code>Debug</code> (on std
 only).
 For ease of use just bound trait <code>Member</code> available in frame_support::pallet_prelude.</p>
@@ -189,7 +189,6 @@ The attribute <code>#[pallet::metadata(..)]</code> allows to specify the metadat
 <p>The attribute <code>#[pallet::generate_deposit($visbility fn deposit_event)]</code> generate a helper
 function on <code>Pallet</code> to deposit event.</p>
 <p>NOTE: For instantiable pallet, event must be generic over T and I.</p>
-<p>NOTE: At this moment declaration doesn't support where clause.</p>
 <h3 id="macro-expansion-5" class="section-header"><a href="#macro-expansion-5">Macro expansion:</a></h3>
 <p>Macro will add on enum <code>Event</code> the attributes:</p>
 <ul>
@@ -198,12 +197,11 @@ function on <code>Pallet</code> to deposit event.</p>
 <li><code>#[derive(frame_support::PartialEqNoBound)]</code>,</li>
 <li><code>#[derive(codec::Encode)]</code>,</li>
 <li><code>#[derive(codec::Decode)]</code>,</li>
-<li><code>#[cfg_attr(not(feature = &quot;std&quot;), derive(frame_support::DebugStripped))]</code></li>
-<li><code>#[cfg_attr(feature = &quot;std&quot;, derive(frame_support::DebugNoBound))]</code></li>
+<li><code>#[derive(frame_support::RuntimeDebugNoBound)]</code></li>
 </ul>
 <p>Macro implements <code>From&lt;Event&lt;..&gt;&gt;</code> for ().</p>
 <p>Macro implements metadata function on <code>Event</code> returning the <code>EventMetadata</code>.</p>
-<p>If <code>#[pallet::generate]</code> then macro implement <code>fn deposit_event</code> on <code>Pallet</code>.</p>
+<p>If <code>#[pallet::generate_deposit]</code> then macro implement <code>fn deposit_event</code> on <code>Pallet</code>.</p>
 <h1 id="storage-palletstorage-optional" class="section-header"><a href="#storage-palletstorage-optional">Storage: <code>#[pallet::storage]</code> optional</a></h1>
 <p>Allow to define some abstract storage inside runtime storage and also set its metadata.
 This attribute can be used multiple times.</p>
@@ -212,7 +210,7 @@ This attribute can be used multiple times.</p>
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">storage</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">getter</span>(<span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">getter_name</span>)]</span> <span class="comment">// optional</span>
-<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">StorageName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">StorageType</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generics</span>, ...<span class="op">&gt;</span>;</pre></div>
+<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">StorageName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">StorageType</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generics</span>, ...<span class="op">&gt;</span>;</pre></div>
 <p>I.e. it must be a type alias, with generics: <code>T</code> or <code>T: Config</code>, aliased type must be one
 of <code>StorageValue</code>, <code>StorageMap</code> or <code>StorageDoubleMap</code> (defined in frame_support).
 Their first generic must be <code>_</code> as it is written by the macro itself.</p>
@@ -244,7 +242,7 @@ This attribute can be used multiple time.</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">type_value</span>]</span>
-<span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MyDefaultName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default_type</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span> }</pre></div>
+<span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MyDefaultName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default_type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span> }</pre></div>
 <p>I.e.: a function definition with generics none or <code>T: Config</code> and a returned type.</p>
 <p>E.g.:</p>
 

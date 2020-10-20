@@ -132,12 +132,12 @@
 	<span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// The block returning the value to get</span>
 	<span class="kw">pub</span> <span class="ident">block</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Block</span><span class="op">&gt;</span>,
-	<span class="doccomment">/// If type value is generic over trait T.</span>
-	<span class="kw">pub</span> <span class="ident">has_trait</span>: <span class="ident">bool</span>,
-	<span class="doccomment">/// If type value is generic over instance I.</span>
-	<span class="kw">pub</span> <span class="ident">has_instance</span>: <span class="ident">bool</span>,
+	<span class="doccomment">/// If type value is generic over `T` (or `T` and `I` for instantiable pallet)</span>
+	<span class="kw">pub</span> <span class="ident">is_generic</span>: <span class="ident">bool</span>,
 	<span class="doccomment">/// A set of usage of instance, must be check for consistency with config.</span>
 	<span class="kw">pub</span> <span class="ident">instances</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">helper</span>::<span class="ident">InstanceUsage</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// The where clause of the function.</span>
+	<span class="kw">pub</span> <span class="ident">where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">WhereClause</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TypeValueDef</span> {
@@ -185,18 +185,18 @@
 			<span class="ident">instances</span>.<span class="ident">push</span>(<span class="ident">usage</span>);
 		}
 
-		<span class="kw">let</span> <span class="ident">has_instance</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">generics</span>.<span class="ident">type_params</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;I&quot;</span>);
-		<span class="kw">let</span> <span class="ident">has_trait</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">generics</span>.<span class="ident">type_params</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="ident">ident</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;T&quot;</span>);
+		<span class="kw">let</span> <span class="ident">is_generic</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">generics</span>.<span class="ident">type_params</span>().<span class="ident">count</span>() <span class="op">&gt;</span> <span class="number">0</span>;
+		<span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">clone</span>();
 
 		<span class="prelude-val">Ok</span>(<span class="ident">TypeValueDef</span> {
 			<span class="ident">index</span>,
-			<span class="ident">has_trait</span>,
-			<span class="ident">has_instance</span>,
+			<span class="ident">is_generic</span>,
 			<span class="ident">vis</span>,
 			<span class="ident">ident</span>,
 			<span class="ident">block</span>,
 			<span class="ident">type_</span>,
 			<span class="ident">instances</span>,
+			<span class="ident">where_clause</span>,
 		})
 	}
 }

@@ -1512,13 +1512,6 @@
 <span id="1511">1511</span>
 <span id="1512">1512</span>
 <span id="1513">1513</span>
-<span id="1514">1514</span>
-<span id="1515">1515</span>
-<span id="1516">1516</span>
-<span id="1517">1517</span>
-<span id="1518">1518</span>
-<span id="1519">1519</span>
-<span id="1520">1520</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1560,11 +1553,13 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">sp_core</span>::{
 	<span class="ident">crypto</span>::<span class="ident">Pair</span>,
-	<span class="ident">traits</span>::{<span class="ident">KeystoreExt</span>, <span class="ident">CallInWasmExt</span>, <span class="ident">TaskExecutorExt</span>},
+	<span class="ident">traits</span>::{<span class="ident">CallInWasmExt</span>, <span class="ident">TaskExecutorExt</span>},
 	<span class="ident">offchain</span>::{<span class="ident">OffchainExt</span>, <span class="ident">TransactionPoolExt</span>},
 	<span class="ident">hexdisplay</span>::<span class="ident">HexDisplay</span>,
 	<span class="ident">storage</span>::<span class="ident">ChildInfo</span>,
 };
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">sp_keystore</span>::{<span class="ident">KeystoreExt</span>, <span class="ident">SyncCryptoStore</span>};
 
 <span class="kw">use</span> <span class="ident">sp_core</span>::{
 	<span class="ident">OpaquePeerId</span>, <span class="ident">crypto</span>::<span class="ident">KeyTypeId</span>, <span class="ident">ed25519</span>, <span class="ident">sr25519</span>, <span class="ident">ecdsa</span>, <span class="ident">H256</span>, <span class="ident">LogLevel</span>,
@@ -1939,10 +1934,9 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Crypto</span> {
 	<span class="doccomment">/// Returns all `ed25519` public keys for the given key id from the keystore.</span>
 	<span class="kw">fn</span> <span class="ident">ed25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ed25519</span>::<span class="ident">Public</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">ed25519_public_keys</span>(<span class="ident">id</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">ed25519_public_keys</span>(<span class="ident">keystore</span>, <span class="ident">id</span>)
 	}
 
 	<span class="doccomment">/// Generate an `ed22519` key for the given key type using an optional `seed` and</span>
@@ -1953,10 +1947,9 @@
 	<span class="doccomment">/// Returns the public key.</span>
 	<span class="kw">fn</span> <span class="ident">ed25519_generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>, <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ed25519</span>::<span class="ident">Public</span> {
 		<span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">expect</span>(<span class="string">&quot;Seed is valid utf8!&quot;</span>));
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">write</span>()
-			.<span class="ident">ed25519_generate_new</span>(<span class="ident">id</span>, <span class="ident">seed</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">ed25519_generate_new</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="ident">seed</span>)
 			.<span class="ident">expect</span>(<span class="string">&quot;`ed25519_generate` failed&quot;</span>)
 	}
 
@@ -1970,10 +1963,9 @@
 		<span class="ident">pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">ed25519</span>::<span class="ident">Public</span>,
 		<span class="ident">msg</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ed25519</span>::<span class="ident">Signature</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">sign_with</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
 			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">sig</span><span class="op">|</span> <span class="ident">ed25519</span>::<span class="ident">Signature</span>::<span class="ident">from_slice</span>(<span class="ident">sig</span>.<span class="ident">as_slice</span>()))
 			.<span class="ident">ok</span>()
 	}
@@ -2069,10 +2061,9 @@
 
 	<span class="doccomment">/// Returns all `sr25519` public keys for the given key id from the keystore.</span>
 	<span class="kw">fn</span> <span class="ident">sr25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">sr25519</span>::<span class="ident">Public</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">sr25519_public_keys</span>(<span class="ident">id</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="op">*</span> <span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">sr25519_public_keys</span>(<span class="ident">keystore</span>, <span class="ident">id</span>)
 	}
 
 	<span class="doccomment">/// Generate an `sr22519` key for the given key type using an optional seed and</span>
@@ -2083,10 +2074,9 @@
 	<span class="doccomment">/// Returns the public key.</span>
 	<span class="kw">fn</span> <span class="ident">sr25519_generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>, <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">sr25519</span>::<span class="ident">Public</span> {
 		<span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">expect</span>(<span class="string">&quot;Seed is valid utf8!&quot;</span>));
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">write</span>()
-			.<span class="ident">sr25519_generate_new</span>(<span class="ident">id</span>, <span class="ident">seed</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">sr25519_generate_new</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="ident">seed</span>)
 			.<span class="ident">expect</span>(<span class="string">&quot;`sr25519_generate` failed&quot;</span>)
 	}
 
@@ -2100,10 +2090,9 @@
 		<span class="ident">pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">sr25519</span>::<span class="ident">Public</span>,
 		<span class="ident">msg</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">sr25519</span>::<span class="ident">Signature</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">sign_with</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
 			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">sig</span><span class="op">|</span> <span class="ident">sr25519</span>::<span class="ident">Signature</span>::<span class="ident">from_slice</span>(<span class="ident">sig</span>.<span class="ident">as_slice</span>()))
 			.<span class="ident">ok</span>()
 	}
@@ -2118,10 +2107,9 @@
 
 	<span class="doccomment">/// Returns all `ecdsa` public keys for the given key id from the keystore.</span>
 	<span class="kw">fn</span> <span class="ident">ecdsa_public_keys</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ecdsa</span>::<span class="ident">Public</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">ecdsa_public_keys</span>(<span class="ident">id</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">ecdsa_public_keys</span>(<span class="ident">keystore</span>, <span class="ident">id</span>)
 	}
 
 	<span class="doccomment">/// Generate an `ecdsa` key for the given key type using an optional `seed` and</span>
@@ -2132,10 +2120,9 @@
 	<span class="doccomment">/// Returns the public key.</span>
 	<span class="kw">fn</span> <span class="ident">ecdsa_generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>, <span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ecdsa</span>::<span class="ident">Public</span> {
 		<span class="kw">let</span> <span class="ident">seed</span> <span class="op">=</span> <span class="ident">seed</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">expect</span>(<span class="string">&quot;Seed is valid utf8!&quot;</span>));
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">write</span>()
-			.<span class="ident">ecdsa_generate_new</span>(<span class="ident">id</span>, <span class="ident">seed</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">ecdsa_generate_new</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="ident">seed</span>)
 			.<span class="ident">expect</span>(<span class="string">&quot;`ecdsa_generate` failed&quot;</span>)
 	}
 
@@ -2149,10 +2136,9 @@
 		<span class="ident">pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">ecdsa</span>::<span class="ident">Public</span>,
 		<span class="ident">msg</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ecdsa</span>::<span class="ident">Signature</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>)
-			.<span class="ident">read</span>()
-			.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
+		<span class="kw">let</span> <span class="ident">keystore</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">KeystoreExt</span><span class="op">&gt;</span>()
+			.<span class="ident">expect</span>(<span class="string">&quot;No `keystore` associated for the current context!&quot;</span>);
+		<span class="ident">SyncCryptoStore</span>::<span class="ident">sign_with</span>(<span class="ident">keystore</span>, <span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">pub_key</span>.<span class="ident">into</span>(), <span class="ident">msg</span>)
 			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">sig</span><span class="op">|</span> <span class="ident">ecdsa</span>::<span class="ident">Signature</span>::<span class="ident">from_slice</span>(<span class="ident">sig</span>.<span class="ident">as_slice</span>()))
 			.<span class="ident">ok</span>()
 	}

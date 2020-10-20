@@ -1740,6 +1740,105 @@
 <span id="1739">1739</span>
 <span id="1740">1740</span>
 <span id="1741">1741</span>
+<span id="1742">1742</span>
+<span id="1743">1743</span>
+<span id="1744">1744</span>
+<span id="1745">1745</span>
+<span id="1746">1746</span>
+<span id="1747">1747</span>
+<span id="1748">1748</span>
+<span id="1749">1749</span>
+<span id="1750">1750</span>
+<span id="1751">1751</span>
+<span id="1752">1752</span>
+<span id="1753">1753</span>
+<span id="1754">1754</span>
+<span id="1755">1755</span>
+<span id="1756">1756</span>
+<span id="1757">1757</span>
+<span id="1758">1758</span>
+<span id="1759">1759</span>
+<span id="1760">1760</span>
+<span id="1761">1761</span>
+<span id="1762">1762</span>
+<span id="1763">1763</span>
+<span id="1764">1764</span>
+<span id="1765">1765</span>
+<span id="1766">1766</span>
+<span id="1767">1767</span>
+<span id="1768">1768</span>
+<span id="1769">1769</span>
+<span id="1770">1770</span>
+<span id="1771">1771</span>
+<span id="1772">1772</span>
+<span id="1773">1773</span>
+<span id="1774">1774</span>
+<span id="1775">1775</span>
+<span id="1776">1776</span>
+<span id="1777">1777</span>
+<span id="1778">1778</span>
+<span id="1779">1779</span>
+<span id="1780">1780</span>
+<span id="1781">1781</span>
+<span id="1782">1782</span>
+<span id="1783">1783</span>
+<span id="1784">1784</span>
+<span id="1785">1785</span>
+<span id="1786">1786</span>
+<span id="1787">1787</span>
+<span id="1788">1788</span>
+<span id="1789">1789</span>
+<span id="1790">1790</span>
+<span id="1791">1791</span>
+<span id="1792">1792</span>
+<span id="1793">1793</span>
+<span id="1794">1794</span>
+<span id="1795">1795</span>
+<span id="1796">1796</span>
+<span id="1797">1797</span>
+<span id="1798">1798</span>
+<span id="1799">1799</span>
+<span id="1800">1800</span>
+<span id="1801">1801</span>
+<span id="1802">1802</span>
+<span id="1803">1803</span>
+<span id="1804">1804</span>
+<span id="1805">1805</span>
+<span id="1806">1806</span>
+<span id="1807">1807</span>
+<span id="1808">1808</span>
+<span id="1809">1809</span>
+<span id="1810">1810</span>
+<span id="1811">1811</span>
+<span id="1812">1812</span>
+<span id="1813">1813</span>
+<span id="1814">1814</span>
+<span id="1815">1815</span>
+<span id="1816">1816</span>
+<span id="1817">1817</span>
+<span id="1818">1818</span>
+<span id="1819">1819</span>
+<span id="1820">1820</span>
+<span id="1821">1821</span>
+<span id="1822">1822</span>
+<span id="1823">1823</span>
+<span id="1824">1824</span>
+<span id="1825">1825</span>
+<span id="1826">1826</span>
+<span id="1827">1827</span>
+<span id="1828">1828</span>
+<span id="1829">1829</span>
+<span id="1830">1830</span>
+<span id="1831">1831</span>
+<span id="1832">1832</span>
+<span id="1833">1833</span>
+<span id="1834">1834</span>
+<span id="1835">1835</span>
+<span id="1836">1836</span>
+<span id="1837">1837</span>
+<span id="1838">1838</span>
+<span id="1839">1839</span>
+<span id="1840">1840</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1820,7 +1919,7 @@
 	<span class="ident">StorageValue</span>, <span class="ident">StorageMap</span>, <span class="ident">StorageDoubleMap</span>, <span class="ident">StoragePrefixedMap</span>, <span class="ident">IterableStorageMap</span>,
 	<span class="ident">IterableStorageDoubleMap</span>, <span class="ident">migration</span>
 };
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dispatch</span>::{<span class="ident">Parameter</span>, <span class="ident">Callable</span>, <span class="ident">IsSubType</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dispatch</span>::{<span class="ident">Parameter</span>, <span class="ident">Callable</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_runtime</span>::{<span class="self">self</span>, <span class="ident">ConsensusEngineId</span>, <span class="ident">print</span>, <span class="ident">traits</span>::<span class="ident">Printable</span>};
 
 <span class="doccomment">/// A type that cannot be instantiated.</span>
@@ -2011,9 +2110,112 @@
 
 <span class="attribute">#[<span class="macro-nonterminal">doc</span>(<span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::{
-	<span class="ident">decl_storage</span>, <span class="ident">construct_runtime</span>, <span class="ident">DebugNoBound</span>, <span class="ident">DebugStripped</span>, <span class="ident">CloneNoBound</span>, <span class="ident">EqNoBound</span>,
-	<span class="ident">PartialEqNoBound</span>, <span class="ident">transactional</span>,
+	<span class="ident">decl_storage</span>, <span class="ident">construct_runtime</span>, <span class="ident">transactional</span>, <span class="ident">RuntimeDebugNoBound</span>
 };
+
+<span class="doccomment">/// Derive [`Clone`] but do not bound any generic.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is useful for type generic over runtime:</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::CloneNoBound;</span>
+<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">///		type C: Clone;</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Foo implements [`Clone`] because `C` bounds [`Clone`].</span>
+<span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Clone`].</span>
+<span class="doccomment">/// #[derive(CloneNoBound)]</span>
+<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">///		c: T::C,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">CloneNoBound</span>;
+
+<span class="doccomment">/// Derive [`Eq`] but do not bound any generic.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is useful for type generic over runtime:</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::{EqNoBound, PartialEqNoBound};</span>
+<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">///		type C: Eq;</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Foo implements [`Eq`] because `C` bounds [`Eq`].</span>
+<span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Eq`].</span>
+<span class="doccomment">/// #[derive(PartialEqNoBound, EqNoBound)]</span>
+<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">///		c: T::C,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">EqNoBound</span>;
+
+<span class="doccomment">/// Derive [`PartialEq`] but do not bound any generic.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is useful for type generic over runtime:</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::PartialEqNoBound;</span>
+<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">///		type C: PartialEq;</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Foo implements [`PartialEq`] because `C` bounds [`PartialEq`].</span>
+<span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`PartialEq`].</span>
+<span class="doccomment">/// #[derive(PartialEqNoBound)]</span>
+<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">///		c: T::C,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">PartialEqNoBound</span>;
+
+<span class="doccomment">/// Derive [`Debug`] but do not bound any generic.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is useful for type generic over runtime:</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::DebugNoBound;</span>
+<span class="doccomment">/// # use core::fmt::Debug;</span>
+<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">///		type C: Debug;</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Foo implements [`Debug`] because `C` bounds [`Debug`].</span>
+<span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Debug`].</span>
+<span class="doccomment">/// #[derive(DebugNoBound)]</span>
+<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">///		c: T::C,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">DebugNoBound</span>;
+
+<span class="doccomment">/// Assert the annotated function is executed within a storage transaction.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The assertion is enabled for native execution and when `debug_assertions` are enabled.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::{</span>
+<span class="doccomment">/// # 	require_transactional, transactional, dispatch::DispatchResult</span>
+<span class="doccomment">/// # };</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[require_transactional]</span>
+<span class="doccomment">/// fn update_all(value: u32) -&gt; DispatchResult {</span>
+<span class="doccomment">/// 	// Update multiple storages.</span>
+<span class="doccomment">/// 	// Return `Err` to indicate should revert.</span>
+<span class="doccomment">/// 	Ok(())</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// #[transactional]</span>
+<span class="doccomment">/// fn safe_update(value: u32) -&gt; DispatchResult {</span>
+<span class="doccomment">/// 	// This is safe</span>
+<span class="doccomment">/// 	update_all(value)</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// fn unsafe_update(value: u32) -&gt; DispatchResult {</span>
+<span class="doccomment">/// 	// this may panic if unsafe_update is not called within a storage transaction</span>
+<span class="doccomment">/// 	update_all(value)</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">require_transactional</span>;
 
 <span class="doccomment">/// Return Err of the expression: `return Err($expression);`.</span>
 <span class="doccomment">///</span>
@@ -2579,7 +2781,7 @@
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">storage</span>::<span class="ident">types</span>::{
 		<span class="ident">StorageValue</span>, <span class="ident">StorageMap</span>, <span class="ident">StorageDoubleMap</span>, <span class="ident">ValueQuery</span>, <span class="ident">OptionQuery</span>,
 	};
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::{<span class="ident">EqNoBound</span>, <span class="ident">PartialEqNoBound</span>, <span class="ident">DebugStripped</span>, <span class="ident">DebugNoBound</span>, <span class="ident">CloneNoBound</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::{<span class="ident">EqNoBound</span>, <span class="ident">PartialEqNoBound</span>, <span class="ident">RuntimeDebugNoBound</span>, <span class="ident">DebugNoBound</span>, <span class="ident">CloneNoBound</span>};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Encode</span>, <span class="ident">Decode</span>};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::<span class="ident">ProvideInherent</span>;
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::<span class="ident">InherentData</span>;
@@ -2632,12 +2834,14 @@
 <span class="doccomment">/// Item must be defined as</span>
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet::config]</span>
-<span class="doccomment">/// pub trait Config: frame_system::Config + $optionally_some_other_supertraits {</span>
+<span class="doccomment">/// pub trait Config: frame_system::Config + $optionally_some_other_supertraits</span>
+<span class="doccomment">/// $optional_where_clause</span>
+<span class="doccomment">/// {</span>
 <span class="doccomment">/// ...</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e. a regular trait definition named `Config`, with supertrait `frame_system::Config`,</span>
-<span class="doccomment">/// optionally other supertrait but no where clause.</span>
+<span class="doccomment">/// optionally other supertrait and where clause.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The associated type `Event` is reserved, if defined it must bounds `From&lt;Event&gt;` and</span>
 <span class="doccomment">/// `IsType&lt;&lt;Self as frame_system::Config&gt;::Event&gt;`, see `#[pallet::event]` for more information.</span>
@@ -2658,9 +2862,6 @@
 <span class="doccomment">/// #[pallet::disable_frame_system_supertrait_check]</span>
 <span class="doccomment">/// pub trait Config: pallet_timestamp::Config {}</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// NOTE: At this moment macro doesn&#39;t support where clause on trait, but where clause can be</span>
-<span class="doccomment">/// used on some of the usage of this trait.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion:</span>
 <span class="doccomment">///</span>
@@ -2695,7 +2896,7 @@
 <span class="doccomment">/// 	frame_support::CloneNoBound,</span>
 <span class="doccomment">/// 	frame_support::EqNoBound,</span>
 <span class="doccomment">/// 	frame_support::PartialEqNoBound,</span>
-<span class="doccomment">/// 	frame_support::DebugStripped,</span>
+<span class="doccomment">/// 	frame_support::RuntimeDebugNoBound,</span>
 <span class="doccomment">/// )]</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
@@ -2802,14 +3003,14 @@
 <span class="doccomment">/// #[pallet::event]</span>
 <span class="doccomment">/// #[pallet::metadata($SomeType = $Metadata, $SomeOtherType = $Metadata, ..)] // Optional</span>
 <span class="doccomment">/// #[pallet::generate_deposit($visbility fn deposit_event)] // Optional</span>
-<span class="doccomment">/// pub enum Event&lt;$some_generic&gt; {</span>
+<span class="doccomment">/// pub enum Event&lt;$some_generic&gt; $optional_where_clause {</span>
 <span class="doccomment">/// 	/// Some doc</span>
 <span class="doccomment">/// 	$SomeName($SomeType, $YetanotherType, ...),</span>
 <span class="doccomment">/// 	...</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e. an enum (with named or unnamed fields variant), named Event, with generic: none or `T` or</span>
-<span class="doccomment">/// `T: Config`, and without where clause.</span>
+<span class="doccomment">/// `T: Config`, and optional where clause.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Each field must implement `Clone`, `Eq`, `PartialEq`, `Encode`, `Decode`, and `Debug` (on std</span>
 <span class="doccomment">/// only).</span>
@@ -2837,8 +3038,6 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// NOTE: For instantiable pallet, event must be generic over T and I.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// NOTE: At this moment declaration doesn&#39;t support where clause.</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Macro will add on enum `Event` the attributes:</span>
@@ -2847,14 +3046,13 @@
 <span class="doccomment">/// * `#[derive(frame_support::PartialEqNoBound)]`,</span>
 <span class="doccomment">/// * `#[derive(codec::Encode)]`,</span>
 <span class="doccomment">/// * `#[derive(codec::Decode)]`,</span>
-<span class="doccomment">/// * `#[cfg_attr(not(feature = &quot;std&quot;), derive(frame_support::DebugStripped))]`</span>
-<span class="doccomment">/// * `#[cfg_attr(feature = &quot;std&quot;, derive(frame_support::DebugNoBound))]`</span>
+<span class="doccomment">/// * `#[derive(frame_support::RuntimeDebugNoBound)]`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Macro implements `From&lt;Event&lt;..&gt;&gt;` for ().</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Macro implements metadata function on `Event` returning the `EventMetadata`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// If `#[pallet::generate]` then macro implement `fn deposit_event` on `Pallet`.</span>
+<span class="doccomment">/// If `#[pallet::generate_deposit]` then macro implement `fn deposit_event` on `Pallet`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Storage: `#[pallet::storage]` optional</span>
 <span class="doccomment">///</span>
@@ -2865,7 +3063,7 @@
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet::storage]</span>
 <span class="doccomment">/// #[pallet::getter(fn $getter_name)] // optional</span>
-<span class="doccomment">/// $vis type $StorageName&lt;$some_generic&gt; = $StorageType&lt;_, $some_generics, ...&gt;;</span>
+<span class="doccomment">/// $vis type $StorageName&lt;$some_generic&gt; $optional_where_clause = $StorageType&lt;_, $some_generics, ...&gt;;</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e. it must be a type alias, with generics: `T` or `T: Config`, aliased type must be one</span>
 <span class="doccomment">/// of `StorageValue`, `StorageMap` or `StorageDoubleMap` (defined in frame_support).</span>
@@ -2907,7 +3105,7 @@
 <span class="doccomment">/// Item is defined as</span>
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet::type_value]</span>
-<span class="doccomment">/// fn $MyDefaultName&lt;$some_generic&gt;() -&gt; $default_type { $expr }</span>
+<span class="doccomment">/// fn $MyDefaultName&lt;$some_generic&gt;() -&gt; $default_type $optional_where_clause { $expr }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e.: a function definition with generics none or `T: Config` and a returned type.</span>
 <span class="doccomment">///</span>

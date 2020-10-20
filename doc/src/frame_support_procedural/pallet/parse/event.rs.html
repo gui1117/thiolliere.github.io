@@ -301,7 +301,9 @@
 	<span class="doccomment">/// If event is declared with genericity.</span>
 	<span class="kw">pub</span> <span class="ident">is_generic</span>: <span class="ident">bool</span>,
 	<span class="doccomment">/// Weither the function `deposit_event` must be generated.</span>
-	<span class="kw">pub</span> <span class="ident">deposit_event</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">syn</span>::<span class="ident">Visibility</span>, <span class="ident">proc_macro2</span>::<span class="ident">Span</span>)<span class="op">&gt;</span>
+	<span class="kw">pub</span> <span class="ident">deposit_event</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">syn</span>::<span class="ident">Visibility</span>, <span class="ident">proc_macro2</span>::<span class="ident">Span</span>)<span class="op">&gt;</span>,
+	<span class="doccomment">/// Where clause used in event definition.</span>
+	<span class="kw">pub</span> <span class="ident">where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">WhereClause</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">EventDef</span> {
@@ -451,11 +453,8 @@
 			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::event, `Error` must be public&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		}
-		<span class="kw">if</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">is_some</span>() {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::event, unexpected where clause&quot;</span>;
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">span</span>(), <span class="ident">msg</span>));
-		}
 
+		<span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">clone</span>();
 		<span class="kw">let</span> <span class="ident">has_instance</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">2</span>;
 		<span class="kw">let</span> <span class="ident">is_generic</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>;
 
@@ -509,6 +508,7 @@
 			<span class="ident">deposit_event</span>,
 			<span class="ident">event</span>,
 			<span class="ident">is_generic</span>,
+			<span class="ident">where_clause</span>,
 		})
 	}
 }

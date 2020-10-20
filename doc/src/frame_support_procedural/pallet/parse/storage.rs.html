@@ -220,7 +220,6 @@
 <span id="219">219</span>
 <span id="220">220</span>
 <span id="221">221</span>
-<span id="222">222</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -311,6 +310,8 @@
 	<span class="doccomment">/// Note that this is best effort as it can&#39;t be determined when QueryKind is generic, and</span>
 	<span class="doccomment">/// result can be false if user do some unexpected type alias.</span>
 	<span class="kw">pub</span> <span class="ident">query_kind</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">QueryKind</span><span class="op">&gt;</span>,
+	<span class="doccomment">/// Where clause of type definition.</span>
+	<span class="kw">pub</span> <span class="ident">where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">WhereClause</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// In `Foo&lt;A, B, C&gt;` retrieve the argument at given position, i.e. A is argument at position 0.</span>
@@ -351,11 +352,7 @@
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">instances</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
 		<span class="ident">instances</span>.<span class="ident">push</span>(<span class="ident">helper</span>::<span class="ident">check_type_def_gen</span>(<span class="kw-2">&amp;</span><span class="ident">item</span>.<span class="ident">generics</span>, <span class="ident">item</span>.<span class="ident">ident</span>.<span class="ident">span</span>())<span class="question-mark">?</span>);
 
-		<span class="kw">if</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">is_some</span>() {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::storage, unexpected where clause&quot;</span>;
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>().<span class="ident">span</span>(), <span class="ident">msg</span>));
-		}
-
+		<span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">clone</span>();
 		<span class="kw">let</span> <span class="ident">docs</span> <span class="op">=</span> <span class="ident">helper</span>::<span class="ident">get_doc_literals</span>(<span class="kw-2">&amp;</span><span class="ident">item</span>.<span class="ident">attrs</span>);
 
 		<span class="kw">let</span> <span class="ident">typ</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Type</span>::<span class="ident">Path</span>(<span class="ident">typ</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">item</span>.<span class="ident">ty</span> {
@@ -441,6 +438,7 @@
 			<span class="ident">docs</span>,
 			<span class="ident">getter</span>,
 			<span class="ident">query_kind</span>,
+			<span class="ident">where_clause</span>,
 		})
 	}
 }

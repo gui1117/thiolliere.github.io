@@ -1641,7 +1641,7 @@
 <span class="doccomment">//! Decimal Fixed Point implementations for Substrate runtime.</span>
 
 <span class="kw">use</span> <span class="ident">sp_std</span>::{<span class="ident">ops</span>::{<span class="self">self</span>, <span class="ident">Add</span>, <span class="ident">Sub</span>, <span class="ident">Mul</span>, <span class="ident">Div</span>}, <span class="ident">fmt</span>::<span class="ident">Debug</span>, <span class="ident">prelude</span>::<span class="kw-2">*</span>, <span class="ident">convert</span>::{<span class="ident">TryInto</span>, <span class="ident">TryFrom</span>}};
-<span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Encode</span>, <span class="ident">Decode</span>};
+<span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Encode</span>, <span class="ident">Decode</span>, <span class="ident">CompactAs</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">helpers_128bit</span>::<span class="ident">multiply_by_rational</span>, <span class="ident">PerThing</span>,
 	<span class="ident">traits</span>::{
@@ -1966,7 +1966,7 @@
 		<span class="doccomment">/// A fixed point number representation in the range.</span>
 		<span class="doccomment">///</span>
 		<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">title</span>]</span>
-		<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Encode</span>, <span class="ident">Decode</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+		<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Encode</span>, <span class="ident">Decode</span>, <span class="ident">CompactAs</span>, <span class="ident">Default</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 		<span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">inner_type</span>);
 
 		<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">inner_type</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {

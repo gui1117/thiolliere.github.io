@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.2.10/src/fmt/fmt_layer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fmt_layer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../tracing_subscriber/index.html'><div class='logo-container'><img src='https://raw.githubusercontent.com/tokio-rs/tracing/master/assets/logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/tracing-subscriber-0.2.13/src/fmt/fmt_layer.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>fmt_layer.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../tracing_subscriber/index.html'><div class='logo-container'><img src='https://raw.githubusercontent.com/tokio-rs/tracing/master/assets/logo-type.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1053,10 +1053,42 @@
 <span id="1052">1052</span>
 <span id="1053">1053</span>
 <span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">field</span>::<span class="ident">RecordFields</span>,
-    <span class="ident">fmt</span>::{<span class="ident">format</span>, <span class="ident">FormatEvent</span>, <span class="ident">FormatFields</span>, <span class="ident">MakeWriter</span>},
+    <span class="ident">fmt</span>::{<span class="ident">format</span>, <span class="ident">FormatEvent</span>, <span class="ident">FormatFields</span>, <span class="ident">MakeWriter</span>, <span class="ident">TestWriter</span>},
     <span class="ident">layer</span>::{<span class="self">self</span>, <span class="ident">Context</span>, <span class="ident">Scope</span>},
     <span class="ident">registry</span>::{<span class="ident">LookupSpan</span>, <span class="ident">SpanRef</span>},
 };
@@ -1161,7 +1193,7 @@
     }
 }
 
-<span class="comment">// This needs to be a seperate impl block because they place different bounds on the type paramaters.</span>
+<span class="comment">// This needs to be a seperate impl block because they place different bounds on the type parameters.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">N</span>, <span class="ident">E</span>, <span class="ident">W</span><span class="op">&gt;</span> <span class="ident">Layer</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">N</span>, <span class="ident">E</span>, <span class="ident">W</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">Subscriber</span> <span class="op">+</span> <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LookupSpan</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -1204,7 +1236,7 @@
     }
 }
 
-<span class="comment">// This needs to be a seperate impl block because they place different bounds on the type paramaters.</span>
+<span class="comment">// This needs to be a seperate impl block because they place different bounds on the type parameters.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">N</span>, <span class="ident">E</span>, <span class="ident">W</span><span class="op">&gt;</span> <span class="ident">Layer</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">N</span>, <span class="ident">E</span>, <span class="ident">W</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Sets the [`MakeWriter`] that the [`Layer`] being built will use to write events.</span>
     <span class="doccomment">///</span>
@@ -1234,6 +1266,38 @@
             <span class="ident">fmt_event</span>: <span class="self">self</span>.<span class="ident">fmt_event</span>,
             <span class="ident">fmt_span</span>: <span class="self">self</span>.<span class="ident">fmt_span</span>,
             <span class="ident">make_writer</span>,
+            <span class="ident">_inner</span>: <span class="self">self</span>.<span class="ident">_inner</span>,
+        }
+    }
+
+    <span class="doccomment">/// Configures the subscriber to support [`libtest`&#39;s output capturing][capturing] when used in</span>
+    <span class="doccomment">/// unit tests.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// See [`TestWriter`] for additional details.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Using [`TestWriter`] to let `cargo test` capture test output:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// use std::io;</span>
+    <span class="doccomment">/// use tracing_subscriber::fmt;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let layer = fmt::layer()</span>
+    <span class="doccomment">///     .with_test_writer();</span>
+    <span class="doccomment">/// # // this is necessary for type inference.</span>
+    <span class="doccomment">/// # use tracing_subscriber::Layer as _;</span>
+    <span class="doccomment">/// # let _ = layer.with_subscriber(tracing_subscriber::registry::Registry::default());</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// [capturing]:</span>
+    <span class="doccomment">/// https://doc.rust-lang.org/book/ch11-02-running-tests.html#showing-function-output</span>
+    <span class="doccomment">/// [`TestWriter`]: writer/struct.TestWriter.html</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_test_writer</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Layer</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">N</span>, <span class="ident">E</span>, <span class="ident">TestWriter</span><span class="op">&gt;</span> {
+        <span class="ident">Layer</span> {
+            <span class="ident">fmt_fields</span>: <span class="self">self</span>.<span class="ident">fmt_fields</span>,
+            <span class="ident">fmt_event</span>: <span class="self">self</span>.<span class="ident">fmt_event</span>,
+            <span class="ident">fmt_span</span>: <span class="self">self</span>.<span class="ident">fmt_span</span>,
+            <span class="ident">make_writer</span>: <span class="ident">TestWriter</span>::<span class="ident">default</span>(),
             <span class="ident">_inner</span>: <span class="self">self</span>.<span class="ident">_inner</span>,
         }
     }

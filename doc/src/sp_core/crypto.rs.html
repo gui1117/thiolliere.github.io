@@ -1262,6 +1262,37 @@
 <span id="1261">1261</span>
 <span id="1262">1262</span>
 <span id="1263">1263</span>
+<span id="1264">1264</span>
+<span id="1265">1265</span>
+<span id="1266">1266</span>
+<span id="1267">1267</span>
+<span id="1268">1268</span>
+<span id="1269">1269</span>
+<span id="1270">1270</span>
+<span id="1271">1271</span>
+<span id="1272">1272</span>
+<span id="1273">1273</span>
+<span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
+<span id="1287">1287</span>
+<span id="1288">1288</span>
+<span id="1289">1289</span>
+<span id="1290">1290</span>
+<span id="1291">1291</span>
+<span id="1292">1292</span>
+<span id="1293">1293</span>
+<span id="1294">1294</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1751,6 +1782,10 @@
 		(<span class="number">22</span>, <span class="string">&quot;dock-mainnet&quot;</span>, <span class="string">&quot;Dock mainnet, standard account (*25519).&quot;</span>)
 	<span class="ident">ShiftNrg</span> <span class="op">=</span><span class="op">&gt;</span>
 		(<span class="number">23</span>, <span class="string">&quot;shift&quot;</span>, <span class="string">&quot;ShiftNrg mainnet, standard account (*25519).&quot;</span>)
+	<span class="ident">ZeroAccount</span> <span class="op">=</span><span class="op">&gt;</span>
+		(<span class="number">24</span>, <span class="string">&quot;zero&quot;</span>, <span class="string">&quot;ZERO mainnet, standard account (*25519).&quot;</span>)
+	<span class="ident">AlphavilleAccount</span> <span class="op">=</span><span class="op">&gt;</span>
+		(<span class="number">25</span>, <span class="string">&quot;alphaville&quot;</span>, <span class="string">&quot;ZERO testnet, standard account (*25519).&quot;</span>)
 	<span class="ident">SubsocialAccount</span> <span class="op">=</span><span class="op">&gt;</span>
 		(<span class="number">28</span>, <span class="string">&quot;subsocial&quot;</span>, <span class="string">&quot;Subsocial network, standard account (*25519).&quot;</span>)
 	<span class="ident">PhalaAccount</span> <span class="op">=</span><span class="op">&gt;</span>
@@ -1761,6 +1796,8 @@
 		(<span class="number">33</span>, <span class="string">&quot;datahighway&quot;</span>, <span class="string">&quot;DataHighway mainnet, standard account (*25519).&quot;</span>)
 	<span class="ident">CentrifugeAccount</span> <span class="op">=</span><span class="op">&gt;</span>
 		(<span class="number">36</span>, <span class="string">&quot;centrifuge&quot;</span>, <span class="string">&quot;Centrifuge Chain mainnet, standard account (*25519).&quot;</span>)
+	<span class="ident">NodleAccount</span> <span class="op">=</span><span class="op">&gt;</span>
+		(<span class="number">37</span>, <span class="string">&quot;nodle&quot;</span>, <span class="string">&quot;Nodle Chain mainnet, standard account (*25519).&quot;</span>)
 	<span class="ident">SubstrateAccount</span> <span class="op">=</span><span class="op">&gt;</span>
 		(<span class="number">42</span>, <span class="string">&quot;substrate&quot;</span>, <span class="string">&quot;Any Substrate network, standard account (*25519).&quot;</span>)
 	<span class="ident">Reserved43</span> <span class="op">=</span><span class="op">&gt;</span>
@@ -1842,7 +1879,17 @@
 
 <span class="doccomment">/// Trait suitable for typical cryptographic PKI key public type.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Public</span>:
-	<span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Default</span> <span class="op">+</span> <span class="ident">Derive</span> <span class="op">+</span> <span class="ident">CryptoType</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Eq</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>
+	<span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
+	<span class="op">+</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
+	<span class="op">+</span> <span class="ident">Default</span>
+	<span class="op">+</span> <span class="ident">Derive</span>
+	<span class="op">+</span> <span class="ident">CryptoType</span>
+	<span class="op">+</span> <span class="ident">PartialEq</span>
+	<span class="op">+</span> <span class="ident">Eq</span>
+	<span class="op">+</span> <span class="ident">Clone</span>
+	<span class="op">+</span> <span class="ident">Send</span>
+	<span class="op">+</span> <span class="ident">Sync</span>
+	<span class="op">+</span> <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
 	<span class="doccomment">/// A new instance from the given slice.</span>
 	<span class="doccomment">///</span>
@@ -2007,6 +2054,14 @@
 				<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">mutable_transmutes</span>)]</span>
 				<span class="ident">sp_std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="string">b&quot;&quot;</span>[..])
 			}
+		}
+	}
+
+	<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Dummy</span> {
+		<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> ();
+
+		<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, ()<span class="op">&gt;</span> {
+			<span class="prelude-val">Ok</span>(<span class="self">Self</span>)
 		}
 	}
 
@@ -2365,6 +2420,13 @@
 	<span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TestPublic</span> {
 		<span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
 			<span class="kw-2">&amp;</span><span class="kw-2">mut</span> []
+		}
+	}
+	<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TestPublic</span> {
+		<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> ();
+
+		<span class="kw">fn</span> <span class="ident">try_from</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, ()<span class="op">&gt;</span> {
+			<span class="prelude-val">Ok</span>(<span class="self">Self</span>)
 		}
 	}
 	<span class="kw">impl</span> <span class="ident">CryptoType</span> <span class="kw">for</span> <span class="ident">TestPublic</span> {

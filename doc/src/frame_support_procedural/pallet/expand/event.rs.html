@@ -138,6 +138,10 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -168,6 +172,15 @@
 	} <span class="kw">else</span> {
 		<span class="kw">return</span> <span class="ident">Default</span>::<span class="ident">default</span>()
 	};
+
+	<span class="kw">let</span> <span class="ident">event_where_clause</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">event</span>.<span class="ident">where_clause</span>;
+
+	<span class="comment">// NOTE: actually event where clause must be a subset of config where clause because of</span>
+	<span class="comment">// `type Event: From&lt;Event&lt;Self&gt;&gt;`. But we merge either way for potential better error message</span>
+	<span class="kw">let</span> <span class="ident">completed_where_clause</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">merge_where_clauses</span>(<span class="kw-2">&amp;</span>[
+		<span class="kw-2">&amp;</span><span class="ident">event</span>.<span class="ident">where_clause</span>,
+		<span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">config</span>.<span class="ident">where_clause</span>,
+	]);
 
 	<span class="kw">let</span> <span class="ident">event_ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">event</span>.<span class="ident">event</span>;
 	<span class="kw">let</span> <span class="ident">frame_system</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">frame_system</span>;
@@ -219,16 +232,11 @@
 
 	<span class="comment">// derive some traits because system event require Clone, FullCodec, Eq, PartialEq and Debug</span>
 	<span class="ident">event_item</span>.<span class="ident">attrs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span>(
-		<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">derive</span>(#<span class="ident">frame_support</span>::<span class="ident">DebugNoBound</span>))]</span>
-	));
-	<span class="ident">event_item</span>.<span class="ident">attrs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span>(
-		<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">derive</span>(#<span class="ident">frame_support</span>::<span class="ident">DebugStripped</span>))]</span>
-	));
-	<span class="ident">event_item</span>.<span class="ident">attrs</span>.<span class="ident">push</span>(<span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span>(
 		<span class="attribute">#[<span class="ident">derive</span>(
 			#<span class="ident">frame_support</span>::<span class="ident">CloneNoBound</span>,
 			#<span class="ident">frame_support</span>::<span class="ident">EqNoBound</span>,
 			#<span class="ident">frame_support</span>::<span class="ident">PartialEqNoBound</span>,
+			#<span class="ident">frame_support</span>::<span class="ident">RuntimeDebugNoBound</span>,
 			#<span class="ident">frame_support</span>::<span class="ident">codec</span>::<span class="ident">Encode</span>,
 			#<span class="ident">frame_support</span>::<span class="ident">codec</span>::<span class="ident">Decode</span>,
 		)]</span>
@@ -242,7 +250,7 @@
 		<span class="kw">let</span> <span class="ident">type_use_gen</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">type_use_generics</span>();
 
 		<span class="ident">quote</span>::<span class="macro">quote_spanned</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="ident">fn_span</span> <span class="op">=</span><span class="op">&gt;</span>
-			<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">type_impl_gen</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span>#<span class="ident">type_use_gen</span><span class="op">&gt;</span> {
+			<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">type_impl_gen</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span>#<span class="ident">type_use_gen</span><span class="op">&gt;</span> #<span class="ident">completed_where_clause</span> {
 				#<span class="ident">fn_vis</span> <span class="kw">fn</span> <span class="ident">deposit_event</span>(<span class="ident">event</span>: <span class="ident">Event</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span>) {
 					<span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="op">&lt;</span>
 						<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Config</span>#<span class="ident">trait_use_gen</span><span class="op">&gt;</span>::<span class="ident">Event</span> <span class="kw">as</span>
@@ -265,11 +273,11 @@
 	<span class="ident">quote</span>::<span class="macro">quote_spanned</span><span class="macro">!</span>(<span class="ident">event_item_span</span> <span class="op">=</span><span class="op">&gt;</span>
 		#<span class="ident">deposit_event</span>
 
-		<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">event_impl_gen</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>#<span class="ident">event_ident</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> () {
+		<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">event_impl_gen</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>#<span class="ident">event_ident</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> () #<span class="ident">event_where_clause</span> {
 			<span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: #<span class="ident">event_ident</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> () { () }
 		}
 
-		<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">event_impl_gen</span><span class="op">&gt;</span> #<span class="ident">event_ident</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">event_impl_gen</span><span class="op">&gt;</span> #<span class="ident">event_ident</span><span class="op">&lt;</span>#<span class="ident">event_use_gen</span><span class="op">&gt;</span> #<span class="ident">event_where_clause</span> {
 			<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 			<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 			<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [#<span class="ident">frame_support</span>::<span class="ident">event</span>::<span class="ident">EventMetadata</span>] {

@@ -199,6 +199,53 @@
 <span id="198">198</span>
 <span id="199">199</span>
 <span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -372,8 +419,16 @@
 	<span class="doccomment">/// This is a no-op when running natively (`std`).</span>
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>() {
-		<span class="kw">static</span> <span class="ident">LOGGER</span>: <span class="ident">RuntimeLogger</span> <span class="op">=</span> <span class="ident">RuntimeLogger</span>;;
+		<span class="kw">static</span> <span class="ident">LOGGER</span>: <span class="ident">RuntimeLogger</span> <span class="op">=</span> <span class="ident">RuntimeLogger</span>;
 		<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">log</span>::<span class="ident">set_logger</span>(<span class="kw-2">&amp;</span><span class="ident">LOGGER</span>);
+
+		<span class="comment">// Set max level to `TRACE` to ensure we propagate</span>
+		<span class="comment">// all log entries to the native side that will do the</span>
+		<span class="comment">// final filtering on what should be printed.</span>
+		<span class="comment">//</span>
+		<span class="comment">// If we don&#39;t set any level, logging is disabled</span>
+		<span class="comment">// completly.</span>
+		<span class="ident">log</span>::<span class="ident">set_max_level</span>(<span class="ident">log</span>::<span class="ident">LevelFilter</span>::<span class="ident">Trace</span>);
 	}
 }
 
@@ -399,6 +454,45 @@
 	}
 
 	<span class="kw">fn</span> <span class="ident">flush</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+	<span class="kw">use</span> <span class="ident">substrate_test_runtime_client</span>::{
+		<span class="ident">ExecutionStrategy</span>, <span class="ident">TestClientBuilderExt</span>, <span class="ident">DefaultTestClientBuilderExt</span>,
+		<span class="ident">TestClientBuilder</span>, <span class="ident">runtime</span>::<span class="ident">TestAPI</span>,
+	};
+	<span class="kw">use</span> <span class="ident">sp_api</span>::<span class="ident">ProvideRuntimeApi</span>;
+	<span class="kw">use</span> <span class="ident">sp_runtime</span>::<span class="ident">generic</span>::<span class="ident">BlockId</span>;
+
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">ensure_runtime_logger_works</span>() {
+		<span class="kw">let</span> <span class="ident">executable</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">current_exe</span>().<span class="ident">unwrap</span>();
+		<span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">process</span>::<span class="ident">Command</span>::<span class="ident">new</span>(<span class="ident">executable</span>)
+			.<span class="ident">env</span>(<span class="string">&quot;RUN_TEST&quot;</span>, <span class="string">&quot;1&quot;</span>)
+			.<span class="ident">env</span>(<span class="string">&quot;RUST_LOG&quot;</span>, <span class="string">&quot;trace&quot;</span>)
+			.<span class="ident">args</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;--nocapture&quot;</span>, <span class="string">&quot;ensure_runtime_logger_works_implementation&quot;</span>])
+			.<span class="ident">output</span>()
+			.<span class="ident">unwrap</span>();
+
+		<span class="kw">let</span> <span class="ident">output</span> <span class="op">=</span> <span class="macro">dbg</span><span class="macro">!</span>(<span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">output</span>.<span class="ident">stderr</span>).<span class="ident">unwrap</span>());
+		<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">output</span>.<span class="ident">contains</span>(<span class="string">&quot;Hey I&#39;m runtime&quot;</span>));
+	}
+
+	<span class="doccomment">/// This is no actual test. It will be called by `ensure_runtime_logger_works`</span>
+	<span class="doccomment">/// to check that the runtime can print from the wasm side using the</span>
+	<span class="doccomment">/// `RuntimeLogger`.</span>
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">ensure_runtime_logger_works_implementation</span>() {
+		<span class="kw">if</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="string">&quot;RUN_TEST&quot;</span>).<span class="ident">is_ok</span>() {
+			<span class="ident">sp_tracing</span>::<span class="ident">try_init_simple</span>();
+
+			<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">TestClientBuilder</span>::<span class="ident">new</span>().<span class="ident">set_execution_strategy</span>(<span class="ident">ExecutionStrategy</span>::<span class="ident">AlwaysWasm</span>).<span class="ident">build</span>();
+			<span class="kw">let</span> <span class="ident">runtime_api</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">runtime_api</span>();
+			<span class="kw">let</span> <span class="ident">block_id</span> <span class="op">=</span> <span class="ident">BlockId</span>::<span class="ident">Number</span>(<span class="number">0</span>);
+			<span class="ident">runtime_api</span>.<span class="ident">do_trace_log</span>(<span class="kw-2">&amp;</span><span class="ident">block_id</span>).<span class="ident">expect</span>(<span class="string">&quot;Logging should not fail&quot;</span>);
+		}
+	}
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "frame_support";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

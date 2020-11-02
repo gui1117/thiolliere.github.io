@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["futures_util"] = [{"text":"impl&lt;Sp, Fut&gt; Executor&lt;Fut&gt; for Compat&lt;Sp&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;'a Sp: Spawn03,<br>&nbsp;&nbsp;&nbsp;&nbsp;Fut: Future01&lt;Item = (), Error = ()&gt; + Send + 'static,&nbsp;</span>","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

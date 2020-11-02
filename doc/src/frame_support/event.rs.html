@@ -827,6 +827,16 @@
 <span id="826">826</span>
 <span id="827">827</span>
 <span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// Copyright 2018-2020 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// This file is part of Substrate.</span>
@@ -1381,16 +1391,18 @@
 	<span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Encode</span>, <span class="ident">Decode</span>};
 
 	<span class="kw">mod</span> <span class="ident">system</span> {
-		<span class="doccomment">/// Temporary keep old name Trait, soon to be deprecated alongside old macro.</span>
+		<span class="doccomment">/// Kind of alias for `Config` trait. Deprecated as `Trait` is renamed `Config`.</span>
 		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">Config</span> {}
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Runtime</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">Runtime</span> {}
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">T</span> {}
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="lifetime">&#39;static</span> {
 			<span class="kw">type</span> <span class="ident">Origin</span>;
 			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
+			<span class="kw">type</span> <span class="ident">PalletInfo</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">PalletInfo</span>;
+			<span class="kw">type</span> <span class="ident">DbWeight</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">weights</span>::<span class="ident">RuntimeDbWeight</span><span class="op">&gt;</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
@@ -1401,13 +1413,18 @@
 	}
 
 	<span class="kw">mod</span> <span class="ident">system_renamed</span> {
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
+		<span class="doccomment">/// Kind of alias for `Config` trait. Deprecated as `Trait` is renamed `Config`.</span>
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">Config</span> {}
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">T</span> {}
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="lifetime">&#39;static</span> {
 			<span class="kw">type</span> <span class="ident">Origin</span>;
 			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
+			<span class="kw">type</span> <span class="ident">PalletInfo</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">PalletInfo</span>;
+			<span class="kw">type</span> <span class="ident">DbWeight</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">weights</span>::<span class="ident">RuntimeDbWeight</span><span class="op">&gt;</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
@@ -1418,19 +1435,19 @@
 	}
 
 	<span class="kw">mod</span> <span class="ident">event_module</span> {
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
-			<span class="kw">type</span> <span class="ident">Origin</span>;
+		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">system</span>;
+
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">system</span>::<span class="ident">Trait</span> {
 			<span class="kw">type</span> <span class="ident">Balance</span>;
-			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="ident">system</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
 			<span class="doccomment">/// Event without renaming the generic parameter `Balance` and `Origin`.</span>
-			<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Balance</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Origin</span>
+			<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Balance</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">Origin</span>
 			{
 				<span class="doccomment">/// Hi, I am a comment.</span>
 				<span class="ident">TestEvent</span>(<span class="ident">Balance</span>, <span class="ident">Origin</span>),
@@ -1441,21 +1458,21 @@
 	}
 
 	<span class="kw">mod</span> <span class="ident">event_module2</span> {
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
-			<span class="kw">type</span> <span class="ident">Origin</span>;
+		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">system</span>;
+
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">system</span>::<span class="ident">Trait</span> {
 			<span class="kw">type</span> <span class="ident">Balance</span>;
-			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="ident">system</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
 			<span class="doccomment">/// Event with renamed generic parameter</span>
 			<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
 				<span class="ident">BalanceRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Balance</span>,
-				<span class="ident">OriginRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Origin</span>
+				<span class="ident">OriginRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">Origin</span>
 			{
 				<span class="ident">TestEvent</span>(<span class="ident">BalanceRenamed</span>),
 				<span class="ident">TestOrigin</span>(<span class="ident">OriginRenamed</span>),
@@ -1472,21 +1489,21 @@
 	}
 
 	<span class="kw">mod</span> <span class="ident">event_module4</span> {
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
-			<span class="kw">type</span> <span class="ident">Origin</span>;
+		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">system</span>;
+
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">system</span>::<span class="ident">Trait</span> {
 			<span class="kw">type</span> <span class="ident">Balance</span>;
-			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="ident">system</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
 			<span class="doccomment">/// Event finish formatting on an unnamed one with trailing comma</span>
 			<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
 				<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Balance</span>,
-				<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Origin</span>,
+				<span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">Origin</span>,
 			{
 				<span class="ident">TestEvent</span>(<span class="ident">Balance</span>, <span class="ident">Origin</span>),
 			}
@@ -1494,21 +1511,21 @@
 	}
 
 	<span class="kw">mod</span> <span class="ident">event_module5</span> {
-		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
-			<span class="kw">type</span> <span class="ident">Origin</span>;
+		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">system</span>;
+
+		<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">system</span>::<span class="ident">Trait</span> {
 			<span class="kw">type</span> <span class="ident">Balance</span>;
-			<span class="kw">type</span> <span class="ident">BlockNumber</span>;
 		}
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="ident">system</span> {}
 		}
 
 		<span class="macro">decl_event</span><span class="macro">!</span>(
 			<span class="doccomment">/// Event finish formatting on an named one with trailing comma</span>
 			<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span>
 				<span class="ident">BalanceRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Balance</span>,
-				<span class="ident">OriginRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">Origin</span>,
+				<span class="ident">OriginRenamed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">Origin</span>,
 			{
 				<span class="ident">TestEvent</span>(<span class="ident">BalanceRenamed</span>, <span class="ident">OriginRenamed</span>),
 				<span class="ident">TrailingCommaInArgs</span>(
@@ -1544,37 +1561,40 @@
 	}
 
 	<span class="kw">impl</span> <span class="ident">event_module</span>::<span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">TestRuntime</span> {
-		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">Balance</span> <span class="op">=</span> <span class="ident">u32</span>;
-		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
 	}
 
 	<span class="kw">impl</span> <span class="ident">event_module2</span>::<span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">TestRuntime</span> {
-		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">Balance</span> <span class="op">=</span> <span class="ident">u32</span>;
-		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
 	}
 
 	<span class="kw">impl</span> <span class="ident">system</span>::<span class="ident">Config</span> <span class="kw">for</span> <span class="ident">TestRuntime</span> {
 		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
+		<span class="kw">type</span> <span class="ident">PalletInfo</span> <span class="op">=</span> ();
+		<span class="kw">type</span> <span class="ident">DbWeight</span> <span class="op">=</span> ();
 	}
 
 	<span class="kw">impl</span> <span class="ident">event_module</span>::<span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">TestRuntime2</span> {
-		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">Balance</span> <span class="op">=</span> <span class="ident">u32</span>;
-		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
 	}
 
 	<span class="kw">impl</span> <span class="ident">event_module2</span>::<span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">TestRuntime2</span> {
-		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">Balance</span> <span class="op">=</span> <span class="ident">u32</span>;
-		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
 	}
 
-	<span class="kw">impl</span> <span class="ident">system_renamed</span>::<span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">TestRuntime2</span> {
+	<span class="kw">impl</span> <span class="ident">system_renamed</span>::<span class="ident">Config</span> <span class="kw">for</span> <span class="ident">TestRuntime2</span> {
 		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
+		<span class="kw">type</span> <span class="ident">PalletInfo</span> <span class="op">=</span> ();
+		<span class="kw">type</span> <span class="ident">DbWeight</span> <span class="op">=</span> ();
+	}
+
+	<span class="kw">impl</span> <span class="ident">system</span>::<span class="ident">Config</span> <span class="kw">for</span> <span class="ident">TestRuntime2</span> {
+		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
+		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
+		<span class="kw">type</span> <span class="ident">PalletInfo</span> <span class="op">=</span> ();
+		<span class="kw">type</span> <span class="ident">DbWeight</span> <span class="op">=</span> ();
 	}
 
 	<span class="kw">const</span> <span class="ident">EXPECTED_METADATA</span>: <span class="ident">OuterEventMetadata</span> <span class="op">=</span> <span class="ident">OuterEventMetadata</span> {

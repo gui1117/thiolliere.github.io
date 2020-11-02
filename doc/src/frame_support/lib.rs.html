@@ -1839,6 +1839,44 @@
 <span id="1838">1838</span>
 <span id="1839">1839</span>
 <span id="1840">1840</span>
+<span id="1841">1841</span>
+<span id="1842">1842</span>
+<span id="1843">1843</span>
+<span id="1844">1844</span>
+<span id="1845">1845</span>
+<span id="1846">1846</span>
+<span id="1847">1847</span>
+<span id="1848">1848</span>
+<span id="1849">1849</span>
+<span id="1850">1850</span>
+<span id="1851">1851</span>
+<span id="1852">1852</span>
+<span id="1853">1853</span>
+<span id="1854">1854</span>
+<span id="1855">1855</span>
+<span id="1856">1856</span>
+<span id="1857">1857</span>
+<span id="1858">1858</span>
+<span id="1859">1859</span>
+<span id="1860">1860</span>
+<span id="1861">1861</span>
+<span id="1862">1862</span>
+<span id="1863">1863</span>
+<span id="1864">1864</span>
+<span id="1865">1865</span>
+<span id="1866">1866</span>
+<span id="1867">1867</span>
+<span id="1868">1868</span>
+<span id="1869">1869</span>
+<span id="1870">1870</span>
+<span id="1871">1871</span>
+<span id="1872">1872</span>
+<span id="1873">1873</span>
+<span id="1874">1874</span>
+<span id="1875">1875</span>
+<span id="1876">1876</span>
+<span id="1877">1877</span>
+<span id="1878">1878</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1863,9 +1901,6 @@
 
 <span class="doccomment">/// Export ourself as `frame_support` to make tests happy.</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="self">self</span> <span class="kw">as</span> <span class="ident">frame_support</span>;
-
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bitmask</span>;
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_tracing</span>;
@@ -1902,6 +1937,8 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">event</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">metadata</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">genesis_config</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">inherent</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -2217,6 +2254,21 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">require_transactional</span>;
 
+<span class="doccomment">/// Convert the current crate version into a [`PalletVersion`](crate::traits::PalletVersion).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It uses the `CARGO_PKG_VERSION_MAJOR`, `CARGO_PKG_VERSION_MINOR` and</span>
+<span class="doccomment">/// `CARGO_PKG_VERSION_PATCH` environment variables to fetch the crate version.</span>
+<span class="doccomment">/// This means that the [`PalletVersion`](crate::traits::PalletVersion)</span>
+<span class="doccomment">/// object will correspond to the version of the crate the macro is called in!</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use frame_support::{traits::PalletVersion, crate_to_pallet_version};</span>
+<span class="doccomment">/// const Version: PalletVersion = crate_to_pallet_version!();</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">crate_to_pallet_version</span>;
+
 <span class="doccomment">/// Return Err of the expression: `return Err($expression);`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Used as `fail!(expression)`.</span>
@@ -2327,18 +2379,23 @@
 	<span class="kw">use</span> <span class="ident">sp_std</span>::{<span class="ident">marker</span>::<span class="ident">PhantomData</span>, <span class="ident">result</span>};
 	<span class="kw">use</span> <span class="ident">sp_io</span>::<span class="ident">TestExternalities</span>;
 
-	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span> {
+	<span class="doccomment">/// Kind of alias for `Config` trait. Deprecated as `Trait` is renamed `Config`.</span>
+	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">Config</span> {}
+	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">T</span> {}
+	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="lifetime">&#39;static</span> {
 		<span class="kw">type</span> <span class="ident">BlockNumber</span>: <span class="ident">Codec</span> <span class="op">+</span> <span class="ident">EncodeLike</span> <span class="op">+</span> <span class="ident">Default</span>;
 		<span class="kw">type</span> <span class="ident">Origin</span>;
+		<span class="kw">type</span> <span class="ident">PalletInfo</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">PalletInfo</span>;
+		<span class="kw">type</span> <span class="ident">DbWeight</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">weights</span>::<span class="ident">RuntimeDbWeight</span><span class="op">&gt;</span>;
 	}
 
 	<span class="kw">mod</span> <span class="ident">module</span> {
 		<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 
-		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Trait</span>;
+		<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Trait</span>, <span class="ident">Config</span>};
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span> {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span>  {}
 		}
 	}
 	<span class="kw">use</span> <span class="self">self</span>::<span class="ident">module</span>::<span class="ident">Module</span>;
@@ -2366,9 +2423,11 @@
 	}
 
 	<span class="kw">struct</span> <span class="ident">Test</span>;
-	<span class="kw">impl</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">Test</span> {
+	<span class="kw">impl</span> <span class="ident">Config</span> <span class="kw">for</span> <span class="ident">Test</span> {
 		<span class="kw">type</span> <span class="ident">BlockNumber</span> <span class="op">=</span> <span class="ident">u32</span>;
 		<span class="kw">type</span> <span class="ident">Origin</span> <span class="op">=</span> <span class="ident">u32</span>;
+		<span class="kw">type</span> <span class="ident">PalletInfo</span> <span class="op">=</span> ();
+		<span class="kw">type</span> <span class="ident">DbWeight</span> <span class="op">=</span> ();
 	}
 
 	<span class="kw">fn</span> <span class="ident">new_test_ext</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TestExternalities</span> {
@@ -2774,7 +2833,7 @@
 <span class="doccomment">/// prelude to be used alongside pallet macro, for ease of use.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet_prelude</span> {
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::{<span class="ident">Get</span>, <span class="ident">Interface</span>, <span class="ident">IsType</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::{<span class="ident">Get</span>, <span class="ident">Interface</span>, <span class="ident">IsType</span>, <span class="ident">GetPalletVersion</span>};
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::<span class="ident">GenesisBuild</span>;
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">dispatch</span>::{<span class="ident">DispatchResultWithPostInfo</span>, <span class="ident">Parameter</span>};
@@ -2900,6 +2959,11 @@
 <span class="doccomment">/// )]</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// It implements on pallet:</span>
+<span class="doccomment">/// * [`GetPalletVersion`]</span>
+<span class="doccomment">/// * [`OnGenesis`]: contains some logic to write pallet version into storage.</span>
+<span class="doccomment">/// * [`ModuleErrorMetadata`]: using error declared or no metadata.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// If attribute generate_store then macro create the trait `Store` and implement it on `Pallet`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Interface: `#[pallet::interface]` mandatory</span>
@@ -2920,6 +2984,9 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The macro implement the traits `OnInitialize`, `OnFinalize`, `OnRuntimeUpgrade`,</span>
 <span class="doccomment">/// `OffchainWorker`, `IntegrityTest` using `Interface` implementation.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// NOTE: OnRuntimeUpgrade is implemented with `Interface::on_runtime_upgrade` and some additional</span>
+<span class="doccomment">/// logic. E.g. logic to write pallet version into storage.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Call: `#[pallet::call]` mandatory</span>
 <span class="doccomment">///</span>
@@ -3549,7 +3616,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// 1. make crate compiling: rename usage of frame_system::Trait to frame_system::Config.</span>
 <span class="doccomment">/// 2. export metadata of the pallet for later checks</span>
-<span class="doccomment">/// 3. reorganize pallet to have trait Trait, decl_* macros, ValidateUnsigned, ProvideInherent,</span>
+<span class="doccomment">/// 3. generate the template upgrade for the pallet provided by decl_storage with environment</span>
+<span class="doccomment">/// 	variable `PRINT_PALLET_UPGRADE`: `PRINT_PALLET_UPGRADE=1 cargo check -p my_pallet`</span>
+<span class="doccomment">/// 	This template can be used as information it contains all information for storages, genesis</span>
+<span class="doccomment">/// 	config and genesis build.</span>
+<span class="doccomment">/// 4. reorganize pallet to have trait Trait, decl_* macros, ValidateUnsigned, ProvideInherent,</span>
 <span class="doccomment">/// 	Origin all together in one file. suggested order:</span>
 <span class="doccomment">/// 	* trait,</span>
 <span class="doccomment">/// 	* decl_module,</span>
@@ -3560,7 +3631,7 @@
 <span class="doccomment">/// 	* validate_unsigned,</span>
 <span class="doccomment">/// 	* provide_inherent,</span>
 <span class="doccomment">/// 	so far it should compile and all be correct.</span>
-<span class="doccomment">/// 4. start writing new pallet module</span>
+<span class="doccomment">/// 5. start writing new pallet module</span>
 <span class="doccomment">/// 	```ignore</span>
 <span class="doccomment">/// 	pub use pallet::*;</span>
 <span class="doccomment">///     #[frame_support::pallet]</span>
@@ -3577,10 +3648,10 @@
 <span class="doccomment">/// 		// pub struct Pallet&lt;T, I = ()&gt;(PhantomData&lt;T&gt;); // for instantiable pallet</span>
 <span class="doccomment">/// 	}</span>
 <span class="doccomment">/// 	```</span>
-<span class="doccomment">/// 5. **migrate trait**: move trait into the module with</span>
+<span class="doccomment">/// 6. **migrate trait**: move trait into the module with</span>
 <span class="doccomment">/// 	* rename `Trait` to `Config`</span>
 <span class="doccomment">/// 	* all const in decl_module to `#[pallet::constant]`</span>
-<span class="doccomment">/// 6. **migrate decl_module**: write:</span>
+<span class="doccomment">/// 7. **migrate decl_module**: write:</span>
 <span class="doccomment">/// 	```ignore</span>
 <span class="doccomment">/// 	#[pallet::interface]</span>
 <span class="doccomment">/// 	impl&lt;T: Trait&gt; Interface for Pallet&lt;T&gt; {</span>
@@ -3601,12 +3672,17 @@
 <span class="doccomment">/// 	- `#[compact]` must now be written `#[pallet::compact]`</span>
 <span class="doccomment">/// 	- `#[weight = ..]` must now be written `#[pallet::weight(..)]`</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// 7. **migrate event**:</span>
+<span class="doccomment">/// 8. **migrate event**:</span>
 <span class="doccomment">/// 	rewrite as a simple enum under with the attribute `#[pallet::event]`,</span>
 <span class="doccomment">/// 	use `#[pallet::generate_deposit($vis fn deposit_event)]` to generate deposit_event,</span>
 <span class="doccomment">/// 	use `#[pallet::metadata(...)]` to configure the metadata for types in order not to break them.</span>
-<span class="doccomment">/// 8. **migrate error**: just rewrite it with attribute `#[pallet::error]`.</span>
-<span class="doccomment">/// 9. **migrate storage**:</span>
+<span class="doccomment">/// 9. **migrate error**: just rewrite it with attribute `#[pallet::error]`.</span>
+<span class="doccomment">/// 10. **migrate storage**:</span>
+<span class="doccomment">/// 	decl_storage provide an upgrade template (see 3.). All storages, genesis config, genesis</span>
+<span class="doccomment">/// 	build and default implementation of genesis config can be taken from it directly.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// 	Otherwise here is the manual process:</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// 	first migrate the genesis logic. write:</span>
 <span class="doccomment">/// 	```ignore</span>
 <span class="doccomment">/// 	#[pallet::genesis_config]</span>
@@ -3647,13 +3723,13 @@
 <span class="doccomment">/// 		pub(super) type MyStorage&lt;T&gt; = StorageValue&lt;u32, ValueQuery, MyStorageOnEmpty&gt;;</span>
 <span class="doccomment">/// 		```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// 10. **migrate origin**: just move the origin to the pallet module under `#[pallet::origin]`</span>
-<span class="doccomment">/// 11. **migrate validate_unsigned**: just move the ValidateUnsigned implementation to the pallet</span>
+<span class="doccomment">/// 11. **migrate origin**: just move the origin to the pallet module under `#[pallet::origin]`</span>
+<span class="doccomment">/// 12. **migrate validate_unsigned**: just move the ValidateUnsigned implementation to the pallet</span>
 <span class="doccomment">/// 	module under `#[pallet::validate_unsigned]`</span>
-<span class="doccomment">/// 12. **migrate provide_inherent**: just move the ValidateUnsigned implementation to the pallet</span>
+<span class="doccomment">/// 13. **migrate provide_inherent**: just move the ValidateUnsigned implementation to the pallet</span>
 <span class="doccomment">/// 	module under `#[pallet::validate_unsigned]`</span>
-<span class="doccomment">/// 13. rename the usage of Module to Pallet and the usage of Config to Trait inside the crate.</span>
-<span class="doccomment">/// 14. migration is done, now double check migration with the checking migration guidelines.</span>
+<span class="doccomment">/// 14. rename the usage of Module to Pallet and the usage of Config to Trait inside the crate.</span>
+<span class="doccomment">/// 15. migration is done, now double check migration with the checking migration guidelines.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Checking upgrade guidelines:</span>
 <span class="doccomment">///</span>

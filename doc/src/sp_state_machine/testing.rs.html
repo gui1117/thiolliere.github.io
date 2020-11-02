@@ -277,6 +277,20 @@
 <span id="276">276</span>
 <span id="277">277</span>
 <span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -297,9 +311,8 @@
 
 <span class="doccomment">//! Test implementation for Externalities.</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
-<span class="kw">use</span> <span class="ident">codec</span>::<span class="ident">Decode</span>;
-<span class="kw">use</span> <span class="ident">hash_db</span>::<span class="ident">Hasher</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>}, <span class="ident">panic</span>::{<span class="ident">AssertUnwindSafe</span>, <span class="ident">UnwindSafe</span>}};
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">backend</span>::<span class="ident">Backend</span>, <span class="ident">OverlayedChanges</span>, <span class="ident">StorageTransactionCache</span>, <span class="ident">ext</span>::<span class="ident">Ext</span>, <span class="ident">InMemoryBackend</span>,
 	<span class="ident">StorageKey</span>, <span class="ident">StorageValue</span>,
@@ -310,6 +323,9 @@
 		<span class="ident">State</span> <span class="kw">as</span> <span class="ident">ChangesTrieState</span>,
 	},
 };
+
+<span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Decode</span>, <span class="ident">Encode</span>};
+<span class="kw">use</span> <span class="ident">hash_db</span>::<span class="ident">Hasher</span>;
 <span class="kw">use</span> <span class="ident">sp_core</span>::{
 	<span class="ident">offchain</span>::{
 		<span class="ident">testing</span>::<span class="ident">TestPersistentOffchainDB</span>,
@@ -322,7 +338,6 @@
 	<span class="ident">traits</span>::<span class="ident">TaskExecutorExt</span>,
 	<span class="ident">testing</span>::<span class="ident">TaskExecutor</span>,
 };
-<span class="kw">use</span> <span class="ident">codec</span>::<span class="ident">Encode</span>;
 <span class="kw">use</span> <span class="ident">sp_externalities</span>::{<span class="ident">Extensions</span>, <span class="ident">Extension</span>};
 
 <span class="doccomment">/// Simple HashMap-based Externalities impl.</span>
@@ -457,6 +472,19 @@
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execute_with</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">execute</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ext</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ext</span>();
 		<span class="ident">sp_externalities</span>::<span class="ident">set_and_run_with_externalities</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ext</span>, <span class="ident">execute</span>)
+	}
+
+	<span class="doccomment">/// Execute the given closure while `self` is set as externalities.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Returns the result of the given closure, if no panics occured.</span>
+	<span class="doccomment">/// Otherwise, returns `Err`.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">execute_with_safe</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> <span class="op">+</span> <span class="ident">UnwindSafe</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ext</span> <span class="op">=</span> <span class="ident">AssertUnwindSafe</span>(<span class="self">self</span>.<span class="ident">ext</span>());
+		<span class="ident">std</span>::<span class="ident">panic</span>::<span class="ident">catch_unwind</span>(<span class="kw">move</span> <span class="op">|</span><span class="op">|</span>
+			<span class="ident">sp_externalities</span>::<span class="ident">set_and_run_with_externalities</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">ext</span>, <span class="ident">f</span>)
+		).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+			<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Closure panicked: {:?}&quot;</span>, <span class="ident">e</span>)
+		})
 	}
 }
 

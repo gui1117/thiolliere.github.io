@@ -2160,10 +2160,10 @@
 			}
 		}
 
-		<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PerThing</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+		<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PerThing</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">where</span> <span class="ident">P</span>::<span class="ident">Inner</span>: <span class="ident">FixedPointOperand</span> {
 			<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-				<span class="kw">let</span> <span class="ident">accuracy</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">ACCURACY</span>.<span class="ident">saturated_into</span>();
-				<span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">p</span>.<span class="ident">deconstruct</span>().<span class="ident">saturated_into</span>();
+				<span class="kw">let</span> <span class="ident">accuracy</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">ACCURACY</span>;
+				<span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">p</span>.<span class="ident">deconstruct</span>();
 				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>::<span class="ident">saturating_from_rational</span>(<span class="ident">value</span>, <span class="ident">accuracy</span>)
 			}
 		}

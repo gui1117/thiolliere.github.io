@@ -140,7 +140,6 @@
 <span id="139">139</span>
 <span id="140">140</span>
 <span id="141">141</span>
-<span id="142">142</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -163,7 +162,7 @@
 <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">spanned</span>::<span class="ident">Spanned</span>;
 
 <span class="doccomment">/// * impl various trait on Error</span>
-<span class="doccomment">/// * impl ModuleErrorMetadata for Pallet</span>
+<span class="doccomment">/// * impl ModuleErrorMetadata for Error</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_error</span>(<span class="ident">def</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Def</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span> {
 	<span class="kw">let</span> <span class="ident">error</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">error</span> {
 		<span class="ident">error</span>
@@ -178,7 +177,6 @@
 	<span class="kw">let</span> <span class="ident">frame_system</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">frame_system</span>;
 	<span class="kw">let</span> <span class="ident">type_impl_gen</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">type_impl_generics</span>();
 	<span class="kw">let</span> <span class="ident">type_use_gen</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">type_use_generics</span>();
-	<span class="kw">let</span> <span class="ident">pallet_ident</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">pallet_struct</span>.<span class="ident">pallet</span>;
 	<span class="kw">let</span> <span class="ident">config_where_clause</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">def</span>.<span class="ident">config</span>.<span class="ident">where_clause</span>;
 
 	<span class="kw">let</span> <span class="ident">phantom_variant</span>: <span class="ident">syn</span>::<span class="ident">Variant</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="macro">parse_quote</span><span class="macro">!</span>(
@@ -275,7 +273,7 @@
 		}
 
 		<span class="kw">impl</span><span class="op">&lt;</span>#<span class="ident">type_impl_gen</span><span class="op">&gt;</span> #<span class="ident">frame_support</span>::<span class="ident">error</span>::<span class="ident">ModuleErrorMetadata</span>
-			<span class="kw">for</span> #<span class="ident">pallet_ident</span><span class="op">&lt;</span>#<span class="ident">type_use_gen</span><span class="op">&gt;</span>
+			<span class="kw">for</span> #<span class="ident">error_ident</span><span class="op">&lt;</span>#<span class="ident">type_use_gen</span><span class="op">&gt;</span>
 			#<span class="ident">config_where_clause</span>
 		{
 			<span class="kw">fn</span> <span class="ident">metadata</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [#<span class="ident">frame_support</span>::<span class="ident">error</span>::<span class="ident">ErrorMetadata</span>] {

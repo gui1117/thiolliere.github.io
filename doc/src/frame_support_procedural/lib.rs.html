@@ -412,6 +412,12 @@
 <span id="411">411</span>
 <span id="412">412</span>
 <span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -437,6 +443,7 @@
 <span class="kw">mod</span> <span class="ident">storage</span>;
 <span class="kw">mod</span> <span class="ident">construct_runtime</span>;
 <span class="kw">mod</span> <span class="ident">pallet</span>;
+<span class="kw">mod</span> <span class="ident">pallet_version</span>;
 <span class="kw">mod</span> <span class="ident">transactional</span>;
 <span class="kw">mod</span> <span class="ident">debug_no_bound</span>;
 <span class="kw">mod</span> <span class="ident">clone_no_bound</span>;
@@ -825,6 +832,11 @@
 <span class="attribute">#[<span class="ident">proc_macro_attribute</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">require_transactional</span>(<span class="ident">attr</span>: <span class="ident">TokenStream</span>, <span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
 	<span class="ident">transactional</span>::<span class="ident">require_transactional</span>(<span class="ident">attr</span>, <span class="ident">input</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_compile_error</span>().<span class="ident">into</span>())
+}
+
+<span class="attribute">#[<span class="ident">proc_macro</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crate_to_pallet_version</span>(<span class="ident">input</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
+	<span class="ident">pallet_version</span>::<span class="ident">crate_to_pallet_version</span>(<span class="ident">input</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">to_compile_error</span>()).<span class="ident">into</span>()
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "frame_support_procedural";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

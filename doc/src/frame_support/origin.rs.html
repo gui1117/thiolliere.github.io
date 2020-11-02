@@ -532,7 +532,6 @@
 <span id="531">531</span>
 <span id="532">532</span>
 <span id="533">533</span>
-<span id="534">534</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -717,7 +716,7 @@
 			<span class="ident">index</span> { $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">index</span>:<span class="ident">tt</span> )<span class="question-mark">?</span> },
 		)<span class="op">*</span>
 	) <span class="op">=</span><span class="op">&gt;</span> {
-		<span class="comment">// WARNING: All instance must hold the filter `frame_system::Config::BaseCallFilter`, except</span>
+		<span class="comment">// WARNING: All instance must hold the filter `frame_system::Trait::BaseCallFilter`, except</span>
 		<span class="comment">// when caller is system Root. One can use `OriginTrait::reset_filter` to do so.</span>
 		<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 		<span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
@@ -782,7 +781,7 @@
 				<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">caller</span>
 			}
 
-			<span class="doccomment">/// Create with system none origin and `frame-system::Config::BaseCallFilter`.</span>
+			<span class="doccomment">/// Create with system none origin and `frame-system::Trait::BaseCallFilter`.</span>
 			<span class="kw">fn</span> <span class="ident">none</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">RawOrigin</span>::<span class="prelude-val">None</span>.<span class="ident">into</span>()
 			}
@@ -790,7 +789,7 @@
 			<span class="kw">fn</span> <span class="ident">root</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">RawOrigin</span>::<span class="ident">Root</span>.<span class="ident">into</span>()
 			}
-			<span class="doccomment">/// Create with system signed origin and `frame-system::Config::BaseCallFilter`.</span>
+			<span class="doccomment">/// Create with system signed origin and `frame-system::Trait::BaseCallFilter`.</span>
 			<span class="kw">fn</span> <span class="ident">signed</span>(<span class="ident">by</span>: <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">AccountId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">RawOrigin</span>::<span class="ident">Signed</span>(<span class="ident">by</span>).<span class="ident">into</span>()
 			}
@@ -816,7 +815,7 @@
 		<span class="comment">// For backwards compatibility and ease of accessing these functions.</span>
 		<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 		<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-			<span class="doccomment">/// Create with system none origin and `frame-system::Config::BaseCallFilter`.</span>
+			<span class="doccomment">/// Create with system none origin and `frame-system::Trait::BaseCallFilter`.</span>
 			<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">none</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">traits</span>::<span class="ident">OriginTrait</span><span class="op">&gt;</span>::<span class="ident">none</span>()
 			}
@@ -824,8 +823,7 @@
 			<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">root</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">traits</span>::<span class="ident">OriginTrait</span><span class="op">&gt;</span>::<span class="ident">root</span>()
 			}
-
-			<span class="doccomment">/// Create with system signed origin and `frame-system::Config::BaseCallFilter`.</span>
+			<span class="doccomment">/// Create with system signed origin and `frame-system::Trait::BaseCallFilter`.</span>
 			<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">signed</span>(<span class="ident">by</span>: <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">AccountId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">traits</span>::<span class="ident">OriginTrait</span><span class="op">&gt;</span>::<span class="ident">signed</span>(<span class="ident">by</span>)
 			}
@@ -839,7 +837,7 @@
 		<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Origin</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
 			<span class="doccomment">/// Convert to runtime origin:</span>
 			<span class="doccomment">/// * root origin is built with no filter</span>
-			<span class="doccomment">/// * others use `frame-system::Config::BaseCallFilter`</span>
+			<span class="doccomment">/// * others use `frame-system::Trait::BaseCallFilter`</span>
 			<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Origin</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="kw">let</span> <span class="ident">o</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">caller_name</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">into</span>();
 				<span class="ident">o</span>.<span class="ident">into</span>()
@@ -874,7 +872,7 @@
 		}
 		<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">AccountId</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
 			<span class="doccomment">/// Convert to runtime origin with caller being system signed or none and use filter</span>
-			<span class="doccomment">/// `frame-system::Config::BaseCallFilter`.</span>
+			<span class="doccomment">/// `frame-system::Trait::BaseCallFilter`.</span>
 			<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">AccountId</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 				<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">system</span>::<span class="ident">Origin</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">runtime</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">x</span>).<span class="ident">into</span>()
 			}
@@ -889,7 +887,7 @@
 				}
 
 				<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>::<span class="ident">Origin</span> <span class="op">&lt;</span> $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic</span> )<span class="question-mark">?</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_instance</span> )<span class="question-mark">?</span> <span class="op">&gt;</span> <span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
-					<span class="doccomment">/// Convert to runtime origin using `frame-system::Config::BaseCallFilter`.</span>
+					<span class="doccomment">/// Convert to runtime origin using `frame-system::Trait::BaseCallFilter`.</span>
 					<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>::<span class="ident">Origin</span> <span class="op">&lt;</span> $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic</span> )<span class="question-mark">?</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">module</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">generic_instance</span> )<span class="question-mark">?</span> <span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 						<span class="kw">let</span> <span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">caller_name</span> <span class="op">=</span> <span class="ident">x</span>.<span class="ident">into</span>();
 						<span class="ident">x</span>.<span class="ident">into</span>()

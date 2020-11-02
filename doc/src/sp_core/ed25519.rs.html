@@ -710,6 +710,10 @@
 <span id="709">709</span>
 <span id="710">710</span>
 <span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1048,15 +1052,19 @@
 
 <span class="doccomment">/// An error type for SS58 decoding.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">thiserror</span>::<span class="ident">Error</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PublicError</span> {
 	<span class="doccomment">/// Bad alphabet.</span>
+	<span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Base 58 requirement is violated&quot;</span>)]</span>
 	<span class="ident">BadBase58</span>,
 	<span class="doccomment">/// Bad length.</span>
+	<span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Length is bad&quot;</span>)]</span>
 	<span class="ident">BadLength</span>,
 	<span class="doccomment">/// Unknown version.</span>
+	<span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Unknown version&quot;</span>)]</span>
 	<span class="ident">UnknownVersion</span>,
 	<span class="doccomment">/// Invalid checksum.</span>
+	<span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Invalid checksum&quot;</span>)]</span>
 	<span class="ident">InvalidChecksum</span>,
 }
 

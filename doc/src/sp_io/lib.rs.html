@@ -1512,6 +1512,34 @@
 <span id="1511">1511</span>
 <span id="1512">1512</span>
 <span id="1513">1513</span>
+<span id="1514">1514</span>
+<span id="1515">1515</span>
+<span id="1516">1516</span>
+<span id="1517">1517</span>
+<span id="1518">1518</span>
+<span id="1519">1519</span>
+<span id="1520">1520</span>
+<span id="1521">1521</span>
+<span id="1522">1522</span>
+<span id="1523">1523</span>
+<span id="1524">1524</span>
+<span id="1525">1525</span>
+<span id="1526">1526</span>
+<span id="1527">1527</span>
+<span id="1528">1528</span>
+<span id="1529">1529</span>
+<span id="1530">1530</span>
+<span id="1531">1531</span>
+<span id="1532">1532</span>
+<span id="1533">1533</span>
+<span id="1534">1534</span>
+<span id="1535">1535</span>
+<span id="1536">1536</span>
+<span id="1537">1537</span>
+<span id="1538">1538</span>
+<span id="1539">1539</span>
+<span id="1540">1540</span>
+<span id="1541">1541</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -1553,7 +1581,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">sp_core</span>::{
 	<span class="ident">crypto</span>::<span class="ident">Pair</span>,
-	<span class="ident">traits</span>::{<span class="ident">CallInWasmExt</span>, <span class="ident">TaskExecutorExt</span>},
+	<span class="ident">traits</span>::{<span class="ident">CallInWasmExt</span>, <span class="ident">TaskExecutorExt</span>, <span class="ident">RuntimeSpawnExt</span>},
 	<span class="ident">offchain</span>::{<span class="ident">OffchainExt</span>, <span class="ident">TransactionPoolExt</span>},
 	<span class="ident">hexdisplay</span>::<span class="ident">HexDisplay</span>,
 	<span class="ident">storage</span>::<span class="ident">ChildInfo</span>,
@@ -2035,7 +2063,6 @@
 	<span class="kw">fn</span> <span class="ident">start_batch_verify</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
 		<span class="kw">let</span> <span class="ident">scheduler</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">TaskExecutorExt</span><span class="op">&gt;</span>()
 			.<span class="ident">expect</span>(<span class="string">&quot;No task executor associated with the current context!&quot;</span>)
-			.<span class="number">0</span>
 			.<span class="ident">clone</span>();
 
 		<span class="self">self</span>.<span class="ident">register_extension</span>(<span class="ident">VerificationExt</span>(<span class="ident">BatchVerifier</span>::<span class="ident">new</span>(<span class="ident">scheduler</span>)))
@@ -2270,7 +2297,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="ident">sp_externalities</span>::<span class="macro">decl_extension</span><span class="macro">!</span> {
-	<span class="doccomment">/// The keystore extension to register/retrieve from the externalities.</span>
+	<span class="doccomment">/// Batch verification extension to register/retrieve from the externalities.</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VerificationExt</span>(<span class="ident">BatchVerifier</span>);
 }
 
@@ -2754,6 +2781,34 @@
 	}
 }
 
+<span class="doccomment">/// Wasm host functions for managing tasks.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This should not be used directly. Use `sp_tasks` for running parallel tasks instead.</span>
+<span class="attribute">#[<span class="ident">runtime_interface</span>(<span class="ident">wasm_only</span>)]</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RuntimeTasks</span> {
+	<span class="doccomment">/// Wasm host function for spawning task.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// This should not be used directly. Use `sp_tasks::spawn` instead.</span>
+	<span class="kw">fn</span> <span class="ident">spawn</span>(<span class="ident">dispatcher_ref</span>: <span class="ident">u32</span>, <span class="ident">entry</span>: <span class="ident">u32</span>, <span class="ident">payload</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+		<span class="ident">sp_externalities</span>::<span class="ident">with_externalities</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">ext</span><span class="op">|</span>{
+			<span class="kw">let</span> <span class="ident">runtime_spawn</span> <span class="op">=</span> <span class="ident">ext</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">RuntimeSpawnExt</span><span class="op">&gt;</span>()
+				.<span class="ident">expect</span>(<span class="string">&quot;Cannot spawn without dynamic runtime dispatcher (RuntimeSpawnExt)&quot;</span>);
+			<span class="ident">runtime_spawn</span>.<span class="ident">spawn_call</span>(<span class="ident">dispatcher_ref</span>, <span class="ident">entry</span>, <span class="ident">payload</span>)
+		}).<span class="ident">expect</span>(<span class="string">&quot;`RuntimeTasks::spawn`: called outside of externalities context&quot;</span>)
+	}
+
+	<span class="doccomment">/// Wasm host function for joining a task.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// This should not be used directly. Use `join` of `sp_tasks::spawn` result instead.</span>
+	<span class="kw">fn</span> <span class="ident">join</span>(<span class="ident">handle</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+		<span class="ident">sp_externalities</span>::<span class="ident">with_externalities</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">ext</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="ident">runtime_spawn</span> <span class="op">=</span> <span class="ident">ext</span>.<span class="ident">extension</span>::<span class="op">&lt;</span><span class="ident">RuntimeSpawnExt</span><span class="op">&gt;</span>()
+				.<span class="ident">expect</span>(<span class="string">&quot;Cannot join without dynamic runtime dispatcher (RuntimeSpawnExt)&quot;</span>);
+			<span class="ident">runtime_spawn</span>.<span class="ident">join</span>(<span class="ident">handle</span>)
+		}).<span class="ident">expect</span>(<span class="string">&quot;`RuntimeTasks::join`: called outside of externalities context&quot;</span>)
+	}
+ }
+
 <span class="doccomment">/// Allocator used by Substrate when executing the Wasm runtime.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 <span class="kw">struct</span> <span class="ident">WasmAllocator</span>;
@@ -2821,6 +2876,7 @@
 	<span class="ident">sandbox</span>::<span class="ident">HostFunctions</span>,
 	<span class="kw">crate</span>::<span class="ident">trie</span>::<span class="ident">HostFunctions</span>,
 	<span class="ident">offchain_index</span>::<span class="ident">HostFunctions</span>,
+	<span class="ident">runtime_tasks</span>::<span class="ident">HostFunctions</span>,
 );
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>

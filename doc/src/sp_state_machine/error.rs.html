@@ -47,6 +47,7 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
+<span id="49">49</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -72,9 +73,9 @@
 <span class="doccomment">/// State Machine Error bound.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This should reflect Wasm error type bound for future compatibility.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Error</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Send</span> {}
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Error</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Send</span><span class="op">&gt;</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">T</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="op">+</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">T</span> {}
 
 <span class="doccomment">/// Externalities Error.</span>
 <span class="doccomment">///</span>
@@ -82,19 +83,20 @@
 <span class="doccomment">/// would not be executed unless externalities were available. This is included for completeness,</span>
 <span class="doccomment">/// and as a transition away from the pre-existing framework.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">derive</span>(<span class="ident">thiserror</span>::<span class="ident">Error</span>))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ExecutionError</span> {
 	<span class="doccomment">/// Backend error.</span>
+	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Backend error {0:?}&quot;</span>))]</span>
 	<span class="ident">Backend</span>(<span class="kw">crate</span>::<span class="ident">DefaultError</span>),
 	<span class="doccomment">/// The entry `:code` doesn&#39;t exist in storage so there&#39;s no way we can execute anything.</span>
+	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;`:code` entry does not exist in storage&quot;</span>))]</span>
 	<span class="ident">CodeEntryDoesNotExist</span>,
 	<span class="doccomment">/// Backend is incompatible with execution proof generation process.</span>
+	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Unable to generate proof&quot;</span>))]</span>
 	<span class="ident">UnableToGenerateProof</span>,
 	<span class="doccomment">/// Invalid execution proof.</span>
+	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Invalid execution proof&quot;</span>))]</span>
 	<span class="ident">InvalidProof</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ExecutionError</span> {
-	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> { <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Externalities Error&quot;</span>) }
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "sp_state_machine";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -279,13 +279,6 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
-<span id="283">283</span>
-<span id="284">284</span>
-<span id="285">285</span>
-<span id="286">286</span>
-<span id="287">287</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -304,7 +297,7 @@
 <span class="comment">// See the License for the specific language governing permissions and</span>
 <span class="comment">// limitations under the License.</span>
 
-<span class="doccomment">//! Storage value type.</span>
+<span class="doccomment">//! Storage value type. Implements StorageValue trait and its method directly.</span>
 
 <span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">FullCodec</span>, <span class="ident">Decode</span>, <span class="ident">EncodeLike</span>, <span class="ident">Encode</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -316,19 +309,11 @@
 };
 <span class="kw">use</span> <span class="ident">frame_metadata</span>::{<span class="ident">DefaultByteGetter</span>, <span class="ident">StorageEntryModifier</span>};
 
-<span class="doccomment">/// A type that implements StorageValue trait when generics are correctly set:</span>
-<span class="doccomment">/// * Prefix must implement StorageInstance, when used inside pallet macro with</span>
-<span class="doccomment">///   `#[pallet::storage]` just write `_` the macro will expand with storage_prefix = type name.</span>
-<span class="doccomment">/// * Value must implement FullCodec</span>
-<span class="doccomment">/// * QueryKind must implmeent QueryKindTrait</span>
-<span class="doccomment">/// * OnEmpty must implement Get&lt;QueryKindTrait::Query&gt; + &#39;static</span>
+<span class="doccomment">/// A type that allow to store a value.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// By default query kind is OptionQuery and OnEmpty returns Default Query (i.e. None for</span>
-<span class="doccomment">/// OptionQuery or default value for ValueQuery).</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// As StorageValue implementation, value is stored at:</span>
+<span class="doccomment">/// Each value is stored at:</span>
 <span class="doccomment">/// ```nocompile</span>
-<span class="doccomment">/// Twox128(PalletInfo::name()) ++ Twox128(storage_type_name)</span>
+<span class="doccomment">/// Twox128(&lt;Prefix::Pallet as PalletInfo&gt;::name()) ++ Twox128(Prefix::STORAGE_PREFIX)</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Value</span>, <span class="ident">QueryKind</span><span class="op">=</span><span class="ident">OptionQuery</span>, <span class="ident">OnEmpty</span><span class="op">=</span><span class="ident">GetDefault</span><span class="op">&gt;</span>(
 	<span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">Prefix</span>, <span class="ident">Value</span>, <span class="ident">QueryKind</span>, <span class="ident">OnEmpty</span>)<span class="op">&gt;</span>
@@ -402,7 +387,7 @@
 	<span class="doccomment">/// `on_runtime_upgrade`**. (More precisely prior initialized modules doesn&#39;t make use of this</span>
 	<span class="doccomment">/// storage).</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">translate</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">Decode</span>, <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-		<span class="ident">f</span>: <span class="ident">F</span>
+		<span class="ident">f</span>: <span class="ident">F</span>,
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> {
 		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">translate</span>(<span class="ident">f</span>)
 	}
@@ -412,8 +397,9 @@
 		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">put</span>(<span class="ident">val</span>)
 	}
 
-	<span class="doccomment">/// Store a value under this key into the provided storage instance; this uses the query</span>
-	<span class="doccomment">/// type rather than the underlying value.</span>
+	<span class="doccomment">/// Store a value under this key into the provided storage instance.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// this uses the query type rather than the underlying value.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="ident">val</span>: <span class="ident">QueryKind</span>::<span class="ident">Query</span>) { <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">set</span>(<span class="ident">val</span>) }
 
 	<span class="doccomment">/// Mutate the value</span>
@@ -423,7 +409,7 @@
 
 	<span class="doccomment">/// Mutate the value if closure returns `Ok`</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_mutate</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span>, <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">QueryKind</span>::<span class="ident">Query</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-		<span class="ident">f</span>: <span class="ident">F</span>
+		<span class="ident">f</span>: <span class="ident">F</span>,
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span> {
 		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">try_mutate</span>(<span class="ident">f</span>)
 	}

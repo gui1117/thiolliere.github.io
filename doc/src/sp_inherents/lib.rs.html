@@ -592,6 +592,7 @@
 <span id="591">591</span>
 <span id="592">592</span>
 <span id="593">593</span>
+<span id="594">594</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -641,7 +642,8 @@
 
 <span class="doccomment">/// An error that can occur within the inherent data system.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Encode</span>, <span class="ident">Decode</span>, <span class="ident">derive_more</span>::<span class="ident">Display</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Encode</span>, <span class="ident">Decode</span>, <span class="ident">thiserror</span>::<span class="ident">Error</span>)]</span>
+<span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Inherents: {0}&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Error</span>(<span class="ident">String</span>);
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>

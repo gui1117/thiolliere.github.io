@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `pallet` attr in crate `frame_support`."><meta name="keywords" content="rust, rustlang, rust-lang, pallet"><title>frame_support::pallet - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc attr"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../frame_support/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><div class="sidebar-elems"><p class='location'><a href='index.html'>frame_support</a></p><script>window.sidebarCurrent = {name: 'pallet', ty: 'attr', relpath: ''};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/frame_support_procedural/lib.rs.html#312-314' title='goto source code'>[src]</a></span><span class='in-band'>Attribute Macro <a href='index.html'>frame_support</a>::<wbr><a class="attr" href=''>pallet</a></span></h1><pre class='rust attr'>#[pallet]</pre><div class='docblock'><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/frame_support_procedural/lib.rs.html#313-315' title='goto source code'>[src]</a></span><span class='in-band'>Attribute Macro <a href='index.html'>frame_support</a>::<wbr><a class="attr" href=''>pallet</a></span></h1><pre class='rust attr'>#[pallet]</pre><div class='docblock'><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
 <p>It is define by a module item:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
@@ -80,6 +80,12 @@ for <code>Pallet</code> allowing to access the storage from pallet struct.</p>
 	<span class="ident">frame_support</span>::<span class="ident">PartialEqNoBound</span>,
 	<span class="ident">frame_support</span>::<span class="ident">RuntimeDebugNoBound</span>,
 )]</span></pre></div>
+<p>It implements on pallet:</p>
+<ul>
+<li>[<code>GetPalletVersion</code>]</li>
+<li>[<code>OnGenesis</code>]: contains some logic to write pallet version into storage.</li>
+<li>[<code>ModuleErrorMetadata</code>]: using error declared or no metadata.</li>
+</ul>
 <p>If attribute generate_store then macro create the trait <code>Store</code> and implement it on <code>Pallet</code>.</p>
 <h1 id="interface-palletinterface-mandatory" class="section-header"><a href="#interface-palletinterface-mandatory">Interface: <code>#[pallet::interface]</code> mandatory</a></h1>
 <p>Implementation of <code>Interface</code> on <code>Pallet</code> allowing to define some specific pallet logic.</p>
@@ -95,6 +101,8 @@ and with an optional where clause.</p>
 <h3 id="macro-expansion-2" class="section-header"><a href="#macro-expansion-2">Macro expansion:</a></h3>
 <p>The macro implement the traits <code>OnInitialize</code>, <code>OnFinalize</code>, <code>OnRuntimeUpgrade</code>,
 <code>OffchainWorker</code>, <code>IntegrityTest</code> using <code>Interface</code> implementation.</p>
+<p>NOTE: OnRuntimeUpgrade is implemented with <code>Interface::on_runtime_upgrade</code> and some additional
+logic. E.g. logic to write pallet version into storage.</p>
 <h1 id="call-palletcall-mandatory" class="section-header"><a href="#call-palletcall-mandatory">Call: <code>#[pallet::call]</code> mandatory</a></h1>
 <p>Implementation of pallet dispatchables.</p>
 <p>Item must be defined as:</p>
@@ -654,6 +662,12 @@ might require some migration.</p>
 <p>export metadata of the pallet for later checks</p>
 </li>
 <li>
+<p>generate the template upgrade for the pallet provided by decl_storage with environment
+variable <code>PRINT_PALLET_UPGRADE</code>: <code>PRINT_PALLET_UPGRADE=1 cargo check -p my_pallet</code>
+This template can be used as information it contains all information for storages, genesis
+config and genesis build.</p>
+</li>
+<li>
 <p>reorganize pallet to have trait Trait, decl_* macros, ValidateUnsigned, ProvideInherent,
 Origin all together in one file. suggested order:</p>
 <ul>
@@ -728,7 +742,10 @@ use <code>#[pallet::metadata(...)]</code> to configure the metadata for types in
 </li>
 <li>
 <p><strong>migrate storage</strong>:
-first migrate the genesis logic. write:</p>
+decl_storage provide an upgrade template (see 3.). All storages, genesis config, genesis
+build and default implementation of genesis config can be taken from it directly.</p>
+<p>Otherwise here is the manual process:</p>
+<p>first migrate the genesis logic. write:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_config</span>]</span>

@@ -382,6 +382,8 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -749,8 +751,10 @@
 
 			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
 				<span class="string">&quot;Invalid pallet::trait, expect explicit `{}::Config` as supertrait, \
-				found {}. To disable this check, use \
-				`#[pallet::disable_frame_system_supertrait_check]`&quot;</span>,
+				found {}. \
+				(try `pub trait Config: frame_system::Config {{ ...` or \
+				`pub trait Config&lt;I: &#39;static&gt;: frame_system::Config {{ ...`). \
+				To disable this check, use `#[pallet::disable_frame_system_supertrait_check]`&quot;</span>,
 				<span class="ident">frame_system</span>,
 				<span class="ident">found</span>,
 			);

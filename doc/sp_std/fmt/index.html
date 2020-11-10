@@ -1,12 +1,14 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `fmt` mod in crate `sp_std`."><meta name="keywords" content="rust, rustlang, rust-lang, fmt"><title>sp_std::fmt - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_std/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module fmt</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>sp_std</a></p><script>window.sidebarCurrent = {name: 'fmt', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span class='since' title='Stable since Rust version 1.0.0'>1.0.0</span><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='https://doc.rust-lang.org/nightly/src/alloc/lib.rs.html#173' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>sp_std</a>::<wbr><a class="mod" href=''>fmt</a></span></h1><div class='docblock'><p>Utilities for formatting and printing <code>String</code>s.</p>
-<p>This module contains the runtime support for the <a href="crate::format"><code>format!</code></a> syntax extension.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `fmt` mod in crate `sp_std`."><meta name="keywords" content="rust, rustlang, rust-lang, fmt"><title>sp_std::fmt - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_std/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><p class="location">Module fmt</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class="location"><a href="../index.html">sp_std</a></p><script>window.sidebarCurrent = {name: "fmt", ty: "mod", relpath: "../"};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span class="since" title="Stable since Rust version 1.0.0">1.0.0</span><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="https://doc.rust-lang.org/nightly/src/alloc/lib.rs.html#170" title="goto source code">[src]</a></span><span class="in-band">Module <a href="../index.html">sp_std</a>::<wbr><a class="mod" href="">fmt</a></span></h1><div class="docblock"><p>Utilities for formatting and printing <code>String</code>s.</p>
+<p>This module contains the runtime support for the <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> syntax extension.
 This macro is implemented in the compiler to emit calls to this module in
 order to format arguments at runtime into strings.</p>
 <h1 id="usage" class="section-header"><a href="#usage">Usage</a></h1>
-<p>The <a href="crate::format"><code>format!</code></a> macro is intended to be familiar to those coming from C's
+<p>The <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> macro is intended to be familiar to those coming from C's
 <code>printf</code>/<code>fprintf</code> functions or Python's <code>str.format</code> function.</p>
-<p>Some examples of the <a href="crate::format"><code>format!</code></a> extension are:</p>
+<p>Some examples of the <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> extension are:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Hello&quot;</span>);                 <span class="comment">// =&gt; &quot;Hello&quot;</span>
@@ -21,7 +23,7 @@ required by the compiler for this to be a string literal; it cannot be a
 variable passed in (in order to perform validity checking). The compiler
 will then parse the format string and determine if the list of arguments
 provided is suitable to pass to this format string.</p>
-<p>To convert a single value to a string, use the <a href="crate::string::ToString"><code>to_string</code></a> method. This
+<p>To convert a single value to a string, use the <a href="https://doc.rust-lang.org/nightly/alloc/string/trait.ToString.html"><code>to_string</code></a> method. This
 will use the <a href="../../sp_std/fmt/trait.Display.html" title="Display"><code>Display</code></a> formatting trait.</p>
 <h2 id="positional-parameters" class="section-header"><a href="#positional-parameters">Positional parameters</a></h2>
 <p>Each formatting argument is allowed to specify which value argument it's
@@ -46,12 +48,12 @@ compile-time error. You may refer to the same argument more than once in the
 format string.</p>
 <h2 id="named-parameters" class="section-header"><a href="#named-parameters">Named parameters</a></h2>
 <p>Rust itself does not have a Python-like equivalent of named parameters to a
-function, but the <a href="crate::format"><code>format!</code></a> macro is a syntax extension that allows it to
+function, but the <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> macro is a syntax extension that allows it to
 leverage named parameters. Named parameters are listed at the end of the
 argument list and have the syntax:</p>
 <pre><code class="language-text">identifier '=' expression
 </code></pre>
-<p>For example, the following <a href="crate::format"><code>format!</code></a> expressions all use named argument:</p>
+<p>For example, the following <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> expressions all use named argument:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{argument}&quot;</span>, <span class="ident">argument</span> <span class="op">=</span> <span class="string">&quot;test&quot;</span>);   <span class="comment">// =&gt; &quot;test&quot;</span>
@@ -350,7 +352,7 @@ most cases, using <code>#[derive(Debug)]</code> is sufficient and recommended.</
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} {:?}&quot;</span>, <span class="string">&#39;a&#39;</span>, <span class="string">&#39;b&#39;</span>), <span class="string">&quot;a &#39;b&#39;&quot;</span>);
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{} {:?}&quot;</span>, <span class="string">&quot;foo\n&quot;</span>, <span class="string">&quot;bar\n&quot;</span>), <span class="string">&quot;foo\n \&quot;bar\\n\&quot;&quot;</span>);</pre></div>
 <h1 id="related-macros" class="section-header"><a href="#related-macros">Related macros</a></h1>
-<p>There are a number of related macros in the <a href="crate::format"><code>format!</code></a> family. The ones that
+<p>There are a number of related macros in the <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format!</code></a> family. The ones that
 are currently implemented are:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
@@ -405,45 +407,45 @@ off, some example usage is:</p>
 }
 <span class="ident">my_fmt_fn</span>(<span class="macro">format_args</span><span class="macro">!</span>(<span class="string">&quot;, or a {} too&quot;</span>, <span class="string">&quot;function&quot;</span>));</pre></div>
 <p>The result of the <a href="https://doc.rust-lang.org/nightly/core/macro.format_args.html"><code>format_args!</code></a> macro is a value of type <a href="../../sp_std/fmt/struct.Arguments.html"><code>fmt::Arguments</code></a>.
-This structure can then be passed to the <a href="https://doc.rust-lang.org/nightly/core/macro.write.html"><code>write</code></a> and <a href="crate::format"><code>format</code></a> functions
+This structure can then be passed to the <a href="https://doc.rust-lang.org/nightly/core/macro.write.html"><code>write</code></a> and <a href="https://doc.rust-lang.org/nightly/alloc/macro.format.html"><code>format</code></a> functions
 inside this module in order to process the format string.
 The goal of this macro is to even further prevent intermediate allocations
 when dealing with formatting strings.</p>
 <p>For example, a logging library could use the standard formatting syntax, but
 it would internally pass around this structure until it has been determined
 where output should go to.</p>
-</div><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
-<table><tr class='module-item'><td><a class="macro" href="macro.Debug.html" title='sp_std::fmt::Debug macro'>Debug</a></td><td class='docblock-short'><p>Derive macro generating an impl of the trait <code>Debug</code>.</p>
-</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table><tr class='module-item'><td><a class="struct" href="struct.Arguments.html" title='sp_std::fmt::Arguments struct'>Arguments</a></td><td class='docblock-short'><p>This structure represents a safely precompiled version of a format string
+</div><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<table><tr class="module-item"><td><a class="macro" href="macro.Debug.html" title="sp_std::fmt::Debug macro">Debug</a></td><td class="docblock-short"><p>Derive macro generating an impl of the trait <code>Debug</code>.</p>
+</td></tr></table><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.Arguments.html" title="sp_std::fmt::Arguments struct">Arguments</a></td><td class="docblock-short"><p>This structure represents a safely precompiled version of a format string
 and its arguments. This cannot be generated at runtime because it cannot
 safely be done, so no constructors are given and the fields are private
 to prevent modification.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DebugList.html" title='sp_std::fmt::DebugList struct'>DebugList</a></td><td class='docblock-short'><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DebugMap.html" title='sp_std::fmt::DebugMap struct'>DebugMap</a></td><td class='docblock-short'><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DebugSet.html" title='sp_std::fmt::DebugSet struct'>DebugSet</a></td><td class='docblock-short'><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DebugStruct.html" title='sp_std::fmt::DebugStruct struct'>DebugStruct</a></td><td class='docblock-short'><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.DebugTuple.html" title='sp_std::fmt::DebugTuple struct'>DebugTuple</a></td><td class='docblock-short'><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Error.html" title='sp_std::fmt::Error struct'>Error</a></td><td class='docblock-short'><p>The error type which is returned from formatting a message into a stream.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.Formatter.html" title='sp_std::fmt::Formatter struct'>Formatter</a></td><td class='docblock-short'><p>Configuration for formatting.</p>
-</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table><tr class='module-item'><td><a class="enum" href="enum.Alignment.html" title='sp_std::fmt::Alignment enum'>Alignment</a></td><td class='docblock-short'><p>Possible alignments returned by <code>Formatter::align</code></p>
-</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table><tr class='module-item'><td><a class="trait" href="trait.Binary.html" title='sp_std::fmt::Binary trait'>Binary</a></td><td class='docblock-short'><p><code>b</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.Debug.html" title='sp_std::fmt::Debug trait'>Debug</a></td><td class='docblock-short'><p><code>?</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.Display.html" title='sp_std::fmt::Display trait'>Display</a></td><td class='docblock-short'><p>Format trait for an empty format, <code>{}</code>.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.LowerExp.html" title='sp_std::fmt::LowerExp trait'>LowerExp</a></td><td class='docblock-short'><p><code>e</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.LowerHex.html" title='sp_std::fmt::LowerHex trait'>LowerHex</a></td><td class='docblock-short'><p><code>x</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.Octal.html" title='sp_std::fmt::Octal trait'>Octal</a></td><td class='docblock-short'><p><code>o</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.Pointer.html" title='sp_std::fmt::Pointer trait'>Pointer</a></td><td class='docblock-short'><p><code>p</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.UpperExp.html" title='sp_std::fmt::UpperExp trait'>UpperExp</a></td><td class='docblock-short'><p><code>E</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.UpperHex.html" title='sp_std::fmt::UpperHex trait'>UpperHex</a></td><td class='docblock-short'><p><code>X</code> formatting.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.Write.html" title='sp_std::fmt::Write trait'>Write</a></td><td class='docblock-short'><p>A collection of methods that are required to format a message into a stream.</p>
-</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
-<table><tr class='module-item'><td><a class="fn" href="fn.format.html" title='sp_std::fmt::format fn'>format</a></td><td class='docblock-short'><p>The <code>format</code> function takes an <a href="../../sp_std/fmt/struct.Arguments.html" title="Arguments"><code>Arguments</code></a> struct and returns the resulting
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebugList.html" title="sp_std::fmt::DebugList struct">DebugList</a></td><td class="docblock-short"><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebugMap.html" title="sp_std::fmt::DebugMap struct">DebugMap</a></td><td class="docblock-short"><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebugSet.html" title="sp_std::fmt::DebugSet struct">DebugSet</a></td><td class="docblock-short"><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebugStruct.html" title="sp_std::fmt::DebugStruct struct">DebugStruct</a></td><td class="docblock-short"><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.DebugTuple.html" title="sp_std::fmt::DebugTuple struct">DebugTuple</a></td><td class="docblock-short"><p>A struct to help with <a href="trait.Debug.html"><code>fmt::Debug</code></a> implementations.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Error.html" title="sp_std::fmt::Error struct">Error</a></td><td class="docblock-short"><p>The error type which is returned from formatting a message into a stream.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Formatter.html" title="sp_std::fmt::Formatter struct">Formatter</a></td><td class="docblock-short"><p>Configuration for formatting.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.Alignment.html" title="sp_std::fmt::Alignment enum">Alignment</a></td><td class="docblock-short"><p>Possible alignments returned by <code>Formatter::align</code></p>
+</td></tr></table><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.Binary.html" title="sp_std::fmt::Binary trait">Binary</a></td><td class="docblock-short"><p><code>b</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Debug.html" title="sp_std::fmt::Debug trait">Debug</a></td><td class="docblock-short"><p><code>?</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Display.html" title="sp_std::fmt::Display trait">Display</a></td><td class="docblock-short"><p>Format trait for an empty format, <code>{}</code>.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.LowerExp.html" title="sp_std::fmt::LowerExp trait">LowerExp</a></td><td class="docblock-short"><p><code>e</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.LowerHex.html" title="sp_std::fmt::LowerHex trait">LowerHex</a></td><td class="docblock-short"><p><code>x</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Octal.html" title="sp_std::fmt::Octal trait">Octal</a></td><td class="docblock-short"><p><code>o</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Pointer.html" title="sp_std::fmt::Pointer trait">Pointer</a></td><td class="docblock-short"><p><code>p</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.UpperExp.html" title="sp_std::fmt::UpperExp trait">UpperExp</a></td><td class="docblock-short"><p><code>E</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.UpperHex.html" title="sp_std::fmt::UpperHex trait">UpperHex</a></td><td class="docblock-short"><p><code>X</code> formatting.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Write.html" title="sp_std::fmt::Write trait">Write</a></td><td class="docblock-short"><p>A trait for writing or formatting into Unicode-accepting buffers or streams.</p>
+</td></tr></table><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<table><tr class="module-item"><td><a class="fn" href="fn.format.html" title="sp_std::fmt::format fn">format</a></td><td class="docblock-short"><p>The <code>format</code> function takes an <a href="../../sp_std/fmt/struct.Arguments.html" title="Arguments"><code>Arguments</code></a> struct and returns the resulting
 formatted string.</p>
-</td></tr><tr class='module-item'><td><a class="fn" href="fn.write.html" title='sp_std::fmt::write fn'>write</a></td><td class='docblock-short'><p>The <code>write</code> function takes an output stream, and an <code>Arguments</code> struct
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.write.html" title="sp_std::fmt::write fn">write</a></td><td class="docblock-short"><p>The <code>write</code> function takes an output stream, and an <code>Arguments</code> struct
 that can be precompiled with the <code>format_args!</code> macro.</p>
-</td></tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
-<table><tr class='module-item'><td><a class="type" href="type.Result.html" title='sp_std::fmt::Result type'>Result</a></td><td class='docblock-short'><p>The type returned by formatter methods.</p>
+</td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<table><tr class="module-item"><td><a class="type" href="type.Result.html" title="sp_std::fmt::Result type">Result</a></td><td class="docblock-short"><p>The type returned by formatter methods.</p>
 </td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "sp_std";</script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>

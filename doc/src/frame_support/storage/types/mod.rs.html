@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `frame/support/src/storage/types/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/storage/types/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -99,6 +101,14 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -138,7 +148,7 @@
 <span class="doccomment">///   storage will get an optional value.</span>
 <span class="doccomment">/// * `ValueQuery` which convert an optional value to a value, user when querying storage will get</span>
 <span class="doccomment">///   a value.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span> {
 	<span class="doccomment">/// Metadata for the storage kind.</span>
 	<span class="kw">const</span> <span class="ident">METADATA</span>: <span class="ident">StorageEntryModifier</span>;
 
@@ -147,27 +157,31 @@
 
 	<span class="doccomment">/// Convert an optional value (i.e. some if trie contains the value or none otherwise) to the</span>
 	<span class="doccomment">/// query.</span>
-	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span><span class="op">&lt;</span><span class="ident">OnEmpty</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> <span class="kw">where</span>
-		<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Query</span><span class="op">&gt;</span>;
+	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span>;
 
 	<span class="doccomment">/// Convert a query to an optional value.</span>
 	<span class="kw">fn</span> <span class="ident">from_query_to_optional_value</span>(<span class="ident">v</span>: <span class="self">Self</span>::<span class="ident">Query</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Implement QueryKindTrait with query being `Option&lt;Value&gt;`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// NOTE: it doesn&#39;t support a generic `OnEmpty`. This means only `None` can be</span>
+<span class="doccomment">/// returned when no value is found. To use another `OnEmpty` implementation, `ValueQuery` can be</span>
+<span class="doccomment">/// used instead.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OptionQuery</span>;
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Value</span>: <span class="ident">FullCodec</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">OptionQuery</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">GetDefault</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">OptionQuery</span>
+<span class="kw">where</span>
+	<span class="ident">Value</span>: <span class="ident">FullCodec</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+{
 	<span class="kw">const</span> <span class="ident">METADATA</span>: <span class="ident">StorageEntryModifier</span> <span class="op">=</span> <span class="ident">StorageEntryModifier</span>::<span class="ident">Optional</span>;
+
 	<span class="kw">type</span> <span class="ident">Query</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>;
-	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span><span class="op">&lt;</span><span class="ident">OnEmpty</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> <span class="kw">where</span>
-		<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Query</span><span class="op">&gt;</span>
-	{
-		<span class="kw">if</span> <span class="ident">v</span>.<span class="ident">is_none</span>() {
-			<span class="ident">OnEmpty</span>::<span class="ident">get</span>()
-		} <span class="kw">else</span> {
-			<span class="ident">v</span>
-		}
+
+	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> {
+		<span class="comment">// NOTE: OnEmpty is fixed to GetDefault, thus it returns `None` on no value.</span>
+		<span class="ident">v</span>
 	}
+
 	<span class="kw">fn</span> <span class="ident">from_query_to_optional_value</span>(<span class="ident">v</span>: <span class="self">Self</span>::<span class="ident">Query</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
 		<span class="ident">v</span>
 	}
@@ -175,15 +189,19 @@
 
 <span class="doccomment">/// Implement QueryKindTrait with query being `Value`</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ValueQuery</span>;
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Value</span>: <span class="ident">FullCodec</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ValueQuery</span> <span class="kw">where</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span> <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ValueQuery</span>
+<span class="kw">where</span>
+	<span class="ident">Value</span>: <span class="ident">FullCodec</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
 {
 	<span class="kw">const</span> <span class="ident">METADATA</span>: <span class="ident">StorageEntryModifier</span> <span class="op">=</span> <span class="ident">StorageEntryModifier</span>::<span class="ident">Default</span>;
+
 	<span class="kw">type</span> <span class="ident">Query</span> <span class="op">=</span> <span class="ident">Value</span>;
-	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span><span class="op">&lt;</span><span class="ident">OnEmpty</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> <span class="kw">where</span>
-		<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Query</span><span class="op">&gt;</span>
-	{
+
+	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> {
 		<span class="ident">v</span>.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">OnEmpty</span>::<span class="ident">get</span>())
 	}
+
 	<span class="kw">fn</span> <span class="ident">from_query_to_optional_value</span>(<span class="ident">v</span>: <span class="self">Self</span>::<span class="ident">Query</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Some</span>(<span class="ident">v</span>)
 	}

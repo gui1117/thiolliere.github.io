@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `frame/support/src/storage/types/map.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>map.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/storage/types/map.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>map.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -477,6 +479,9 @@
 <span id="476">476</span>
 <span id="477">477</span>
 <span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -534,7 +539,7 @@
 	<span class="ident">Hasher</span>: <span class="kw">crate</span>::<span class="ident">hash</span>::<span class="ident">StorageHasher</span>,
 	<span class="ident">Key</span>: <span class="ident">FullCodec</span>,
 	<span class="ident">Value</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
+	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span>,
 	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">QueryKind</span>::<span class="ident">Query</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
 	<span class="kw">type</span> <span class="ident">Query</span> <span class="op">=</span> <span class="ident">QueryKind</span>::<span class="ident">Query</span>;
@@ -547,7 +552,7 @@
 		<span class="ident">Prefix</span>::<span class="ident">STORAGE_PREFIX</span>.<span class="ident">as_bytes</span>()
 	}
 	<span class="kw">fn</span> <span class="ident">from_optional_value_to_query</span>(<span class="ident">v</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Query</span> {
-		<span class="ident">QueryKind</span>::<span class="ident">from_optional_value_to_query</span>::<span class="op">&lt;</span><span class="ident">OnEmpty</span><span class="op">&gt;</span>(<span class="ident">v</span>)
+		<span class="ident">QueryKind</span>::<span class="ident">from_optional_value_to_query</span>(<span class="ident">v</span>)
 	}
 	<span class="kw">fn</span> <span class="ident">from_query_to_optional_value</span>(<span class="ident">v</span>: <span class="self">Self</span>::<span class="ident">Query</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span> {
 		<span class="ident">QueryKind</span>::<span class="ident">from_query_to_optional_value</span>(<span class="ident">v</span>)
@@ -561,7 +566,7 @@
 	<span class="ident">Hasher</span>: <span class="kw">crate</span>::<span class="ident">hash</span>::<span class="ident">StorageHasher</span>,
 	<span class="ident">Key</span>: <span class="ident">FullCodec</span>,
 	<span class="ident">Value</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
+	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span>,
 	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">QueryKind</span>::<span class="ident">Query</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
 	<span class="kw">fn</span> <span class="ident">module_prefix</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
@@ -579,7 +584,7 @@
 	<span class="ident">Hasher</span>: <span class="kw">crate</span>::<span class="ident">hash</span>::<span class="ident">StorageHasher</span>,
 	<span class="ident">Key</span>: <span class="ident">FullCodec</span>,
 	<span class="ident">Value</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
+	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span>,
 	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">QueryKind</span>::<span class="ident">Query</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
 	<span class="doccomment">/// Get the storage key used to fetch a value corresponding to a specific key.</span>
@@ -735,17 +740,17 @@
 	<span class="ident">Hasher</span>: <span class="kw">crate</span>::<span class="ident">hash</span>::<span class="ident">StorageHasher</span> <span class="op">+</span> <span class="kw">crate</span>::<span class="ident">ReversibleStorageHasher</span>,
 	<span class="ident">Key</span>: <span class="ident">FullCodec</span>,
 	<span class="ident">Value</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
+	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span>,
 	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">QueryKind</span>::<span class="ident">Query</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
-	<span class="doccomment">/// Enumerate all elements in the map in no particular order. </span>
+	<span class="doccomment">/// Enumerate all elements in the map in no particular order.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// If you alter the map while doing this, you&#39;ll get undefined results.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">iter</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">PrefixIterator</span><span class="op">&lt;</span>(<span class="ident">Key</span>, <span class="ident">Value</span>)<span class="op">&gt;</span> {
 		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">IterableStorageMap</span><span class="op">&lt;</span><span class="ident">Key</span>, <span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">iter</span>()
 	}
 
-	<span class="doccomment">/// Remove all elements from the map and iterate through them in no particular order. </span>
+	<span class="doccomment">/// Remove all elements from the map and iterate through them in no particular order.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// If you add elements to the map while doing this, you&#39;ll get undefined results.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">drain</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">PrefixIterator</span><span class="op">&lt;</span>(<span class="ident">Key</span>, <span class="ident">Value</span>)<span class="op">&gt;</span> {
@@ -778,7 +783,7 @@
 	<span class="ident">Hasher</span>: <span class="kw">crate</span>::<span class="ident">hash</span>::<span class="ident">StorageHasher</span>,
 	<span class="ident">Key</span>: <span class="ident">FullCodec</span>,
 	<span class="ident">Value</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>,
+	<span class="ident">QueryKind</span>: <span class="ident">QueryKindTrait</span><span class="op">&lt;</span><span class="ident">Value</span>, <span class="ident">OnEmpty</span><span class="op">&gt;</span>,
 	<span class="ident">OnEmpty</span>: <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">QueryKind</span>::<span class="ident">Query</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
 	<span class="kw">const</span> <span class="ident">MODIFIER</span>: <span class="ident">StorageEntryModifier</span> <span class="op">=</span> <span class="ident">QueryKind</span>::<span class="ident">METADATA</span>;
@@ -804,16 +809,18 @@
 	}
 
 	<span class="kw">struct</span> <span class="ident">ADefault</span>;
-	<span class="kw">impl</span> <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ADefault</span> {
-		<span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
-			<span class="prelude-val">Some</span>(<span class="number">97</span>)
+	<span class="kw">impl</span> <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">Get</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ADefault</span> {
+		<span class="kw">fn</span> <span class="ident">get</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+			<span class="number">97</span>
 		}
 	}
 
 	<span class="attribute">#[<span class="ident">test</span>]</span>
 	<span class="kw">fn</span> <span class="ident">test</span>() {
-		<span class="kw">type</span> <span class="ident">A</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">OptionQuery</span>, <span class="ident">ADefault</span><span class="op">&gt;</span>;
-		<span class="kw">type</span> <span class="ident">AValueQueryDefaultEmpty</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">ValueQuery</span><span class="op">&gt;</span>;
+		<span class="kw">type</span> <span class="ident">A</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">OptionQuery</span><span class="op">&gt;</span>;
+		<span class="kw">type</span> <span class="ident">AValueQueryWithAnOnEmpty</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span>
+			<span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">ValueQuery</span>, <span class="ident">ADefault</span>
+		<span class="op">&gt;</span>;
 		<span class="kw">type</span> <span class="ident">B</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_256</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">ValueQuery</span><span class="op">&gt;</span>;
 		<span class="kw">type</span> <span class="ident">C</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">u8</span>, <span class="ident">ValueQuery</span><span class="op">&gt;</span>;
 		<span class="kw">type</span> <span class="ident">WithLen</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u16</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span><span class="op">&gt;</span>;
@@ -826,69 +833,75 @@
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">hashed_key_for</span>(<span class="number">3</span>).<span class="ident">to_vec</span>(), <span class="ident">k</span>);
 
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">3</span>), <span class="bool-val">false</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="prelude-val">Some</span>(<span class="number">97</span>));
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">0</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">97</span>);
 
 			<span class="ident">A</span>::<span class="ident">insert</span>(<span class="number">3</span>, <span class="number">10</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">3</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">10</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">10</span>);
 
 			<span class="ident">A</span>::<span class="ident">swap</span>(<span class="number">3</span>, <span class="number">2</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">3</span>), <span class="bool-val">false</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="prelude-val">Some</span>(<span class="number">97</span>));
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">0</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">get</span>(<span class="number">3</span>), <span class="number">97</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="number">10</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="number">10</span>);
 
 			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">false</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">97</span>));
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">None</span>);
 
-			<span class="ident">A</span>::<span class="ident">mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">2</span>));
-			<span class="ident">A</span>::<span class="ident">mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">2</span>));
+			<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="number">2</span>);
+			<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="number">2</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="number">97</span> <span class="op">*</span> <span class="number">4</span>);
+
+			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="number">2</span>; <span class="prelude-val">Ok</span>(())
+			});
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="number">2</span>; <span class="prelude-val">Ok</span>(())
+			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">97</span> <span class="op">*</span> <span class="number">4</span>));
 
 			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> { <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">2</span>); <span class="prelude-val">Ok</span>(()) });
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> { <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">2</span>); <span class="prelude-val">Ok</span>(()) });
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">97</span> <span class="op">*</span> <span class="number">4</span>));
-
-			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> { <span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">2</span>); <span class="prelude-val">Err</span>(()) });
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="number">2</span>; <span class="prelude-val">Err</span>(())
+			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">false</span>);
 
 			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
-			<span class="ident">A</span>::<span class="ident">mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+			<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">v</span>.<span class="ident">is_none</span>());
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">10</span>);
 			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
-			<span class="ident">A</span>::<span class="ident">mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+			<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">10</span>);
 			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">100</span>));
 
 			<span class="ident">A</span>::<span class="ident">remove</span>(<span class="number">2</span>);
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">v</span>.<span class="ident">is_none</span>());
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="number">10</span>);
 				<span class="prelude-val">Ok</span>(())
 			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">10</span>);
 				<span class="prelude-val">Ok</span>(())
 			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">100</span>));
-			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">A</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">10</span>);
 				<span class="prelude-val">Err</span>(())
 			});
@@ -899,13 +912,8 @@
 			<span class="ident">A</span>::<span class="ident">insert</span>(<span class="number">2</span>, <span class="number">10</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">take</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">false</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">take</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">97</span>));
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">take</span>(<span class="number">2</span>), <span class="number">97</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">false</span>);
-
-			<span class="ident">B</span>::<span class="ident">insert</span>(<span class="number">2</span>, <span class="number">10</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">migrate_key_from_blake</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>), <span class="bool-val">true</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
 
 			<span class="ident">B</span>::<span class="ident">insert</span>(<span class="number">2</span>, <span class="number">10</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">migrate_key</span>::<span class="op">&lt;</span><span class="ident">Blake2_256</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="number">2</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));
@@ -939,15 +947,15 @@
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>(), <span class="macro">vec</span><span class="macro">!</span>[(<span class="number">4</span>, <span class="number">40</span>), (<span class="number">3</span>, <span class="number">30</span>)]);
 
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">MODIFIER</span>, <span class="ident">StorageEntryModifier</span>::<span class="ident">Optional</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">MODIFIER</span>, <span class="ident">StorageEntryModifier</span>::<span class="ident">Default</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">MODIFIER</span>, <span class="ident">StorageEntryModifier</span>::<span class="ident">Default</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">HASHER</span>, <span class="ident">frame_metadata</span>::<span class="ident">StorageHasher</span>::<span class="ident">Blake2_128Concat</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(
-				<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">HASHER</span>,
+				<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">HASHER</span>,
 				<span class="ident">frame_metadata</span>::<span class="ident">StorageHasher</span>::<span class="ident">Blake2_128Concat</span>
 			);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">NAME</span>, <span class="string">&quot;foo&quot;</span>);
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">DEFAULT</span>.<span class="number">0</span>.<span class="ident">default_byte</span>(), <span class="prelude-val">Some</span>(<span class="number">97u32</span>).<span class="ident">encode</span>());
-			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryDefaultEmpty</span>::<span class="ident">DEFAULT</span>.<span class="number">0</span>.<span class="ident">default_byte</span>(), <span class="number">0</span>.<span class="ident">encode</span>());
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">DEFAULT</span>.<span class="number">0</span>.<span class="ident">default_byte</span>(), <span class="number">97u32</span>.<span class="ident">encode</span>());
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">DEFAULT</span>.<span class="number">0</span>.<span class="ident">default_byte</span>(), <span class="prelude-ty">Option</span>::<span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>::<span class="prelude-val">None</span>.<span class="ident">encode</span>());
 
 			<span class="ident">WithLen</span>::<span class="ident">remove_all</span>();
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">WithLen</span>::<span class="ident">decode_len</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);

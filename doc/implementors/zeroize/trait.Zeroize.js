@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["bip39"] = [{"text":"impl Zeroize for Language","synthetic":false,"types":[]},{"text":"impl Zeroize for Mnemonic","synthetic":false,"types":[]},{"text":"impl Zeroize for Seed","synthetic":false,"types":[]}];
 implementors["curve25519_dalek"] = [{"text":"impl Zeroize for Scalar","synthetic":false,"types":[]},{"text":"impl Zeroize for MontgomeryPoint","synthetic":false,"types":[]}];
 implementors["ed25519_dalek"] = [{"text":"impl Zeroize for SecretKey","synthetic":false,"types":[]},{"text":"impl Zeroize for ExpandedSecretKey","synthetic":false,"types":[]}];
 implementors["merlin"] = [{"text":"impl Zeroize for Transcript","synthetic":false,"types":[]}];

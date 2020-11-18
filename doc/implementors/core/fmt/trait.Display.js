@@ -1,6 +1,7 @@
 (function() {var implementors = {};
 implementors["aho_corasick"] = [{"text":"impl Display for Error","synthetic":false,"types":[]}];
 implementors["ansi_term"] = [{"text":"impl Display for Prefix","synthetic":false,"types":[]},{"text":"impl Display for Infix","synthetic":false,"types":[]},{"text":"impl Display for Suffix","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Display for ANSIString&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Display for ANSIStrings&lt;'a&gt;","synthetic":false,"types":[]}];
+implementors["anyhow"] = [{"text":"impl Display for Error","synthetic":false,"types":[]}];
 implementors["arrayvec"] = [{"text":"impl&lt;A:&nbsp;Array&lt;Item = u8&gt;&gt; Display for ArrayString&lt;A&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T&gt; Display for CapacityError&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["backtrace"] = [{"text":"impl&lt;'a&gt; Display for SymbolName&lt;'a&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Display for BytesOrWideString&lt;'a&gt;","synthetic":false,"types":[]}];
 implementors["bip39"] = [{"text":"impl Display for ErrorKind","synthetic":false,"types":[]},{"text":"impl Display for Mnemonic","synthetic":false,"types":[]},{"text":"impl Display for MnemonicType","synthetic":false,"types":[]}];

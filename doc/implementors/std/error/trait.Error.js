@@ -1,8 +1,10 @@
 (function() {var implementors = {};
 implementors["aho_corasick"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["arrayvec"] = [{"text":"impl&lt;T:&nbsp;Any&gt; Error for CapacityError&lt;T&gt;","synthetic":false,"types":[]}];
+implementors["bip39"] = [{"text":"impl Error for ErrorKind","synthetic":false,"types":[]}];
 implementors["byte_slice_cast"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["chrono"] = [{"text":"impl Error for ParseError","synthetic":false,"types":[]},{"text":"impl Error for RoundingError","synthetic":false,"types":[]}];
+implementors["crypto_mac"] = [{"text":"impl Error for MacError","synthetic":false,"types":[]},{"text":"impl Error for InvalidKeyLength","synthetic":false,"types":[]}];
 implementors["digest"] = [{"text":"impl Error for InvalidOutputSize","synthetic":false,"types":[]}];
 implementors["either"] = [{"text":"impl&lt;L, R&gt; Error for Either&lt;L, R&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;L: Error,<br>&nbsp;&nbsp;&nbsp;&nbsp;R: Error,&nbsp;</span>","synthetic":false,"types":[]}];
 implementors["failure"] = [{"text":"impl&lt;E:&nbsp;Display + Debug&gt; Error for Compat&lt;E&gt;","synthetic":false,"types":[]}];

@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/tiny-bip39-0.7.3/src/mnemonic.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mnemonic.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/tiny-bip39-0.8.0/src/mnemonic.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mnemonic.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bip39/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../bip39/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -385,10 +385,17 @@
 <span id="382">382</span>
 <span id="383">383</span>
 <span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">failure</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">anyhow</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">unicode_normalization</span>::<span class="ident">UnicodeNormalization</span>;
+<span class="kw">use</span> <span class="ident">zeroize</span>::<span class="ident">Zeroize</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">crypto</span>::{<span class="ident">gen_random_bytes</span>, <span class="ident">sha256_first_byte</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::<span class="ident">ErrorKind</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">language</span>::<span class="ident">Language</span>;
@@ -410,6 +417,8 @@
 <span class="doccomment">/// but beware that the entropy value is **not the same thing** as an HD wallet seed, and should</span>
 <span class="doccomment">/// *never* be used that way.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// [`Mnemonic`][Mnemonic] implements [`Zeroize`][Zeroize], so it&#39;s bytes will be zeroed when it&#39;s dropped.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// [Mnemonic]: ./mnemonic/struct.Mnemonic.html</span>
 <span class="doccomment">/// [Mnemonic::new()]: ./mnemonic/struct.Mnemonic.html#method.new</span>
 <span class="doccomment">/// [Mnemonic::from_phrase()]: ./mnemonic/struct.Mnemonic.html#method.from_phrase</span>
@@ -418,7 +427,8 @@
 <span class="doccomment">/// [Seed::new()]: ./seed/struct.Seed.html#method.new</span>
 <span class="doccomment">/// [Seed::as_bytes()]: ./seed/struct.Seed.html#method.as_bytes</span>
 <span class="doccomment">///</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Zeroize</span>)]</span>
+<span class="attribute">#[<span class="ident">zeroize</span>(<span class="ident">drop</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Mnemonic</span> {
     <span class="ident">phrase</span>: <span class="ident">String</span>,
     <span class="ident">lang</span>: <span class="ident">Language</span>,
@@ -608,10 +618,10 @@
     }
 
     <span class="doccomment">/// Consume the `Mnemonic` and return the phrase as a `String`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This operation doesn&#39;t perform any allocations.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_phrase</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="self">self</span>.<span class="ident">phrase</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_phrase</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+        <span class="comment">// Create an empty string and swap values with the mnemonic&#39;s phrase.</span>
+        <span class="comment">// This allows `Mnemonic` to implement `Drop`, while still returning the phrase.</span>
+        <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">phrase</span>, <span class="ident">String</span>::<span class="ident">new</span>())
     }
 
     <span class="doccomment">/// Get the original entropy value of the mnemonic phrase as a slice.</span>

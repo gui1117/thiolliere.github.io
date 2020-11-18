@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1914,6 +1914,28 @@
 <span id="1911">1911</span>
 <span id="1912">1912</span>
 <span id="1913">1913</span>
+<span id="1914">1914</span>
+<span id="1915">1915</span>
+<span id="1916">1916</span>
+<span id="1917">1917</span>
+<span id="1918">1918</span>
+<span id="1919">1919</span>
+<span id="1920">1920</span>
+<span id="1921">1921</span>
+<span id="1922">1922</span>
+<span id="1923">1923</span>
+<span id="1924">1924</span>
+<span id="1925">1925</span>
+<span id="1926">1926</span>
+<span id="1927">1927</span>
+<span id="1928">1928</span>
+<span id="1929">1929</span>
+<span id="1930">1930</span>
+<span id="1931">1931</span>
+<span id="1932">1932</span>
+<span id="1933">1933</span>
+<span id="1934">1934</span>
+<span id="1935">1935</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -2870,21 +2892,22 @@
 <span class="doccomment">/// prelude to be used alongside pallet macro, for ease of use.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet_prelude</span> {
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::{<span class="ident">Get</span>, <span class="ident">Interface</span>, <span class="ident">IsType</span>, <span class="ident">GetPalletVersion</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::{<span class="ident">Get</span>, <span class="ident">Hooks</span>, <span class="ident">IsType</span>, <span class="ident">GetPalletVersion</span>, <span class="ident">EnsureOrigin</span>};
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">traits</span>::<span class="ident">GenesisBuild</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">dispatch</span>::{<span class="ident">DispatchResultWithPostInfo</span>, <span class="ident">Parameter</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">dispatch</span>::{<span class="ident">DispatchResultWithPostInfo</span>, <span class="ident">Parameter</span>, <span class="ident">DispatchError</span>};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">storage</span>::<span class="ident">types</span>::{
 		<span class="ident">StorageValue</span>, <span class="ident">StorageMap</span>, <span class="ident">StorageDoubleMap</span>, <span class="ident">ValueQuery</span>, <span class="ident">OptionQuery</span>,
 	};
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::{<span class="ident">EqNoBound</span>, <span class="ident">PartialEqNoBound</span>, <span class="ident">RuntimeDebugNoBound</span>, <span class="ident">DebugNoBound</span>, <span class="ident">CloneNoBound</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::{
+		<span class="ident">EqNoBound</span>, <span class="ident">PartialEqNoBound</span>, <span class="ident">RuntimeDebugNoBound</span>, <span class="ident">DebugNoBound</span>, <span class="ident">CloneNoBound</span>
+	};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">codec</span>::{<span class="ident">Encode</span>, <span class="ident">Decode</span>};
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::<span class="ident">ProvideInherent</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::<span class="ident">InherentData</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::<span class="ident">InherentIdentifier</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">weights</span>::<span class="ident">Weight</span>;
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_inherents</span>::{<span class="ident">InherentData</span>, <span class="ident">InherentIdentifier</span>, <span class="ident">ProvideInherent</span>};
+	<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">weights</span>::{<span class="ident">DispatchClass</span>, <span class="ident">Pays</span>, <span class="ident">Weight</span>};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{
 		<span class="ident">Twox256</span>, <span class="ident">Twox128</span>, <span class="ident">Blake2_256</span>, <span class="ident">Blake2_128</span>, <span class="ident">Identity</span>, <span class="ident">Twox64Concat</span>, <span class="ident">Blake2_128Concat</span>,
+		<span class="ident">debug</span>, <span class="ident">ensure</span>, <span class="ident">RuntimeDebug</span>, <span class="ident">storage</span>
 	};
 	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sp_runtime</span>::{
 		<span class="ident">traits</span>::{<span class="ident">MaybeSerializeDeserialize</span>, <span class="ident">Member</span>, <span class="ident">ValidateUnsigned</span>},
@@ -3003,26 +3026,26 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// If attribute generate_store then macro create the trait `Store` and implement it on `Pallet`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # Interface: `#[pallet::interface]` mandatory</span>
+<span class="doccomment">/// # Hooks: `#[pallet::hooks]` mandatory</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Implementation of `Interface` on `Pallet` allowing to define some specific pallet logic.</span>
+<span class="doccomment">/// Implementation of `Hooks` on `Pallet` allowing to define some specific pallet logic.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Item must be defined as</span>
 <span class="doccomment">/// ```ignore</span>
-<span class="doccomment">/// #[pallet::interface]</span>
-<span class="doccomment">/// impl&lt;T: Config&gt; Interface&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T&gt; $optional_where_clause {</span>
+<span class="doccomment">/// #[pallet::hooks]</span>
+<span class="doccomment">/// impl&lt;T: Config&gt; Hooks&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T&gt; $optional_where_clause {</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e. a regular trait implementation with generic bound: `T: Config`, for the trait</span>
-<span class="doccomment">/// `Interface&lt;BlockNumberFor&lt;T&gt;&gt;` (they are defined in preludes), for the type `Pallet&lt;T&gt;`</span>
+<span class="doccomment">/// `Hooks&lt;BlockNumberFor&lt;T&gt;&gt;` (they are defined in preludes), for the type `Pallet&lt;T&gt;`</span>
 <span class="doccomment">/// and with an optional where clause.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The macro implement the traits `OnInitialize`, `OnFinalize`, `OnRuntimeUpgrade`,</span>
-<span class="doccomment">/// `OffchainWorker`, `IntegrityTest` using `Interface` implementation.</span>
+<span class="doccomment">/// The macro implements the traits `OnInitialize`, `OnFinalize`, `OnRuntimeUpgrade`,</span>
+<span class="doccomment">/// `OffchainWorker`, `IntegrityTest` using `Hooks` implementation.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// NOTE: OnRuntimeUpgrade is implemented with `Interface::on_runtime_upgrade` and some additional</span>
+<span class="doccomment">/// NOTE: OnRuntimeUpgrade is implemented with `Hooks::on_runtime_upgrade` and some additional</span>
 <span class="doccomment">/// logic. E.g. logic to write pallet version into storage.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Call: `#[pallet::call]` mandatory</span>
@@ -3076,7 +3099,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Item must be defined as:</span>
 <span class="doccomment">/// ```ignore</span>
-<span class="doccomment">/// #[pallet::call]</span>
+<span class="doccomment">/// #[pallet::extra_constants]</span>
 <span class="doccomment">/// impl&lt;T: Config&gt; Pallet&lt;T&gt; where $optional_where_clause {</span>
 <span class="doccomment">/// 	/// $some_doc</span>
 <span class="doccomment">/// 	$vis fn $fn_name() -&gt; $some_return_type {</span>
@@ -3338,6 +3361,9 @@
 <span class="doccomment">/// I.e. a trait implementation with bound `T: Config`, of trait `ValidateUnsigned` for type</span>
 <span class="doccomment">/// `Pallet&lt;T&gt;`, and some optional where clause.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// NOTE: There is also `sp_runtime::traits::SignedExtension` that can be used to add some specific</span>
+<span class="doccomment">/// logic for transaction validation.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Macro make currenlty no use of this information, but it might use this information in the</span>
@@ -3360,6 +3386,19 @@
 <span class="doccomment">/// might require some migration.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// NOTE: for instantiable pallet, origin must be generic over T and I.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # General notes on instantiable pallet</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An instantiable pallet is one where Config is generic, i.e. `Config&lt;I&gt;`. This allow runtime to</span>
+<span class="doccomment">/// implement multiple instance of the pallet, by using different type for the generic.</span>
+<span class="doccomment">/// This is the sole purpose of the generic `I`.</span>
+<span class="doccomment">/// But because `PalletInfo` requires `Pallet` placeholder to be static it is important to bound</span>
+<span class="doccomment">/// `&#39;static` whenever `PalletInfo` can be used.</span>
+<span class="doccomment">/// And in order to have instantiable pallet usable as a regular pallet without instance, it is</span>
+<span class="doccomment">/// important to bound `= ()` on every types.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Thus impl bound look like `impl&lt;T: Config&lt;I&gt;, I: &#39;static&gt;`, and types look like</span>
+<span class="doccomment">/// `SomeType&lt;T, I=()&gt;` or `SomeType&lt;T: Config&lt;I&gt;, I: &#39;static = ()&gt;`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example for pallet without instance.</span>
 <span class="doccomment">///</span>
@@ -3397,12 +3436,12 @@
 <span class="doccomment">/// 	#[pallet::generate_store(pub(super) trait Store)]</span>
 <span class="doccomment">/// 	pub struct Pallet&lt;T&gt;(PhantomData&lt;T&gt;);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// 	// Implement on the pallet interface on pallet.</span>
+<span class="doccomment">/// 	// Implement on the pallet hooks on pallet.</span>
 <span class="doccomment">/// 	// The macro checks:</span>
-<span class="doccomment">/// 	// * trait is `Interface` (imported from pallet_prelude)</span>
+<span class="doccomment">/// 	// * trait is `Hooks` (imported from pallet_prelude)</span>
 <span class="doccomment">/// 	// * struct is `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;`</span>
-<span class="doccomment">/// 	#[pallet::interface]</span>
-<span class="doccomment">/// 	impl&lt;T: Config&gt; Interface&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T&gt; {</span>
+<span class="doccomment">/// 	#[pallet::hooks]</span>
+<span class="doccomment">/// 	impl&lt;T: Config&gt; Hooks&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T&gt; {</span>
 <span class="doccomment">/// 	}</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 	// Declare Call struct and implement dispatchables.</span>
@@ -3587,8 +3626,8 @@
 <span class="doccomment">/// 	#[pallet::generate_store(pub(super) trait Store)]</span>
 <span class="doccomment">/// 	pub struct Pallet&lt;T, I = ()&gt;(PhantomData&lt;(T, I)&gt;);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// 	#[pallet::interface]</span>
-<span class="doccomment">/// 	impl&lt;T: Config&lt;I&gt;, I: &#39;static&gt; Interface&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T, I&gt; {</span>
+<span class="doccomment">/// 	#[pallet::hooks]</span>
+<span class="doccomment">/// 	impl&lt;T: Config&lt;I&gt;, I: &#39;static&gt; Hooks&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet&lt;T, I&gt; {</span>
 <span class="doccomment">/// 	}</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 	#[pallet::call]</span>
@@ -3725,8 +3764,8 @@
 <span class="doccomment">/// 	* all const in decl_module to `#[pallet::constant]`</span>
 <span class="doccomment">/// 7. **migrate decl_module**: write:</span>
 <span class="doccomment">/// 	```ignore</span>
-<span class="doccomment">/// 	#[pallet::interface]</span>
-<span class="doccomment">/// 	impl&lt;T: Trait&gt; Interface for Pallet&lt;T&gt; {</span>
+<span class="doccomment">/// 	#[pallet::hooks]</span>
+<span class="doccomment">/// 	impl&lt;T: Trait&gt; Hooks for Pallet&lt;T&gt; {</span>
 <span class="doccomment">/// 	}</span>
 <span class="doccomment">/// 	```</span>
 <span class="doccomment">/// 	and write inside on_initialize/on_finalize/on_runtime_upgrade/offchain_worker/integrity_test</span>
@@ -3795,11 +3834,16 @@
 <span class="doccomment">/// 		pub(super) type MyStorage&lt;T&gt; = StorageValue&lt;u32, ValueQuery, MyStorageOnEmpty&gt;;</span>
 <span class="doccomment">/// 		```</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// 	NOTE: decl_storage also generates functions `assimilate_storage` and `build_storage`</span>
+<span class="doccomment">/// 	directly on GenesisConfig, those are sometimes used in tests. In order not to break they</span>
+<span class="doccomment">/// 	can be implemented manually, just implement those functions by calling `GenesisBuild`</span>
+<span class="doccomment">/// 	implementation.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// 11. **migrate origin**: just move the origin to the pallet module under `#[pallet::origin]`</span>
 <span class="doccomment">/// 12. **migrate validate_unsigned**: just move the ValidateUnsigned implementation to the pallet</span>
 <span class="doccomment">/// 	module under `#[pallet::validate_unsigned]`</span>
 <span class="doccomment">/// 13. **migrate provide_inherent**: just move the ValidateUnsigned implementation to the pallet</span>
-<span class="doccomment">/// 	module under `#[pallet::validate_unsigned]`</span>
+<span class="doccomment">/// 	module under `#[pallet::provide_inherent]`</span>
 <span class="doccomment">/// 14. rename the usage of Module to Pallet and the usage of Config to Trait inside the crate.</span>
 <span class="doccomment">/// 15. migration is done, now double check migration with the checking migration guidelines.</span>
 <span class="doccomment">///</span>
@@ -3815,7 +3859,7 @@
 <span class="doccomment">/// 	* Origin is moved inside macro unser `#[pallet::origin]` if it exists</span>
 <span class="doccomment">/// 	* ValidateUnsigned is moved inside macro under `#[pallet::validate_unsigned)]` if it exists</span>
 <span class="doccomment">/// 	* ProvideInherent is moved inside macro under `#[pallet::inherent)]` if it exists</span>
-<span class="doccomment">/// 	* on_initialize/on_finalize/on_runtime_upgrade/offchain_worker are moved to Interface</span>
+<span class="doccomment">/// 	* on_initialize/on_finalize/on_runtime_upgrade/offchain_worker are moved to Hooks</span>
 <span class="doccomment">/// 		implementation</span>
 <span class="doccomment">/// 	* storages with `config(..)` are converted to genesis_config field, and their default is</span>
 <span class="doccomment">/// 		`= $expr;` if the storage have default value</span>

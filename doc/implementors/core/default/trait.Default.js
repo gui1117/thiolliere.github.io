@@ -3,6 +3,7 @@ implementors["adler"] = [{"text":"impl Default for Adler32","synthetic":false,"t
 implementors["ahash"] = [{"text":"impl Default for AHasher","synthetic":false,"types":[]},{"text":"impl Default for ABuildHasher","synthetic":false,"types":[]}];
 implementors["aho_corasick"] = [{"text":"impl Default for AhoCorasickBuilder","synthetic":false,"types":[]},{"text":"impl Default for MatchKind","synthetic":false,"types":[]},{"text":"impl Default for MatchKind","synthetic":false,"types":[]},{"text":"impl Default for Config","synthetic":false,"types":[]},{"text":"impl Default for Builder","synthetic":false,"types":[]}];
 implementors["ansi_term"] = [{"text":"impl Default for Style","synthetic":false,"types":[]}];
+implementors["anyhow"] = [{"text":"impl&lt;'_&gt; Default for Chain&lt;'_&gt;","synthetic":false,"types":[]}];
 implementors["arrayvec"] = [{"text":"impl&lt;A:&nbsp;Array&lt;Item = u8&gt;&gt; Default for ArrayString&lt;A&gt;","synthetic":false,"types":[]},{"text":"impl&lt;A:&nbsp;Array&gt; Default for ArrayVec&lt;A&gt;","synthetic":false,"types":[]}];
 implementors["backtrace"] = [{"text":"impl Default for Backtrace","synthetic":false,"types":[]}];
 implementors["bip39"] = [{"text":"impl Default for Language","synthetic":false,"types":[]},{"text":"impl Default for MnemonicType","synthetic":false,"types":[]}];

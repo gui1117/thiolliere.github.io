@@ -485,7 +485,7 @@
 	<span class="ident">module_name</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
 	<span class="doccomment">/// Usually `T`.</span>
 	<span class="ident">module_runtime_generic</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
-	<span class="doccomment">/// Usually `Trait`</span>
+	<span class="doccomment">/// Usually `Config`</span>
 	<span class="ident">module_runtime_trait</span>: <span class="ident">syn</span>::<span class="ident">Path</span>,
 	<span class="doccomment">/// For instantiable module: usually `I: Instance=DefaultInstance`.</span>
 	<span class="ident">module_instance</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ModuleInstanceDef</span><span class="op">&gt;</span>,
@@ -520,7 +520,7 @@
 	<span class="ident">module_name</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
 	<span class="doccomment">/// Usually `T`.</span>
 	<span class="ident">module_runtime_generic</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
-	<span class="doccomment">/// Usually `Trait`.</span>
+	<span class="doccomment">/// Usually `Config`.</span>
 	<span class="ident">module_runtime_trait</span>: <span class="ident">syn</span>::<span class="ident">Path</span>,
 	<span class="doccomment">/// For instantiable module: usually `I: Instance=DefaultInstance`.</span>
 	<span class="ident">module_instance</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ModuleInstanceDef</span><span class="op">&gt;</span>,
@@ -536,7 +536,7 @@
 	<span class="ident">crate_name</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
 	<span class="doccomment">/// Full struct expansion: `Module&lt;T, I&gt;`.</span>
 	<span class="ident">module_struct</span>: <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>,
-	<span class="doccomment">/// Impl block for module: `&lt;T: Trait, I: Instance&gt;`.</span>
+	<span class="doccomment">/// Impl block for module: `&lt;T: Config, I: Instance&gt;`.</span>
 	<span class="ident">module_impl</span>: <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>,
 	<span class="doccomment">/// For instantiable: `I`.</span>
 	<span class="ident">optional_instance</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,
@@ -655,7 +655,7 @@
 	<span class="ident">storage_struct</span>: <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>,
 	<span class="doccomment">/// If storage is generic over runtime then `T`.</span>
 	<span class="ident">optional_storage_runtime_comma</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,
-	<span class="doccomment">/// If storage is generic over runtime then `T: Trait`.</span>
+	<span class="doccomment">/// If storage is generic over runtime then `T: Config`.</span>
 	<span class="ident">optional_storage_runtime_bound_comma</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// The where clause to use to constrain generics if storage is generic over runtime.</span>
 	<span class="ident">optional_storage_where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span><span class="op">&gt;</span>,

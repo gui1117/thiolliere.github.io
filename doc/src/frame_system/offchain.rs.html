@@ -1,17 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/system/src/offchain.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>offchain.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/system/src/offchain.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>offchain.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><script defer type="text/javascript" src="https://substrate.dev/js/config.js"></script>
-<script defer type="text/javascript" src="https://substrate.dev/js/klaro.min.js"></script>
-<script async type="opt-in" data-type="application/javascript"
-		data-src="https://www.googletagmanager.com/gtag/js?id=UA-145158313-2" data-name="googleAnalytics"></script>
-<script type="opt-in" data-type="application/javascript" data-name="googleAnalytics">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-145158313-2');
-</script>
-
-<style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_system/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_system/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -859,7 +848,6 @@
 <span id="845">845</span>
 <span id="846">846</span>
 <span id="847">847</span>
-<span id="848">848</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -926,7 +914,7 @@
 <span class="kw">use</span> <span class="ident">sp_std</span>::<span class="ident">prelude</span>::{<span class="ident">Box</span>, <span class="ident">Vec</span>};
 <span class="kw">use</span> <span class="ident">sp_runtime</span>::<span class="ident">app_crypto</span>::<span class="ident">RuntimeAppPublic</span>;
 <span class="kw">use</span> <span class="ident">sp_runtime</span>::<span class="ident">traits</span>::{<span class="ident">Extrinsic</span> <span class="kw">as</span> <span class="ident">ExtrinsicT</span>, <span class="ident">IdentifyAccount</span>, <span class="ident">One</span>};
-<span class="kw">use</span> <span class="ident">frame_support</span>::{<span class="ident">debug</span>, <span class="ident">RuntimeDebug</span>};
+<span class="kw">use</span> <span class="ident">frame_support</span>::{<span class="ident">debug</span>, <span class="ident">storage</span>::<span class="ident">StorageMap</span>, <span class="ident">RuntimeDebug</span>};
 
 <span class="doccomment">/// Marker struct used to flag using all supported keys to sign a payload.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ForAll</span> {}
@@ -1239,9 +1227,6 @@
 <span class="doccomment">/// The point of this trait is to be able to easily convert between `RuntimeAppPublic`, the wrapped</span>
 <span class="doccomment">/// (generic = non application-specific) crypto types and the `Public` type required by the runtime.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// TODO [#5662] Potentially use `IsWrappedBy` types, or find some other way to make it easy to</span>
-<span class="doccomment">/// obtain unwrapped crypto (and wrap it back).</span>
-<span class="doccomment">///</span>
 <span class="doccomment">///	Example (pseudo-)implementation:</span>
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">///	// im-online specific crypto</span>
@@ -1255,6 +1240,8 @@
 <span class="doccomment">/// type Public = MultiSigner: From&lt;sr25519::Public&gt;;</span>
 <span class="doccomment">/// type Signature = MulitSignature: From&lt;sr25519::Signature&gt;;</span>
 <span class="doccomment">/// ```</span>
+<span class="comment">// TODO [#5662] Potentially use `IsWrappedBy` types, or find some other way to make it easy to</span>
+<span class="comment">// obtain unwrapped crypto (and wrap it back).</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AppCrypto</span><span class="op">&lt;</span><span class="ident">Public</span>, <span class="ident">Signature</span><span class="op">&gt;</span> {
 	<span class="doccomment">/// A application-specific crypto.</span>
 	<span class="kw">type</span> <span class="ident">RuntimeAppPublic</span>: <span class="ident">RuntimeAppPublic</span>;
@@ -1309,9 +1296,9 @@
 <span class="doccomment">/// This trait adds extra bounds to `Public` and `Signature` types of the runtime</span>
 <span class="doccomment">/// that are necessary to use these types for signing.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///	TODO [#5663] Could this be just `T::Signature as traits::Verify&gt;::Signer`?</span>
-<span class="doccomment">/// Seems that this may cause issues with bounds resolution.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SigningTypes</span>: <span class="kw">crate</span>::<span class="ident">Trait</span> {
+<span class="comment">// TODO [#5663] Could this be just `T::Signature as traits::Verify&gt;::Signer`?</span>
+<span class="comment">// Seems that this may cause issues with bounds resolution.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SigningTypes</span>: <span class="kw">crate</span>::<span class="ident">Config</span> {
 	<span class="doccomment">/// A public key that is capable of identifing `AccountId`s.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Usually that&#39;s either a raw crypto public key (e.g. `sr25519::Public`) or</span>

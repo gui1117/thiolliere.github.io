@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Call","Dispatchable calls."]],"struct":[["Module",""]],"trait":[["_","Provides version information about a pallet."]]});

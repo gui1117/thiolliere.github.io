@@ -798,6 +798,10 @@
 <span id="795">795</span>
 <span id="796">796</span>
 <span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -857,8 +861,12 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">transaction_validity</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">random_number_generator</span>;
 <span class="kw">mod</span> <span class="ident">runtime_string</span>;
+<span class="kw">mod</span> <span class="ident">multiaddress</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">runtime_string</span>::<span class="kw-2">*</span>;
+
+<span class="comment">// Re-export Multiaddress</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">multiaddress</span>::<span class="ident">MultiAddress</span>;
 
 <span class="doccomment">/// Re-export these since they&#39;re only &quot;kind of&quot; generic.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">generic</span>::{<span class="ident">DigestItem</span>, <span class="ident">Digest</span>};

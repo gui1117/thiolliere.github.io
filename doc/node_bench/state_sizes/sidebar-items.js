@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["KUSAMA_STATE_DISTRIBUTION","Kusama value size distribution"]]});

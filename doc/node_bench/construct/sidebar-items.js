@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["ConstructionBenchmark",""],["ConstructionBenchmarkDescription",""],["PoolTransaction",""],["Transactions",""]]});

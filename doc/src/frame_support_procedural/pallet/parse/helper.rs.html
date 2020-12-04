@@ -758,7 +758,7 @@
 		<span class="kw">let</span> <span class="ident">content</span>;
 		<span class="ident">syn</span>::<span class="macro">parenthesized</span><span class="macro">!</span>(<span class="ident">content</span> <span class="kw">in</span> <span class="ident">input</span>);
 		<span class="kw">if</span> <span class="op">!</span><span class="ident">content</span>.<span class="ident">is_empty</span>() {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;unexpected tokens, expect nothing inside parenthesis as `()`&quot;</span>;
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;unexpected tokens, expected nothing inside parenthesis as `()`&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">content</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		}
 		<span class="prelude-val">Ok</span>(<span class="self">Self</span>)
@@ -771,7 +771,7 @@
 	<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Lifetime</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
 		<span class="kw">if</span> <span class="ident">lifetime</span>.<span class="ident">ident</span> <span class="op">!</span><span class="op">=</span> <span class="string">&quot;static&quot;</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;unexpected tokens, expect `static`&quot;</span>;
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;unexpected tokens, expected `static`&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">lifetime</span>.<span class="ident">ident</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		}
 		<span class="prelude-val">Ok</span>(<span class="self">Self</span>)
@@ -787,7 +787,7 @@
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `I: &#39;static = ()`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `I: &#39;static = ()`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CheckTraitDefGenerics</span>;
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">CheckTraitDefGenerics</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -823,7 +823,7 @@
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `T` or `T, I = ()`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `T` or `T, I = ()`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="ident">InstanceUsage</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -870,7 +870,7 @@
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `` or `T` or `T: Config` or `T, I = ()` or \
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `` or `T` or `T: Config` or `T, I = ()` or \
 		`T: Config&lt;I&gt;, I: &#39;static = ()`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
@@ -944,7 +944,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// return the instance if found.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_pallet_struct_usage</span>(<span class="ident">type_</span>: <span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="ident">InstanceUsage</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -984,12 +984,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// `span` is used in case generics is empty (empty generics has span == call_site).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// return weither it contains instance.</span>
+<span class="doccomment">/// return whether it contains instance.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_impl_gen</span>(
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `impl&lt;T: Config&gt;` or `impl&lt;T: Config&lt;I&gt;, I: &#39;static&gt;`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `impl&lt;T: Config&gt;` or `impl&lt;T: Config&lt;I&gt;, I: &#39;static&gt;`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="ident">InstanceUsage</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -1039,7 +1039,7 @@
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `T` or `T: Config` or `T, I = ()` or \
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `T` or `T: Config` or `T, I = ()` or \
 		`T: Config&lt;I&gt;, I: &#39;static = ()`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="ident">InstanceUsage</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
@@ -1110,7 +1110,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// return the instance if found.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_genesis_builder_usage</span>(<span class="ident">type_</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Path</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `GenesisBuild&lt;T&gt;` or `GenesisBuild&lt;T, I&gt;`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `GenesisBuild&lt;T&gt;` or `GenesisBuild&lt;T, I&gt;`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="ident">InstanceUsage</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
@@ -1156,7 +1156,7 @@
 	<span class="ident">gen</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Generics</span>,
 	<span class="ident">span</span>: <span class="ident">proc_macro2</span>::<span class="ident">Span</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `` or `T: Config` or `T: Config&lt;I&gt;, I: &#39;static`&quot;</span>;
+	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expected `` or `T: Config` or `T: Config&lt;I&gt;, I: &#39;static`&quot;</span>;
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Checker</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InstanceUsage</span><span class="op">&gt;</span>);
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">Checker</span> {
 		<span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {

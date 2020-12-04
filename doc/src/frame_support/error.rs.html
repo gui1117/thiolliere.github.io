@@ -255,7 +255,7 @@
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// decl_error! {</span>
 <span class="doccomment">///     /// Errors that can occur in my module.</span>
-<span class="doccomment">///     pub enum MyError for Module&lt;T: Trait&gt; {</span>
+<span class="doccomment">///     pub enum MyError for Module&lt;T: Config&gt; {</span>
 <span class="doccomment">///         /// Hey this is an error message that indicates bla.</span>
 <span class="doccomment">///         MyCoolErrorMessage,</span>
 <span class="doccomment">///         /// You are just not cool enough for my module!</span>
@@ -263,13 +263,13 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// # use frame_system::Trait;</span>
+<span class="doccomment">/// # use frame_system::Config;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // You need to register the error type in `decl_module!` as well to make the error</span>
 <span class="doccomment">/// // exported in the metadata.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// decl_module! {</span>
-<span class="doccomment">///     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">///     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">///         type Error = MyError&lt;T&gt;;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///         #[weight = 0]</span>

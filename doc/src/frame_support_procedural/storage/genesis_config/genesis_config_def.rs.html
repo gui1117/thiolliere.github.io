@@ -192,11 +192,11 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GenesisConfigDef</span> {
 	<span class="kw">pub</span> <span class="ident">is_generic</span>: <span class="ident">bool</span>,
 	<span class="kw">pub</span> <span class="ident">fields</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">GenesisConfigFieldDef</span><span class="op">&gt;</span>,
-	<span class="doccomment">/// For example: `&lt;T: Trait&lt;I&gt;, I: Instance=DefaultInstance&gt;`.</span>
+	<span class="doccomment">/// For example: `&lt;T: Config&lt;I&gt;, I: Instance=DefaultInstance&gt;`.</span>
 	<span class="kw">pub</span> <span class="ident">genesis_struct_decl</span>: <span class="ident">TokenStream</span>,
 	<span class="doccomment">/// For example: `&lt;T, I&gt;`.</span>
 	<span class="kw">pub</span> <span class="ident">genesis_struct</span>: <span class="ident">TokenStream</span>,
-	<span class="doccomment">/// For example: `&lt;T: Trait&lt;I&gt;, I: Instance&gt;`.</span>
+	<span class="doccomment">/// For example: `&lt;T: Config&lt;I&gt;, I: Instance&gt;`.</span>
 	<span class="kw">pub</span> <span class="ident">genesis_impl</span>: <span class="ident">TokenStream</span>,
 	<span class="doccomment">/// The where clause to use to constrain generics if genesis config is generic.</span>
 	<span class="kw">pub</span> <span class="ident">genesis_where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">WhereClause</span><span class="op">&gt;</span>,

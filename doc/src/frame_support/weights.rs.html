@@ -882,9 +882,6 @@
 <span id="879">879</span>
 <span id="880">880</span>
 <span id="881">881</span>
-<span id="882">882</span>
-<span id="883">883</span>
-<span id="884">884</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -927,9 +924,9 @@
 <span class="doccomment">//!    `Yes`**.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use frame_system::Trait;</span>
+<span class="doccomment">//! # use frame_system::Config;</span>
 <span class="doccomment">//! frame_support::decl_module! {</span>
-<span class="doccomment">//!     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">//!     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">//!         #[weight = 1000]</span>
 <span class="doccomment">//!         fn dispatching(origin) { unimplemented!() }</span>
 <span class="doccomment">//!     }</span>
@@ -940,10 +937,10 @@
 <span class="doccomment">//! 2.1 Define weight and class, **in which case `PaysFee` would be `Yes`**.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use frame_system::Trait;</span>
+<span class="doccomment">//! # use frame_system::Config;</span>
 <span class="doccomment">//! # use frame_support::weights::DispatchClass;</span>
 <span class="doccomment">//! frame_support::decl_module! {</span>
-<span class="doccomment">//!     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">//!     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">//!         #[weight = (1000, DispatchClass::Operational)]</span>
 <span class="doccomment">//!         fn dispatching(origin) { unimplemented!() }</span>
 <span class="doccomment">//!     }</span>
@@ -954,10 +951,10 @@
 <span class="doccomment">//! 2.2 Define weight and `PaysFee`, **in which case `ClassifyDispatch` would be `Normal`**.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use frame_system::Trait;</span>
+<span class="doccomment">//! # use frame_system::Config;</span>
 <span class="doccomment">//! # use frame_support::weights::Pays;</span>
 <span class="doccomment">//! frame_support::decl_module! {</span>
-<span class="doccomment">//!     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">//!     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">//!         #[weight = (1000, Pays::No)]</span>
 <span class="doccomment">//!         fn dispatching(origin) { unimplemented!() }</span>
 <span class="doccomment">//!     }</span>
@@ -968,10 +965,10 @@
 <span class="doccomment">//! 3. Define all 3 parameters.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use frame_system::Trait;</span>
+<span class="doccomment">//! # use frame_system::Config;</span>
 <span class="doccomment">//! # use frame_support::weights::{DispatchClass, Pays};</span>
 <span class="doccomment">//! frame_support::decl_module! {</span>
-<span class="doccomment">//!     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">//!     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">//!         #[weight = (1000, DispatchClass::Operational, Pays::No)]</span>
 <span class="doccomment">//!         fn dispatching(origin) { unimplemented!() }</span>
 <span class="doccomment">//!     }</span>
@@ -988,10 +985,10 @@
 <span class="doccomment">//! all 3 are static values, providing a raw tuple is easier.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//! # use frame_system::Trait;</span>
+<span class="doccomment">//! # use frame_system::Config;</span>
 <span class="doccomment">//! # use frame_support::weights::{DispatchClass, FunctionOf, Pays};</span>
 <span class="doccomment">//! frame_support::decl_module! {</span>
-<span class="doccomment">//!     pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {</span>
+<span class="doccomment">//!     pub struct Module&lt;T: Config&gt; for enum Call where origin: T::Origin {</span>
 <span class="doccomment">//!         #[weight = FunctionOf(</span>
 <span class="doccomment">//! 			// weight, function.</span>
 <span class="doccomment">//! 			|args: (&amp;u32, &amp;u64)| *args.0 as u64 + args.1,</span>
@@ -1589,9 +1586,6 @@
 	<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">decl_module</span>, <span class="ident">parameter_types</span>, <span class="ident">traits</span>::<span class="ident">Get</span>};
 	<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-	<span class="doccomment">/// Kind of alias for `Config` trait. Deprecated as `Trait` is renamed `Config`.</span>
-	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">Config</span> {}
-	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">T</span> {}
 	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="lifetime">&#39;static</span> {
 		<span class="kw">type</span> <span class="ident">Origin</span>;
 		<span class="kw">type</span> <span class="ident">Balance</span>;
@@ -1618,7 +1612,7 @@
 	}
 
 	<span class="macro">decl_module</span><span class="macro">!</span> {
-		<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span> {
+		<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span> {
 			<span class="comment">// no arguments, fixed weight</span>
 			<span class="attribute">#[<span class="ident">weight</span> <span class="op">=</span> <span class="number">1000</span>]</span>
 			<span class="kw">fn</span> <span class="ident">f00</span>(<span class="ident">_origin</span>) { <span class="macro">unimplemented</span><span class="macro">!</span>(); }

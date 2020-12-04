@@ -236,8 +236,6 @@
 <span id="233">233</span>
 <span id="234">234</span>
 <span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -288,7 +286,7 @@
 <span class="doccomment">/// Definition of dispatchable typically: `#[weight...] fn foo(origin .., param1: ...) -&gt; ..`</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CallVariantDef</span> {
 	<span class="doccomment">/// Function name.</span>
-	<span class="kw">pub</span> <span class="ident">fn_</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
+	<span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">syn</span>::<span class="ident">Ident</span>,
 	<span class="doccomment">/// Information on args: `(is_compact, name, type)`</span>
 	<span class="kw">pub</span> <span class="ident">args</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">bool</span>, <span class="ident">syn</span>::<span class="ident">Ident</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
 	<span class="doccomment">/// Weight formula.</span>
@@ -310,7 +308,6 @@
 		<span class="ident">syn</span>::<span class="macro">bracketed</span><span class="macro">!</span>(<span class="ident">content</span> <span class="kw">in</span> <span class="ident">input</span>);
 		<span class="ident">content</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">keyword</span>::<span class="ident">pallet</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
 		<span class="ident">content</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="macro">Token</span><span class="macro">!</span>[::]<span class="op">&gt;</span>()<span class="question-mark">?</span>;
-
 		<span class="ident">content</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">keyword</span>::<span class="ident">weight</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
 
 		<span class="kw">let</span> <span class="ident">weight_content</span>;
@@ -340,7 +337,6 @@
 
 <span class="doccomment">/// Check the syntax is `OriginFor&lt;T&gt;`</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_dispatchable_first_arg_type</span>(<span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">syn</span>::<span class="ident">Type</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-	<span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;expect `OriginFor&lt;T&gt;`&quot;</span>;
 
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CheckDispatchableFirstArg</span>;
 	<span class="kw">impl</span> <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">CheckDispatchableFirstArg</span> {
@@ -356,7 +352,7 @@
 
 	<span class="ident">syn</span>::<span class="ident">parse2</span>::<span class="op">&lt;</span><span class="ident">CheckDispatchableFirstArg</span><span class="op">&gt;</span>(<span class="ident">ty</span>.<span class="ident">to_token_stream</span>())
 		.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Invalid ty: {}&quot;</span>, <span class="ident">expected</span>);
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid type: expected `OriginFor&lt;T&gt;`&quot;</span>;
 			<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">ty</span>.<span class="ident">span</span>(), <span class="ident">msg</span>);
 			<span class="ident">err</span>.<span class="ident">combine</span>(<span class="ident">e</span>);
 			<span class="ident">err</span>
@@ -375,7 +371,7 @@
 		<span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Item</span>::<span class="ident">Impl</span>(<span class="ident">item</span>) <span class="op">=</span> <span class="ident">item</span> {
 			<span class="ident">item</span>
 		} <span class="kw">else</span> {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::call, expect item impl&quot;</span>));
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::call, expected item impl&quot;</span>));
 		};
 
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">instances</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
@@ -383,7 +379,7 @@
 		<span class="ident">instances</span>.<span class="ident">push</span>(<span class="ident">helper</span>::<span class="ident">check_pallet_struct_usage</span>(<span class="kw-2">&amp;</span><span class="ident">item</span>.<span class="ident">self_ty</span>)<span class="question-mark">?</span>);
 
 		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="kw">_</span>, <span class="kw">_</span>, <span class="ident">for_</span>)) <span class="op">=</span> <span class="ident">item</span>.<span class="ident">trait_</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::call, expect no trait ident as in \
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::call, expected no trait ident as in \
 				`impl&lt;..&gt; Pallet&lt;..&gt; { .. }`&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">for_</span>.<span class="ident">span</span>(), <span class="ident">msg</span>))
 		}
@@ -421,7 +417,7 @@
 					<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">call_var_attrs</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
 						<span class="string">&quot;Invalid pallet::call, require weight attribute i.e. `#[pallet::weight = $expr]`&quot;</span>
 					} <span class="kw">else</span> {
-						<span class="string">&quot;Invalid pallet::call, to many weight attribute given&quot;</span>
+						<span class="string">&quot;Invalid pallet::call, too many weight attributes given&quot;</span>
 					};
 					<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">method</span>.<span class="ident">sig</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 				}
@@ -456,7 +452,7 @@
 				<span class="kw">let</span> <span class="ident">docs</span> <span class="op">=</span> <span class="ident">helper</span>::<span class="ident">get_doc_literals</span>(<span class="kw-2">&amp;</span><span class="ident">method</span>.<span class="ident">attrs</span>);
 
 				<span class="ident">methods</span>.<span class="ident">push</span>(<span class="ident">CallVariantDef</span> {
-					<span class="ident">fn_</span>: <span class="ident">method</span>.<span class="ident">sig</span>.<span class="ident">ident</span>.<span class="ident">clone</span>(),
+					<span class="ident">name</span>: <span class="ident">method</span>.<span class="ident">sig</span>.<span class="ident">ident</span>.<span class="ident">clone</span>(),
 					<span class="ident">weight</span>,
 					<span class="ident">args</span>,
 					<span class="ident">docs</span>,

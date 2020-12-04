@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/ed25519-1.0.1/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/ed25519-1.0.3/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
 <link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../ed25519/index.html'><div class='logo-container'><img src='https://raw.githubusercontent.com/RustCrypto/meta/master/logo_small.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
@@ -296,6 +296,139 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
+<span id="390">390</span>
+<span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
+<span id="396">396</span>
+<span id="397">397</span>
+<span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Ed25519 signatures.</span>
 <span class="doccomment">//!</span>
@@ -308,13 +441,13 @@
 <span class="doccomment">//! [`signature::Verifier`] traits defined in the [`signature`] crate.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! These traits allow crates which produce and consume Ed25519 signatures</span>
-<span class="doccomment">//! to be written abstractly in such a way that different signer/verifier</span>
+<span class="doccomment">//! to be written abstractly in such a way that different signing_key/verifier</span>
 <span class="doccomment">//! providers can be plugged in, enabling support for using different</span>
 <span class="doccomment">//! Ed25519 implementations, including HSMs or Cloud KMS services.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Minimum Supported Rust Version</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Rust **1.40** or higher.</span>
+<span class="doccomment">//! Rust **1.41** or higher.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Minimum supported Rust version may be changed in the future, but such</span>
 <span class="doccomment">//! changes will be accompanied with a minor version bump.</span>
@@ -323,20 +456,23 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! By using the `ed25519` crate, you can write code which signs and verifies</span>
 <span class="doccomment">//! messages using the Ed25519 signature algorithm generically over any</span>
-<span class="doccomment">//! supported underlying Ed25519 implementation (see the next section for</span>
-<span class="doccomment">//! available providers).</span>
+<span class="doccomment">//! supported Ed25519 implementation (see the next section for available</span>
+<span class="doccomment">//! providers).</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This allows consumers of your code to plug in whatever implementation they</span>
 <span class="doccomment">//! want to use without having to add all potential Ed25519 libraries you&#39;d</span>
 <span class="doccomment">//! like to support as optional dependencies.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Below is a usage example of how to use this crate to do so:</span>
+<span class="doccomment">//! ## Example</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//! use ed25519::signature::{Signer, Verifier};</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! pub struct HelloSigner&lt;S&gt; {</span>
-<span class="doccomment">//!     pub signer: S</span>
+<span class="doccomment">//! pub struct HelloSigner&lt;S&gt;</span>
+<span class="doccomment">//! where</span>
+<span class="doccomment">//!     S: Signer&lt;ed25519::Signature&gt;</span>
+<span class="doccomment">//! {</span>
+<span class="doccomment">//!     pub signing_key: S</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! impl&lt;S&gt; HelloSigner&lt;S&gt;</span>
@@ -347,7 +483,7 @@
 <span class="doccomment">//!         // NOTE: use `try_sign` if you&#39;d like to be able to handle</span>
 <span class="doccomment">//!         // errors from external signing services/devices (e.g. HSM/KMS)</span>
 <span class="doccomment">//!         // &lt;https://docs.rs/signature/latest/signature/trait.Signer.html#tymethod.try_sign&gt;</span>
-<span class="doccomment">//!         self.signer.sign(format_message(person).as_bytes())</span>
+<span class="doccomment">//!         self.signing_key.sign(format_message(person).as_bytes())</span>
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//! }</span>
 <span class="doccomment">//!</span>
@@ -373,35 +509,170 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! A hypothetical consumer of the above code can then instantiate</span>
-<span class="doccomment">//! `HelloSigner` using [`ed25519-dalek`] (via the [`signatory-dalek`] crate) as:</span>
+<span class="doccomment">//! ## Using above example with `ed25519-dalek`</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```ignore</span>
-<span class="doccomment">//! use signatory_dalek::Ed25519Signer;</span>
-<span class="doccomment">//! use hello_signer::HelloSigner; // i.e. `HelloSigner` defined in the above example</span>
+<span class="doccomment">//! The [`ed25519-dalek`] crate natively supports the [`ed25519::Signature`][`Signature`]</span>
+<span class="doccomment">//! type defined in this crate along with the [`signature::Signer`] and</span>
+<span class="doccomment">//! [`signature::Verifier`] traits.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! /// `HelloSigner` instantiated with an `ed25519-dalek` signature provider</span>
-<span class="doccomment">//! pub type DalekHelloSigner = HelloSigner&lt;Ed25519Signer&gt;;</span>
+<span class="doccomment">//! Below is an example of how a hypothetical consumer of the code above can</span>
+<span class="doccomment">//! instantiate and use the previously defined `HelloSigner` and `HelloVerifier`</span>
+<span class="doccomment">//! types with [`ed25519-dalek`] as the signing/verification provider:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use ed25519_dalek::{Signer, Verifier, Signature};</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # pub struct HelloSigner&lt;S&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     S: Signer&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub signing_key: S</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # impl&lt;S&gt; HelloSigner&lt;S&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     S: Signer&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub fn sign(&amp;self, person: &amp;str) -&gt; Signature {</span>
+<span class="doccomment">//! #         // NOTE: use `try_sign` if you&#39;d like to be able to handle</span>
+<span class="doccomment">//! #         // errors from external signing services/devices (e.g. HSM/KMS)</span>
+<span class="doccomment">//! #         // &lt;https://docs.rs/signature/latest/signature/trait.Signer.html#tymethod.try_sign&gt;</span>
+<span class="doccomment">//! #         self.signing_key.sign(format_message(person).as_bytes())</span>
+<span class="doccomment">//! #     }</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # pub struct HelloVerifier&lt;V&gt; {</span>
+<span class="doccomment">//! #     pub verify_key: V</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # impl&lt;V&gt; HelloVerifier&lt;V&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     V: Verifier&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub fn verify(</span>
+<span class="doccomment">//! #         &amp;self,</span>
+<span class="doccomment">//! #         person: &amp;str,</span>
+<span class="doccomment">//! #         signature: &amp;Signature</span>
+<span class="doccomment">//! #     ) -&gt; Result&lt;(), ed25519::Error&gt; {</span>
+<span class="doccomment">//! #         self.verify_key.verify(format_message(person).as_bytes(), signature)</span>
+<span class="doccomment">//! #     }</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # fn format_message(person: &amp;str) -&gt; String {</span>
+<span class="doccomment">//! #     format!(&quot;Hello, {}!&quot;, person)</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! use rand_core::OsRng; // Requires the `std` feature of `rand_core`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// `HelloSigner` defined above instantiated with `ed25519-dalek` as</span>
+<span class="doccomment">//! /// the signing provider.</span>
+<span class="doccomment">//! pub type DalekHelloSigner = HelloSigner&lt;ed25519_dalek::Keypair&gt;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let signing_key = ed25519_dalek::Keypair::generate(&amp;mut OsRng);</span>
+<span class="doccomment">//! let signer = DalekHelloSigner { signing_key };</span>
+<span class="doccomment">//! let person = &quot;Joe&quot;; // Message to sign</span>
+<span class="doccomment">//! let signature = signer.sign(person);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// `HelloVerifier` defined above instantiated with `ed25519-dalek`</span>
+<span class="doccomment">//! /// as the signature verification provider.</span>
+<span class="doccomment">//! pub type DalekHelloVerifier = HelloVerifier&lt;ed25519_dalek::PublicKey&gt;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let verify_key: ed25519_dalek::PublicKey = signer.signing_key.public;</span>
+<span class="doccomment">//! let verifier = DalekHelloVerifier { verify_key };</span>
+<span class="doccomment">//! assert!(verifier.verify(person, &amp;signature).is_ok());</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Using above example with `ring-compat`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The [`ring-compat`] crate provides wrappers for [*ring*] which implement</span>
+<span class="doccomment">//! the [`signature::Signer`] and [`signature::Verifier`] traits for</span>
+<span class="doccomment">//! [`ed25519::Signature`][`Signature`].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Below is an example of how a hypothetical consumer of the code above can</span>
+<span class="doccomment">//! instantiate and use the previously defined `HelloSigner` and `HelloVerifier`</span>
+<span class="doccomment">//! types with [`ring-compat`] as the signing/verification provider:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use ring_compat::signature::{</span>
+<span class="doccomment">//!     ed25519::{Signature, SigningKey, VerifyKey},</span>
+<span class="doccomment">//!     Signer, Verifier</span>
+<span class="doccomment">//! };</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # pub struct HelloSigner&lt;S&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     S: Signer&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub signing_key: S</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # impl&lt;S&gt; HelloSigner&lt;S&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     S: Signer&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub fn sign(&amp;self, person: &amp;str) -&gt; Signature {</span>
+<span class="doccomment">//! #         // NOTE: use `try_sign` if you&#39;d like to be able to handle</span>
+<span class="doccomment">//! #         // errors from external signing services/devices (e.g. HSM/KMS)</span>
+<span class="doccomment">//! #         // &lt;https://docs.rs/signature/latest/signature/trait.Signer.html#tymethod.try_sign&gt;</span>
+<span class="doccomment">//! #         self.signing_key.sign(format_message(person).as_bytes())</span>
+<span class="doccomment">//! #     }</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # pub struct HelloVerifier&lt;V&gt; {</span>
+<span class="doccomment">//! #     pub verify_key: V</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # impl&lt;V&gt; HelloVerifier&lt;V&gt;</span>
+<span class="doccomment">//! # where</span>
+<span class="doccomment">//! #     V: Verifier&lt;Signature&gt;</span>
+<span class="doccomment">//! # {</span>
+<span class="doccomment">//! #     pub fn verify(</span>
+<span class="doccomment">//! #         &amp;self,</span>
+<span class="doccomment">//! #         person: &amp;str,</span>
+<span class="doccomment">//! #         signature: &amp;Signature</span>
+<span class="doccomment">//! #     ) -&gt; Result&lt;(), ed25519::Error&gt; {</span>
+<span class="doccomment">//! #         self.verify_key.verify(format_message(person).as_bytes(), signature)</span>
+<span class="doccomment">//! #     }</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # fn format_message(person: &amp;str) -&gt; String {</span>
+<span class="doccomment">//! #     format!(&quot;Hello, {}!&quot;, person)</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! use rand_core::{OsRng, RngCore}; // Requires the `std` feature of `rand_core`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// `HelloSigner` defined above instantiated with *ring* as</span>
+<span class="doccomment">//! /// the signing provider.</span>
+<span class="doccomment">//! pub type RingHelloSigner = HelloSigner&lt;SigningKey&gt;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let mut ed25519_seed = [0u8; 32];</span>
+<span class="doccomment">//! OsRng.fill_bytes(&amp;mut ed25519_seed);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let signing_key = SigningKey::from_seed(&amp;ed25519_seed).unwrap();</span>
+<span class="doccomment">//! let verify_key = signing_key.verify_key();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let signer = RingHelloSigner { signing_key };</span>
+<span class="doccomment">//! let person = &quot;Joe&quot;; // Message to sign</span>
+<span class="doccomment">//! let signature = signer.sign(person);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! /// `HelloVerifier` defined above instantiated with *ring*</span>
+<span class="doccomment">//! /// as the signature verification provider.</span>
+<span class="doccomment">//! pub type RingHelloVerifier = HelloVerifier&lt;VerifyKey&gt;;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let verifier = RingHelloVerifier { verify_key };</span>
+<span class="doccomment">//! assert!(verifier.verify(person, &amp;signature).is_ok());</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Available Ed25519 providers</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The following libraries natively support the types and traits from the</span>
-<span class="doccomment">//! `ed25519` crate:</span>
+<span class="doccomment">//! The following libraries support the types/traits from the `ed25519` crate:</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! - [`ed25519-dalek`] - mature pure Rust implementation of Ed25519</span>
+<span class="doccomment">//! - [`ring-compat`] - compatibility wrapper for [*ring*]</span>
+<span class="doccomment">//! - [`signatory-sodiumoxide`] - compatibility wrapper for [`sodiumoxide`]</span>
 <span class="doccomment">//! - [`yubihsm`] - host-side client library for YubiHSM2 devices from Yubico</span>
+
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The [Signatory] project provides wrappers for several notable crates which</span>
-<span class="doccomment">//! produce or verify Ed25519 signatures:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - [`signatory-dalek`] - wrapper for [`ed25519-dalek`]</span>
-<span class="doccomment">//! - [`signatory-ring`] - wrapper for [*ring*]</span>
-<span class="doccomment">//! - [`signatory-sodiumoxide`] - wrapper for [`sodiumoxide`]</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`ed25519-dalek`]: https://github.com/dalek-cryptography/ed25519-dalek</span>
+<span class="doccomment">//! [`ed25519-dalek`]: https://docs.rs/ed25519-dalek</span>
+<span class="doccomment">//! [`ring-compat`]: https://docs.rs/ring-compat</span>
 <span class="doccomment">//! [*ring*]: https://github.com/briansmith/ring</span>
-<span class="doccomment">//! [Signatory]: https://github.com/iqlusioninc/signatory/blob/develop/README.md</span>
-<span class="doccomment">//! [`signatory-dalek`]: https://docs.rs/signatory-dalek/</span>
 <span class="doccomment">//! [`signatory-ring`]: https://docs.rs/signatory-ring/</span>
 <span class="doccomment">//! [`signatory-sodiumoxide`]: https://docs.rs/signatory-sodiumoxide/</span>
 <span class="doccomment">//! [`sodiumoxide`]: https://github.com/sodiumoxide/sodiumoxide</span>
@@ -410,15 +681,10 @@
 <span class="attribute">#![<span class="ident">no_std</span>]</span>
 <span class="attribute">#![<span class="ident">doc</span>(
     <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://raw.githubusercontent.com/RustCrypto/meta/master/logo_small.png&quot;</span>,
-    <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/ed25519/1.0.1&quot;</span>
+    <span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/ed25519/1.0.3&quot;</span>
 )]</span>
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(
-    <span class="ident">missing_docs</span>,
-    <span class="ident">rust_2018_idioms</span>,
-    <span class="ident">unused_qualifications</span>,
-    <span class="ident">intra_doc_link_resolution_failure</span>
-)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>, <span class="ident">rust_2018_idioms</span>, <span class="ident">unused_qualifications</span>)]</span>
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">de</span>, <span class="ident">ser</span>, <span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};

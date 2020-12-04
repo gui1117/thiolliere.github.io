@@ -101,6 +101,7 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
+<span id="101">101</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -147,7 +148,8 @@
 		<span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Item</span>::<span class="ident">Fn</span>(<span class="ident">item</span>) <span class="op">=</span> <span class="ident">item</span> {
 			<span class="ident">item</span>
 		} <span class="kw">else</span> {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::type_value, expect item fn&quot;</span>));
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::type_value, expected item fn&quot;</span>;
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		};
 
 
@@ -177,7 +179,7 @@
 		<span class="kw">let</span> <span class="ident">type_</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">output</span>.<span class="ident">clone</span>() {
 			<span class="ident">syn</span>::<span class="ident">ReturnType</span>::<span class="ident">Type</span>(<span class="kw">_</span>, <span class="ident">type_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">type_</span>,
 			<span class="ident">syn</span>::<span class="ident">ReturnType</span>::<span class="ident">Default</span> <span class="op">=</span><span class="op">&gt;</span> {
-				<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::type_value, expect return type&quot;</span>;
+				<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::type_value, expected return type&quot;</span>;
 				<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">sig</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 			},
 		};

@@ -281,8 +281,6 @@
 <span id="278">278</span>
 <span id="279">279</span>
 <span id="280">280</span>
-<span id="281">281</span>
-<span id="282">282</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -317,7 +315,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Each value is stored at:</span>
 <span class="doccomment">/// ```nocompile</span>
-<span class="doccomment">/// Twox128(&lt;Prefix::Pallet as PalletInfo&gt;::name()) ++ Twox128(Prefix::STORAGE_PREFIX)</span>
+<span class="doccomment">/// Twox128(Prefix::pallet_prefix()) ++ Twox128(Prefix::STORAGE_PREFIX)</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">Prefix</span>, <span class="ident">Value</span>, <span class="ident">QueryKind</span><span class="op">=</span><span class="ident">OptionQuery</span>, <span class="ident">OnEmpty</span><span class="op">=</span><span class="ident">GetDefault</span><span class="op">&gt;</span>(
 	<span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">Prefix</span>, <span class="ident">Value</span>, <span class="ident">QueryKind</span>, <span class="ident">OnEmpty</span>)<span class="op">&gt;</span>
@@ -333,8 +331,7 @@
 {
 	<span class="kw">type</span> <span class="ident">Query</span> <span class="op">=</span> <span class="ident">QueryKind</span>::<span class="ident">Query</span>;
 	<span class="kw">fn</span> <span class="ident">module_prefix</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
-		<span class="op">&lt;</span><span class="ident">Prefix</span>::<span class="ident">PalletInfo</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">traits</span>::<span class="ident">PalletInfo</span><span class="op">&gt;</span>::<span class="ident">name</span>::<span class="op">&lt;</span><span class="ident">Prefix</span>::<span class="ident">Pallet</span><span class="op">&gt;</span>()
-			.<span class="ident">expect</span>(<span class="string">&quot;Every active pallet has a name in the runtime; qed&quot;</span>).<span class="ident">as_bytes</span>()
+		<span class="ident">Prefix</span>::<span class="ident">pallet_prefix</span>().<span class="ident">as_bytes</span>()
 	}
 	<span class="kw">fn</span> <span class="ident">storage_prefix</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
 		<span class="ident">Prefix</span>::<span class="ident">STORAGE_PREFIX</span>.<span class="ident">as_bytes</span>()
@@ -487,8 +484,7 @@
 
 	<span class="kw">struct</span> <span class="ident">Prefix</span>;
 	<span class="kw">impl</span> <span class="ident">StorageInstance</span> <span class="kw">for</span> <span class="ident">Prefix</span> {
-		<span class="kw">type</span> <span class="ident">Pallet</span> <span class="op">=</span> ();
-		<span class="kw">type</span> <span class="ident">PalletInfo</span> <span class="op">=</span> ();
+		<span class="kw">fn</span> <span class="ident">pallet_prefix</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> { <span class="string">&quot;test&quot;</span> }
 		<span class="kw">const</span> <span class="ident">STORAGE_PREFIX</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;foo&quot;</span>;
 	}
 

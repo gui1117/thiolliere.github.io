@@ -1035,11 +1035,11 @@
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// In case of using crate `sp_runtime` without the crate `frame`</span>
 	<span class="doccomment">/// system, it is already implemented for</span>
-	<span class="doccomment">/// `frame_system::Module&lt;T: Trait&gt;` as:</span>
+	<span class="doccomment">/// `frame_system::Module&lt;T: Config&gt;` as:</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// ```ignore</span>
 	<span class="doccomment">/// fn current_block_number() -&gt; Self {</span>
-	<span class="doccomment">///     frame_system::Module&lt;Trait&gt;::block_number()</span>
+	<span class="doccomment">///     frame_system::Module&lt;Config&gt;::block_number()</span>
 	<span class="doccomment">/// }</span>
 	<span class="doccomment">/// ```</span>
 	<span class="doccomment">/// .</span>

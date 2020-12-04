@@ -325,13 +325,13 @@
 		<span class="kw">if</span> <span class="ident">arg_pos</span> <span class="op">&lt;</span> <span class="ident">args</span>.<span class="ident">args</span>.<span class="ident">len</span>() {
 			<span class="prelude-val">Ok</span>(<span class="ident">args</span>.<span class="ident">args</span>[<span class="ident">arg_pos</span>].<span class="ident">clone</span>())
 		} <span class="kw">else</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;pallet::storage unexpected number of generic argument, expect at \
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;pallet::storage unexpected number of generic argument, expected at \
 				least {} args, found {}&quot;</span>, <span class="ident">arg_pos</span> <span class="op">+</span> <span class="number">1</span>, <span class="ident">args</span>.<span class="ident">args</span>.<span class="ident">len</span>());
 			<span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">args</span>.<span class="ident">span</span>(), <span class="ident">msg</span>))
 		}
 	} <span class="kw">else</span> {
-		<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;pallet::storage unexpected number of generic argument, expect at least \
-			{} args, found none&quot;</span>, <span class="ident">arg_pos</span> <span class="op">+</span> <span class="number">1</span>);
+		<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;pallet::storage unexpected number of generic argument, expected at \
+			least {} args, found none&quot;</span>, <span class="ident">arg_pos</span> <span class="op">+</span> <span class="number">1</span>);
 		<span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">segment</span>.<span class="ident">span</span>(), <span class="ident">msg</span>))
 	}
 }
@@ -341,7 +341,7 @@
 		<span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Item</span>::<span class="ident">Type</span>(<span class="ident">item</span>) <span class="op">=</span> <span class="ident">item</span> {
 			<span class="ident">item</span>
 		} <span class="kw">else</span> {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::storage, expect item type&quot;</span>));
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::storage, expected item type&quot;</span>));
 		};
 
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PalletStorageAttr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">helper</span>::<span class="ident">take_item_attrs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">item</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
@@ -360,12 +360,12 @@
 		<span class="kw">let</span> <span class="ident">typ</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Type</span>::<span class="ident">Path</span>(<span class="ident">typ</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">item</span>.<span class="ident">ty</span> {
 			<span class="ident">typ</span>
 		} <span class="kw">else</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::storage, expect type path&quot;</span>;
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::storage, expected type path&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">ty</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		};
 
 		<span class="kw">if</span> <span class="ident">typ</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="number">1</span> {
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::storage, expect type path with one segment&quot;</span>;
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::storage, expected type path with one segment&quot;</span>;
 			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">ty</span>.<span class="ident">span</span>(), <span class="ident">msg</span>));
 		}
 
@@ -394,7 +394,7 @@
 			}
 			<span class="ident">found</span> @ <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
 				<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-					<span class="string">&quot;Invalid pallet::storage, expect ident: `StorageValue` or \
+					<span class="string">&quot;Invalid pallet::storage, expected ident: `StorageValue` or \
 					`StorageMap` or `StorageDoubleMap` in order to expand metadata, found \
 					`{}`&quot;</span>,
 					<span class="ident">found</span>,

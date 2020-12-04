@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["KSM","Or any other token type."]],"fn":[["assert_assignments_equal",""],["assignment_len",""],["generate_random_phragmen_assignment",""],["main",""],["reduce_and_compare",""]],"mod":[["common","Common fuzzing utils."]],"type":[["AccountId",""],["Balance",""]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["DatabaseType",""]],"struct":[["ParityDbWrapper",""],["TempDatabase",""]]});

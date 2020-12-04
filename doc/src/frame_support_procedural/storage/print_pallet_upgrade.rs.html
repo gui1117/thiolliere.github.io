@@ -700,7 +700,7 @@ pub mod pallet {{
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 	use super::*;
-	
+
 	#[pallet::config]
 	pub trait Config{config_gen}: frame_system::Config
 		// TODO_MAYBE_ADDITIONAL_BOUNDS_AND_WHERE_CLAUSE
@@ -719,7 +719,7 @@ pub mod pallet {{
 	pub type Module{decl_gen} = Pallet{use_gen};
 
 	#[pallet::interface]
-	impl{impl_gen} Interface&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet{use_gen}
+	impl{impl_gen} Hooks&lt;BlockNumberFor&lt;T&gt;&gt; for Pallet{use_gen}
 		// TODO_MAYBE_WHERE_CLAUSE
 	{{
 		// TODO_ON_FINALIZE

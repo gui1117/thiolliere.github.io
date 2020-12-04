@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Mode",""]],"fn":[["run_benchmark",""]],"struct":[["BenchmarkOutput",""],["NsFormatter",""],["Path",""]],"trait":[["Benchmark",""],["BenchmarkDescription",""]]});

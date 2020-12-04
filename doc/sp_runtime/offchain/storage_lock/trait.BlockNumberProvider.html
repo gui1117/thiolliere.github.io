@@ -12,11 +12,11 @@ used with <a href="../../../sp_runtime/offchain/storage_lock/struct.BlockAndTime
 current block number.</p>
 <p>In case of using crate <code>sp_runtime</code> without the crate <code>frame</code>
 system, it is already implemented for
-<code>frame_system::Module&lt;T: Trait&gt;</code> as:</p>
+<code>frame_system::Module&lt;T: Config&gt;</code> as:</p>
 
 <div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">fn</span> <span class="ident">current_block_number</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-    <span class="ident">frame_system</span>::<span class="ident">Module</span><span class="op">&lt;</span><span class="ident">Trait</span><span class="op">&gt;</span>::<span class="ident">block_number</span>()
+    <span class="ident">frame_system</span>::<span class="ident">Module</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">block_number</span>()
 }</pre></div>
 <p>.</p>
 </div></div><span class="loading-content">Loading content...</span><h2 id="implementors" class="small-section-header">Implementors<a href="#implementors" class="anchor"></a></h2><div class="item-list" id="implementors-list"></div><span class="loading-content">Loading content...</span><script type="text/javascript" src="../../../implementors/sp_runtime/offchain/storage_lock/trait.BlockNumberProvider.js" async></script></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "sp_runtime";</script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>

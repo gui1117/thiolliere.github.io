@@ -249,14 +249,6 @@
 <span id="246">246</span>
 <span id="247">247</span>
 <span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
-<span id="256">256</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -278,6 +270,7 @@
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">helper</span>;
 <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">spanned</span>::<span class="ident">Spanned</span>;
 <span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
+<span class="kw">use</span> <span class="ident">frame_support_procedural_tools</span>::<span class="ident">clean_type_string</span>;
 
 <span class="doccomment">/// List of additional token to be used for parsing.</span>
 <span class="kw">mod</span> <span class="ident">keyword</span> {
@@ -300,9 +293,9 @@
 	<span class="kw">pub</span> <span class="ident">instances</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">helper</span>::<span class="ident">InstanceUsage</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// If event is declared with instance.</span>
 	<span class="kw">pub</span> <span class="ident">has_instance</span>: <span class="ident">bool</span>,
-	<span class="doccomment">/// If event is declared with genericity.</span>
+	<span class="doccomment">/// If event is declared with generics.</span>
 	<span class="kw">pub</span> <span class="ident">is_generic</span>: <span class="ident">bool</span>,
-	<span class="doccomment">/// Weither the function `deposit_event` must be generated.</span>
+	<span class="doccomment">/// Whether the function `deposit_event` must be generated.</span>
 	<span class="kw">pub</span> <span class="ident">deposit_event</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">syn</span>::<span class="ident">Visibility</span>, <span class="ident">proc_macro2</span>::<span class="ident">Span</span>)<span class="op">&gt;</span>,
 	<span class="doccomment">/// Where clause used in event definition.</span>
 	<span class="kw">pub</span> <span class="ident">where_clause</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">WhereClause</span><span class="op">&gt;</span>,
@@ -368,7 +361,9 @@
 }
 
 <span class="doccomment">/// Parse for syntax `$Type = &quot;$SomeString&quot;`.</span>
-<span class="kw">fn</span> <span class="ident">parse_event_metadata_element</span>(<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">syn</span>::<span class="ident">Type</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_event_metadata_element</span>(
+	<span class="ident">input</span>: <span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">ParseStream</span>
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">syn</span>::<span class="ident">Type</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
 	<span class="kw">let</span> <span class="ident">typ</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">Type</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
 	<span class="ident">input</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="macro">Token</span><span class="macro">!</span>[<span class="op">=</span>]<span class="op">&gt;</span>()<span class="question-mark">?</span>;
 	<span class="kw">let</span> <span class="ident">ident</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="ident">LitStr</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
@@ -443,7 +438,7 @@
 		<span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Item</span>::<span class="ident">Enum</span>(<span class="ident">item</span>) <span class="op">=</span> <span class="ident">item</span> {
 			<span class="ident">item</span>
 		} <span class="kw">else</span> {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::event, expect item enum&quot;</span>))
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">item</span>.<span class="ident">span</span>(), <span class="string">&quot;Invalid pallet::event, expected item enum&quot;</span>))
 		};
 
 		<span class="kw">let</span> <span class="ident">event_attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PalletEventAttr</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">helper</span>::<span class="ident">take_item_attrs</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">item</span>.<span class="ident">attrs</span>)<span class="question-mark">?</span>;
@@ -481,26 +476,15 @@
 					.<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
 						<span class="ident">metadata</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">field</span>.<span class="ident">ty</span>)
 							.<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="number">1</span>.<span class="ident">clone</span>())
-							.<span class="ident">or_else</span>(<span class="op">|</span><span class="op">|</span> {
-								<span class="kw">if</span> <span class="kw">let</span> <span class="ident">syn</span>::<span class="ident">Type</span>::<span class="ident">Path</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span> {
-									<span class="ident">p</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">last</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">s</span>.<span class="ident">ident</span>))
-								} <span class="kw">else</span> {
-									<span class="prelude-val">None</span>
-								}
-							})
-							.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-								<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;Invalid pallet::event, type can&#39;t be parsed for \
-									metadata, must be either a path type (and thus last \
-									segments ident is metadata) or match a type in the \
-									metadata attributes&quot;</span>;
-								<span class="ident">syn</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">field</span>.<span class="ident">span</span>(), <span class="ident">msg</span>)
+							.<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
+								<span class="ident">clean_type_string</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span>.<span class="ident">to_token_stream</span>().<span class="ident">to_string</span>())
 							})
 					})
-					.<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+					.<span class="ident">collect</span>();
 
-				<span class="prelude-val">Ok</span>((<span class="ident">name</span>, <span class="ident">args</span>, <span class="ident">docs</span>))
+				(<span class="ident">name</span>, <span class="ident">args</span>, <span class="ident">docs</span>)
 			})
-			.<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">syn</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
+			.<span class="ident">collect</span>();
 
 		<span class="prelude-val">Ok</span>(<span class="ident">EventDef</span> {
 			<span class="ident">index</span>,

@@ -1,6 +1,4 @@
 (function() {var implementors = {};
-implementors["ethbloom"] = [{"text":"impl Distribution&lt;Bloom&gt; for Standard","synthetic":false,"types":[]}];
-implementors["ethereum_types"] = [{"text":"impl Distribution&lt;H32&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H64&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H128&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H264&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H520&gt; for Standard","synthetic":false,"types":[]}];
-implementors["primitive_types"] = [{"text":"impl Distribution&lt;H160&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H256&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H512&gt; for Standard","synthetic":false,"types":[]}];
+implementors["primitive_types"] = [{"text":"impl Distribution&lt;H128&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H160&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H256&gt; for Standard","synthetic":false,"types":[]},{"text":"impl Distribution&lt;H512&gt; for Standard","synthetic":false,"types":[]}];
 implementors["rand"] = [];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

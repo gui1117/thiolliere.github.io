@@ -460,7 +460,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```nocompile</span>
 <span class="doccomment">/// decl_storage! {</span>
-<span class="doccomment">/// 	trait Store for Module&lt;T: Trait&gt; as Example {</span>
+<span class="doccomment">/// 	trait Store for Module&lt;T: Config&gt; as Example {</span>
 <span class="doccomment">/// 		Foo get(fn foo) config(): u32=12;</span>
 <span class="doccomment">/// 		Bar: map hasher(identity) u32 =&gt; u32;</span>
 <span class="doccomment">/// 		pub Zed build(|config| vec![(0, 0)]): map hasher(identity) u32 =&gt; u32;</span>
@@ -468,7 +468,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Declaration is set with the header `(pub) trait Store for Module&lt;T: Trait&gt; as Example`,</span>
+<span class="doccomment">/// Declaration is set with the header `(pub) trait Store for Module&lt;T: Config&gt; as Example`,</span>
 <span class="doccomment">/// with `Store` a (pub) trait generated associating each storage item to the `Module` and</span>
 <span class="doccomment">/// `as Example` setting the prefix used for storage items of this module. `Example` must be unique:</span>
 <span class="doccomment">/// another module with the same name and the same inner storage item name will conflict.</span>
@@ -594,7 +594,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```nocompile</span>
 <span class="doccomment">/// decl_storage! {</span>
-<span class="doccomment">/// 	trait Store for Module&lt;T: Trait&gt; as Example {</span>
+<span class="doccomment">/// 	trait Store for Module&lt;T: Config&gt; as Example {</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 		// Your storage items</span>
 <span class="doccomment">/// 	}</span>
@@ -627,7 +627,7 @@
 <span class="doccomment">/// (`DefaultInstance` type is optional):</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```nocompile</span>
-<span class="doccomment">/// trait Store for Module&lt;T: Trait&lt;I&gt;, I: Instance=DefaultInstance&gt; as Example {}</span>
+<span class="doccomment">/// trait Store for Module&lt;T: Config&lt;I&gt;, I: Instance=DefaultInstance&gt; as Example {}</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Accessing the structure no requires the instance as generic parameter:</span>
@@ -639,7 +639,7 @@
 <span class="doccomment">/// This macro supports a where clause which will be replicated to all generated types.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```nocompile</span>
-<span class="doccomment">/// trait Store for Module&lt;T: Trait&gt; as Example where T::AccountId: std::fmt::Display {}</span>
+<span class="doccomment">/// trait Store for Module&lt;T: Config&gt; as Example where T::AccountId: std::fmt::Display {}</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Limitations</span>
@@ -699,8 +699,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// We provide support for the following module parts in a pallet:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// - `Pallet` or `Module`, mandatory. (one or the other must be provided depending if pallet use</span>
-<span class="doccomment">/// 	pallet attribute macro or old decl_module macro</span>
+<span class="doccomment">/// - `Pallet` or `Module`, mandatory. (one or the other must be provided depending if the pallet</span>
+<span class="doccomment">/// 	uses the pallet attribute macro or old `decl_module` macro.</span>
 <span class="doccomment">/// - `Call`</span>
 <span class="doccomment">/// - `Storage`</span>
 <span class="doccomment">/// - `Event` or `Event&lt;T&gt;` (if the event is generic)</span>

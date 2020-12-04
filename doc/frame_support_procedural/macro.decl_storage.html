@@ -4,14 +4,14 @@
                 <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/frame_support_procedural/lib.rs.html#241-243" title="goto source code">[src]</a></span><span class="in-band">Macro <a href="index.html">frame_support_procedural</a>::<wbr><a class="macro" href="">decl_storage</a></span></h1><pre class="rust macro">decl_storage!() { /* proc-macro */ }</pre><div class="docblock"><p>Declares strongly-typed wrappers around codec-compatible types in storage.</p>
 <h2 id="example" class="section-header"><a href="#example">Example</a></h2>
 <pre><code class="language-nocompile">decl_storage! {
-	trait Store for Module&lt;T: Trait&gt; as Example {
+	trait Store for Module&lt;T: Config&gt; as Example {
 		Foo get(fn foo) config(): u32=12;
 		Bar: map hasher(identity) u32 =&gt; u32;
 		pub Zed build(|config| vec![(0, 0)]): map hasher(identity) u32 =&gt; u32;
 	}
 }
 </code></pre>
-<p>Declaration is set with the header <code>(pub) trait Store for Module&lt;T: Trait&gt; as Example</code>,
+<p>Declaration is set with the header <code>(pub) trait Store for Module&lt;T: Config&gt; as Example</code>,
 with <code>Store</code> a (pub) trait generated associating each storage item to the <code>Module</code> and
 <code>as Example</code> setting the prefix used for storage items of this module. <code>Example</code> must be unique:
 another module with the same name and the same inner storage item name will conflict.
@@ -135,7 +135,7 @@ Will include the item in <code>GenesisConfig</code>.</li>
 when at least one storage field requires default initialization
 (both <code>get</code> and <code>config</code> or <code>build</code>), or specifically as in:</p>
 <pre><code class="language-nocompile">decl_storage! {
-	trait Store for Module&lt;T: Trait&gt; as Example {
+	trait Store for Module&lt;T: Config&gt; as Example {
 
 		// Your storage items
 	}
@@ -161,7 +161,7 @@ when at least one storage field requires default initialization
 <h3 id="module-with-instances" class="section-header"><a href="#module-with-instances">Module with Instances</a></h3>
 <p>The <code>decl_storage!</code> macro supports building modules with instances with the following syntax
 (<code>DefaultInstance</code> type is optional):</p>
-<pre><code class="language-nocompile">trait Store for Module&lt;T: Trait&lt;I&gt;, I: Instance=DefaultInstance&gt; as Example {}
+<pre><code class="language-nocompile">trait Store for Module&lt;T: Config&lt;I&gt;, I: Instance=DefaultInstance&gt; as Example {}
 </code></pre>
 <p>Accessing the structure no requires the instance as generic parameter:</p>
 <ul>
@@ -170,7 +170,7 @@ when at least one storage field requires default initialization
 </ul>
 <h2 id="where-clause" class="section-header"><a href="#where-clause">Where clause</a></h2>
 <p>This macro supports a where clause which will be replicated to all generated types.</p>
-<pre><code class="language-nocompile">trait Store for Module&lt;T: Trait&gt; as Example where T::AccountId: std::fmt::Display {}
+<pre><code class="language-nocompile">trait Store for Module&lt;T: Config&gt; as Example where T::AccountId: std::fmt::Display {}
 </code></pre>
 <h2 id="limitations" class="section-header"><a href="#limitations">Limitations</a></h2><h1 id="instancing-and-generic-genesisconfig" class="section-header"><a href="#instancing-and-generic-genesisconfig">Instancing and generic <code>GenesisConfig</code></a></h1>
 <p>If your module supports instancing and you see an error like <code>parameter </code>I<code> is never used</code> for

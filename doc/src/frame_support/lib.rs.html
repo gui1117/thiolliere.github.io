@@ -1936,6 +1936,90 @@
 <span id="1933">1933</span>
 <span id="1934">1934</span>
 <span id="1935">1935</span>
+<span id="1936">1936</span>
+<span id="1937">1937</span>
+<span id="1938">1938</span>
+<span id="1939">1939</span>
+<span id="1940">1940</span>
+<span id="1941">1941</span>
+<span id="1942">1942</span>
+<span id="1943">1943</span>
+<span id="1944">1944</span>
+<span id="1945">1945</span>
+<span id="1946">1946</span>
+<span id="1947">1947</span>
+<span id="1948">1948</span>
+<span id="1949">1949</span>
+<span id="1950">1950</span>
+<span id="1951">1951</span>
+<span id="1952">1952</span>
+<span id="1953">1953</span>
+<span id="1954">1954</span>
+<span id="1955">1955</span>
+<span id="1956">1956</span>
+<span id="1957">1957</span>
+<span id="1958">1958</span>
+<span id="1959">1959</span>
+<span id="1960">1960</span>
+<span id="1961">1961</span>
+<span id="1962">1962</span>
+<span id="1963">1963</span>
+<span id="1964">1964</span>
+<span id="1965">1965</span>
+<span id="1966">1966</span>
+<span id="1967">1967</span>
+<span id="1968">1968</span>
+<span id="1969">1969</span>
+<span id="1970">1970</span>
+<span id="1971">1971</span>
+<span id="1972">1972</span>
+<span id="1973">1973</span>
+<span id="1974">1974</span>
+<span id="1975">1975</span>
+<span id="1976">1976</span>
+<span id="1977">1977</span>
+<span id="1978">1978</span>
+<span id="1979">1979</span>
+<span id="1980">1980</span>
+<span id="1981">1981</span>
+<span id="1982">1982</span>
+<span id="1983">1983</span>
+<span id="1984">1984</span>
+<span id="1985">1985</span>
+<span id="1986">1986</span>
+<span id="1987">1987</span>
+<span id="1988">1988</span>
+<span id="1989">1989</span>
+<span id="1990">1990</span>
+<span id="1991">1991</span>
+<span id="1992">1992</span>
+<span id="1993">1993</span>
+<span id="1994">1994</span>
+<span id="1995">1995</span>
+<span id="1996">1996</span>
+<span id="1997">1997</span>
+<span id="1998">1998</span>
+<span id="1999">1999</span>
+<span id="2000">2000</span>
+<span id="2001">2001</span>
+<span id="2002">2002</span>
+<span id="2003">2003</span>
+<span id="2004">2004</span>
+<span id="2005">2005</span>
+<span id="2006">2006</span>
+<span id="2007">2007</span>
+<span id="2008">2008</span>
+<span id="2009">2009</span>
+<span id="2010">2010</span>
+<span id="2011">2011</span>
+<span id="2012">2012</span>
+<span id="2013">2013</span>
+<span id="2014">2014</span>
+<span id="2015">2015</span>
+<span id="2016">2016</span>
+<span id="2017">2017</span>
+<span id="2018">2018</span>
+<span id="2019">2019</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
@@ -2006,6 +2090,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">traits</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">weights</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">instances</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">hash</span>::{
 	<span class="ident">Twox256</span>, <span class="ident">Twox128</span>, <span class="ident">Blake2_256</span>, <span class="ident">Blake2_128</span>, <span class="ident">Identity</span>, <span class="ident">Twox64Concat</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">Hashable</span>,
@@ -2024,20 +2109,25 @@
 
 <span class="doccomment">/// Create new implementations of the [`Get`](crate::traits::Get) trait.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The so-called parameter type can be created in three different ways:</span>
+<span class="doccomment">/// The so-called parameter type can be created in four different ways:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// - Using `const` to create a parameter type that provides a `const` getter.</span>
-<span class="doccomment">///   It is required that the `value` is const.</span>
+<span class="doccomment">/// - Using `const` to create a parameter type that provides a `const` getter. It is required that</span>
+<span class="doccomment">///   the `value` is const.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// - Declare the parameter type without `const` to have more freedom when creating the value.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// - Using `storage` to create a storage parameter type. This type is special as it tries to</span>
-<span class="doccomment">///   load the value from the storage under a fixed key. If the value could not be found in the</span>
-<span class="doccomment">///   storage, the given default value will be returned. It is required that the value implements</span>
-<span class="doccomment">///   [`Encode`](codec::Encode) and [`Decode`](codec::Decode). The key for looking up the value</span>
-<span class="doccomment">///   in the storage is built using the following formular:</span>
+<span class="doccomment">/// - Using `storage` to create a storage parameter type. This type is special as it tries to load</span>
+<span class="doccomment">///   the value from the storage under a fixed key. If the value could not be found in the storage,</span>
+<span class="doccomment">///   the given default value will be returned. It is required that the value implements</span>
+<span class="doccomment">///   [`Encode`](codec::Encode) and [`Decode`](codec::Decode). The key for looking up the value in</span>
+<span class="doccomment">///   the storage is built using the following formula:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///   `twox_128(&quot;:&quot; ++ NAME ++ &quot;:&quot;)` where `NAME` is the name that is passed as type name.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// - Using `static` to create a static parameter type. Its value is</span>
+<span class="doccomment">///   being provided by a static variable with the equivalent name in `UPPER_SNAKE_CASE`. An</span>
+<span class="doccomment">///   additional `set` function is provided in this case to alter the static variable.</span>
+<span class="doccomment">///   **This is intended for testing ONLY and is ONLY available when `std` is enabled.**</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
@@ -2053,12 +2143,14 @@
 <span class="doccomment">///    /// Visibility of the type is optional</span>
 <span class="doccomment">///    OtherArgument: u64 = non_const_expression();</span>
 <span class="doccomment">///    pub storage StorageArgument: u64 = 5;</span>
+<span class="doccomment">///    pub static StaticArgument: u32 = 7;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// trait Config {</span>
 <span class="doccomment">///    type Parameter: Get&lt;u64&gt;;</span>
 <span class="doccomment">///    type OtherParameter: Get&lt;u64&gt;;</span>
 <span class="doccomment">///    type StorageParameter: Get&lt;u64&gt;;</span>
+<span class="doccomment">///    type StaticParameter: Get&lt;u32&gt;;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// struct Runtime;</span>
@@ -2066,7 +2158,10 @@
 <span class="doccomment">///    type Parameter = Argument;</span>
 <span class="doccomment">///    type OtherParameter = OtherArgument;</span>
 <span class="doccomment">///    type StorageParameter = StorageArgument;</span>
+<span class="doccomment">///    type StaticParameter = StaticArgument;</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // In testing, `StaticArgument` can be altered later: `StaticArgument::set(8)`.</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Invalid example:</span>
@@ -2081,7 +2176,6 @@
 <span class="doccomment">///    pub const Argument: u64 = non_const_expression();</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
-
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">parameter_types</span> {
 	(
@@ -2174,7 +2268,69 @@
 				<span class="ident">I</span>::<span class="ident">from</span>(<span class="self">Self</span>::<span class="ident">get</span>())
 			}
 		}
-	}
+	};
+	(
+		$(
+			$( <span class="attribute">#[ <span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span>:<span class="ident">meta</span> ]</span> )<span class="op">*</span>
+			<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span>:<span class="ident">vis</span> <span class="kw">static</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>;
+		)<span class="op">*</span>
+	) <span class="op">=</span><span class="op">&gt;</span> (
+		<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">parameter_types_impl_thread_local</span><span class="macro">!</span>(
+			$(
+				$( <span class="attribute">#[ <span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span> ]</span> )<span class="op">*</span>
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span> <span class="kw">static</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>;
+			)<span class="op">*</span>
+		);
+	);
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">parameter_types_impl_thread_local</span> {
+	( $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">any</span>:<span class="ident">tt</span> )<span class="op">*</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+		<span class="macro">compile_error</span><span class="macro">!</span>(<span class="string">&quot;static parameter types is only available in std and for testing.&quot;</span>);
+	};
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">parameter_types_impl_thread_local</span> {
+	(
+		$(
+			$( <span class="attribute">#[ <span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span>:<span class="ident">meta</span> ]</span> )<span class="op">*</span>
+			<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span>:<span class="ident">vis</span> <span class="kw">static</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>;
+		)<span class="op">*</span>
+	) <span class="op">=</span><span class="op">&gt;</span> {
+		<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">parameter_types_impl_thread_local</span><span class="macro">!</span>(
+			<span class="macro-nonterminal">IMPL_THREAD_LOCAL</span> $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="kw">type</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>, )<span class="op">*</span>
+		);
+		<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">paste</span>::<span class="macro">item</span><span class="macro">!</span> {
+			<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">parameter_types</span><span class="macro">!</span>(
+				$(
+					$( <span class="attribute">#[ <span class="macro-nonterminal">$</span><span class="macro-nonterminal">attr</span> ]</span> )<span class="op">*</span>
+					<span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span> <span class="op">=</span> [<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">snake</span>:<span class="ident">upper</span><span class="op">&gt;</span>].<span class="ident">with</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">borrow</span>().<span class="ident">clone</span>());
+				)<span class="op">*</span>
+			);
+			$(
+				<span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+					<span class="doccomment">/// Set the internal value.</span>
+					<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="kw">type</span>) {
+						[<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">snake</span>:<span class="ident">upper</span><span class="op">&gt;</span>].<span class="ident">with</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">v</span>.<span class="ident">borrow_mut</span>() <span class="op">=</span> <span class="ident">t</span>);
+					}
+				}
+			)<span class="op">*</span>
+		}
+	};
+	(<span class="ident">IMPL_THREAD_LOCAL</span> $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span>:<span class="ident">vis</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="kw">type</span>:<span class="macro-nonterminal">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">expr</span>, )<span class="op">*</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+		<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">paste</span>::<span class="macro">item</span><span class="macro">!</span> {
+			<span class="macro">thread_local</span><span class="macro">!</span> {
+				$(
+					<span class="kw">pub</span> <span class="kw">static</span> [<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">snake</span>:<span class="ident">upper</span><span class="op">&gt;</span>]: <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="kw">type</span><span class="op">&gt;</span> <span class="op">=</span>
+						<span class="macro-nonterminal">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>);
+				)<span class="op">*</span>
+			}
+		}
+	};
 }
 
 <span class="doccomment">/// Macro for easily creating a new implementation of both the `Get` and `Contains` traits. Use</span>
@@ -2214,14 +2370,14 @@
 <span class="doccomment">/// This is useful for type generic over runtime:</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use frame_support::CloneNoBound;</span>
-<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">/// trait Config {</span>
 <span class="doccomment">///		type C: Clone;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Foo implements [`Clone`] because `C` bounds [`Clone`].</span>
 <span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Clone`].</span>
 <span class="doccomment">/// #[derive(CloneNoBound)]</span>
-<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">/// struct Foo&lt;T: Config&gt; {</span>
 <span class="doccomment">///		c: T::C,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
@@ -2232,14 +2388,14 @@
 <span class="doccomment">/// This is useful for type generic over runtime:</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use frame_support::{EqNoBound, PartialEqNoBound};</span>
-<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">/// trait Config {</span>
 <span class="doccomment">///		type C: Eq;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Foo implements [`Eq`] because `C` bounds [`Eq`].</span>
 <span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Eq`].</span>
 <span class="doccomment">/// #[derive(PartialEqNoBound, EqNoBound)]</span>
-<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">/// struct Foo&lt;T: Config&gt; {</span>
 <span class="doccomment">///		c: T::C,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
@@ -2250,14 +2406,14 @@
 <span class="doccomment">/// This is useful for type generic over runtime:</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use frame_support::PartialEqNoBound;</span>
-<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">/// trait Config {</span>
 <span class="doccomment">///		type C: PartialEq;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Foo implements [`PartialEq`] because `C` bounds [`PartialEq`].</span>
 <span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`PartialEq`].</span>
 <span class="doccomment">/// #[derive(PartialEqNoBound)]</span>
-<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">/// struct Foo&lt;T: Config&gt; {</span>
 <span class="doccomment">///		c: T::C,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
@@ -2269,14 +2425,14 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// # use frame_support::DebugNoBound;</span>
 <span class="doccomment">/// # use core::fmt::Debug;</span>
-<span class="doccomment">/// trait Trait {</span>
+<span class="doccomment">/// trait Config {</span>
 <span class="doccomment">///		type C: Debug;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Foo implements [`Debug`] because `C` bounds [`Debug`].</span>
 <span class="doccomment">/// // Otherwise compilation will fail with an output telling `c` doesn&#39;t implement [`Debug`].</span>
 <span class="doccomment">/// #[derive(DebugNoBound)]</span>
-<span class="doccomment">/// struct Foo&lt;T: Trait&gt; {</span>
+<span class="doccomment">/// struct Foo&lt;T: Config&gt; {</span>
 <span class="doccomment">///		c: T::C,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
@@ -2355,7 +2511,6 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Used as `assert_noop(expression_to_assert, expected_error_expression)`.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_noop</span> {
 	(
 		<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span>,
@@ -2371,7 +2526,6 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Used as `assert_err!(expression_to_assert, expected_error_expression)`</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_err</span> {
 	( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span> , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">y</span>:<span class="ident">expr</span> $(,)<span class="question-mark">?</span> ) <span class="op">=</span><span class="op">&gt;</span> {
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>, <span class="prelude-val">Err</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">y</span>.<span class="ident">into</span>()));
@@ -2383,7 +2537,6 @@
 <span class="doccomment">/// This can be used on`DispatchResultWithPostInfo` when the post info should</span>
 <span class="doccomment">/// be ignored.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_err_ignore_postinfo</span> {
 	( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span> , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">y</span>:<span class="ident">expr</span> $(,)<span class="question-mark">?</span> ) <span class="op">=</span><span class="op">&gt;</span> {
 		<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro">assert_err</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>.<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> ()).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">error</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">y</span>);
@@ -2392,7 +2545,6 @@
 
 <span class="doccomment">/// Assert an expression returns error with the given weight.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_err_with_weight</span> {
 	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">err</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">weight</span>:<span class="ident">expr</span> $(,)<span class="question-mark">?</span> ) <span class="op">=</span><span class="op">&gt;</span> {
 		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">dispatch_err_with_post</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span> {
@@ -2409,7 +2561,6 @@
 <span class="doccomment">/// Used as `assert_ok!(expression_to_assert, expected_ok_expression)`,</span>
 <span class="doccomment">/// or `assert_ok!(expression_to_assert)` which would assert against `Ok(())`.</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">assert_ok</span> {
 	( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">expr</span> $(,)<span class="question-mark">?</span> ) <span class="op">=</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">is</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>;
@@ -2438,9 +2589,6 @@
 	<span class="kw">use</span> <span class="ident">sp_std</span>::{<span class="ident">marker</span>::<span class="ident">PhantomData</span>, <span class="ident">result</span>};
 	<span class="kw">use</span> <span class="ident">sp_io</span>::<span class="ident">TestExternalities</span>;
 
-	<span class="doccomment">/// Kind of alias for `Config` trait. Deprecated as `Trait` is renamed `Config`.</span>
-	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Trait</span>: <span class="ident">Config</span> {}
-	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Trait</span> <span class="kw">for</span> <span class="ident">T</span> {}
 	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="lifetime">&#39;static</span> {
 		<span class="kw">type</span> <span class="ident">BlockNumber</span>: <span class="ident">Codec</span> <span class="op">+</span> <span class="ident">EncodeLike</span> <span class="op">+</span> <span class="ident">Default</span>;
 		<span class="kw">type</span> <span class="ident">Origin</span>;
@@ -2451,16 +2599,16 @@
 	<span class="kw">mod</span> <span class="ident">module</span> {
 		<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 
-		<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Trait</span>, <span class="ident">Config</span>};
+		<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Config</span>;
 
 		<span class="macro">decl_module</span><span class="macro">!</span> {
-			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span>  {}
+			<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">enum</span> <span class="ident">Call</span> <span class="kw">where</span> <span class="ident">origin</span>: <span class="ident">T</span>::<span class="ident">Origin</span>, <span class="ident">system</span><span class="op">=</span><span class="self">self</span>  {}
 		}
 	}
 	<span class="kw">use</span> <span class="self">self</span>::<span class="ident">module</span>::<span class="ident">Module</span>;
 
 	<span class="macro">decl_storage</span><span class="macro">!</span> {
-		<span class="kw">trait</span> <span class="ident">Store</span> <span class="kw">for</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Test</span> {
+		<span class="kw">trait</span> <span class="ident">Store</span> <span class="kw">for</span> <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Test</span> {
 			<span class="kw">pub</span> <span class="ident">Data</span> <span class="ident">get</span>(<span class="kw">fn</span> <span class="ident">data</span>) <span class="ident">build</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">vec</span><span class="macro">!</span>[(<span class="number">15u32</span>, <span class="number">42u64</span>)]):
 				<span class="ident">map</span> <span class="ident">hasher</span>(<span class="ident">twox_64_concat</span>) <span class="ident">u32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">u64</span>;
 			<span class="kw">pub</span> <span class="ident">OptionLinkedMap</span>: <span class="ident">map</span> <span class="ident">hasher</span>(<span class="ident">blake2_128_concat</span>) <span class="ident">u32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>;
@@ -2924,7 +3072,7 @@
 <span class="doccomment">/// It is define by a module item:</span>
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet]</span>
-<span class="doccomment">/// mod pallet {</span>
+<span class="doccomment">/// pub mod pallet {</span>
 <span class="doccomment">/// ...</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
@@ -2939,7 +3087,7 @@
 <span class="doccomment">/// frame_system:</span>
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet]</span>
-<span class="doccomment">/// mod {</span>
+<span class="doccomment">/// pub mod pallet {</span>
 <span class="doccomment">///		use frame_support::pallet_prelude::*;</span>
 <span class="doccomment">///		use frame_system::pallet_prelude::*;</span>
 <span class="doccomment">///		...</span>
@@ -3006,6 +3154,9 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// More precisely the store trait contains an associated type for each storage. It is implemented</span>
 <span class="doccomment">/// for `Pallet` allowing to access the storage from pallet struct.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Thus when defining a storage named `Foo`, it can later be accessed from `Pallet` using</span>
+<span class="doccomment">/// `&lt;Pallet as Store&gt;::Foo`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion:</span>
 <span class="doccomment">///</span>
@@ -3168,9 +3319,9 @@
 <span class="doccomment">/// Variant documentations and field types are put into metadata.</span>
 <span class="doccomment">/// The attribute `#[pallet::metadata(..)]` allows to specify the metadata to put for some types.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The metadat of a type is defined by:</span>
+<span class="doccomment">/// The metadata of a type is defined by:</span>
 <span class="doccomment">/// * if matching a type in `#[pallet::metadata(..)]`, then the corresponding metadata.</span>
-<span class="doccomment">/// * otherwise the last segment of the type.</span>
+<span class="doccomment">/// * otherwise the type stringified.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// E.g.:</span>
 <span class="doccomment">/// ```ignore</span>
@@ -3180,7 +3331,7 @@
 <span class="doccomment">/// 	Proposed(u32, T::AccountId),</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// will write in event variant metadata `&quot;SpecialU32&quot;` and `&quot;AccountId&quot;`.</span>
+<span class="doccomment">/// will write in event variant metadata `&quot;SpecialU32&quot;` and `&quot;T::AccountId&quot;`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The attribute `#[pallet::generate_deposit($visbility fn deposit_event)]` generate a helper</span>
 <span class="doccomment">/// function on `Pallet` to deposit event.</span>
@@ -3212,16 +3363,17 @@
 <span class="doccomment">/// ```ignore</span>
 <span class="doccomment">/// #[pallet::storage]</span>
 <span class="doccomment">/// #[pallet::getter(fn $getter_name)] // optional</span>
-<span class="doccomment">/// $vis type $StorageName&lt;$some_generic&gt; $optional_where_clause = $StorageType&lt;_, $some_generics, ...&gt;;</span>
+<span class="doccomment">/// $vis type $StorageName&lt;$some_generic&gt; $optional_where_clause</span>
+<span class="doccomment">/// 	= $StorageType&lt;_, $some_generics, ...&gt;;</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// I.e. it must be a type alias, with generics: `T` or `T: Config`, aliased type must be one</span>
 <span class="doccomment">/// of `StorageValue`, `StorageMap` or `StorageDoubleMap` (defined in frame_support).</span>
 <span class="doccomment">/// Their first generic must be `_` as it is written by the macro itself.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The Prefix generic written by the macro is generated using PalletInfo::name and the name of the</span>
-<span class="doccomment">/// storage type.</span>
-<span class="doccomment">/// E.g. if runtime name the pallet MyExample the storage `type Foo&lt;T&gt; = ...` use</span>
-<span class="doccomment">/// prefixes: `Twox128(b&quot;MyExample&quot;) ++ Twox128(b&quot;Foo&quot;)`.</span>
+<span class="doccomment">/// The Prefix generic written by the macro is generated using `PalletInfo::name::&lt;Pallet&lt;..&gt;&gt;()`</span>
+<span class="doccomment">/// and the name of the storage type.</span>
+<span class="doccomment">/// E.g. if runtime names the pallet &quot;MyExample&quot; then the storage `type Foo&lt;T&gt; = ...` use the</span>
+<span class="doccomment">/// prefix: `Twox128(b&quot;MyExample&quot;) ++ Twox128(b&quot;Foo&quot;)`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The optional attribute `#[pallet::getter(fn $my_getter_fn_name)]` allow to define a</span>
 <span class="doccomment">/// getter function on `Pallet`.</span>
@@ -3240,8 +3392,9 @@
 <span class="doccomment">/// ### Macro expansion</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// For each storage the macro generate a struct named</span>
-<span class="doccomment">/// `_GeneratedPrefixForStorage$NameOfStorage`, implements StorageInstance on it using pallet</span>
-<span class="doccomment">/// names and storage name. and use it as first generic of the aliased type.</span>
+<span class="doccomment">/// `_GeneratedPrefixForStorage$NameOfStorage`, implements `StorageInstance` on it using pallet</span>
+<span class="doccomment">/// name and storage name. And use it as first generic of the aliased type.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The macro implement the function `storage_metadata` on `Pallet` implementing the metadata for</span>
 <span class="doccomment">/// storages.</span>
@@ -3276,7 +3429,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Allow to define the genesis configuration of the pallet.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Item is defined as either a type alias or an enum or a struct.</span>
+<span class="doccomment">/// Item is defined as either an enum or a struct.</span>
 <span class="doccomment">/// It needs to be public and implement trait GenesisBuild with `#[pallet::genesis_build]`.</span>
 <span class="doccomment">/// The type generics is constrained to be either none, or `T` or `T: Config`.</span>
 <span class="doccomment">///</span>
@@ -3344,7 +3497,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Macro make currenlty no use of this information, but it might use this information in the</span>
+<span class="doccomment">/// Macro make currently no use of this information, but it might use this information in the</span>
 <span class="doccomment">/// future to give information directly to construct_runtime.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Validate unsigned: `#[pallet::validate_unsigned]` optional</span>
@@ -3366,7 +3519,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// ### Macro expansion</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Macro make currenlty no use of this information, but it might use this information in the</span>
+<span class="doccomment">/// Macro make currently no use of this information, but it might use this information in the</span>
 <span class="doccomment">/// future to give information directly to construct_runtime.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Origin: `#[pallet::origin]` optional</span>
@@ -3496,7 +3649,7 @@
 <span class="doccomment">/// 	pub enum Event&lt;T: Config&gt; {</span>
 <span class="doccomment">/// 		/// doc comment put in metadata</span>
 <span class="doccomment">/// 		// `&lt;T as frame_system::Config&gt;::AccountId` is not defined in metadata list, the last</span>
-<span class="doccomment">/// 		// segment is put into metadata, i.e. `AccountId`</span>
+<span class="doccomment">/// 		// Thus the metadata is `&lt;T as frame_system::Config&gt;::AccountId`.</span>
 <span class="doccomment">/// 		Proposed(&lt;T as frame_system::Config&gt;::AccountId),</span>
 <span class="doccomment">/// 		/// doc</span>
 <span class="doccomment">/// 		// here metadata will be `Balance` as define in metadata list</span>
@@ -3745,8 +3898,9 @@
 <span class="doccomment">/// 5. start writing new pallet module</span>
 <span class="doccomment">/// 	```ignore</span>
 <span class="doccomment">/// 	pub use pallet::*;</span>
-<span class="doccomment">///     #[frame_support::pallet]</span>
-<span class="doccomment">/// 	mod pallet {</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// 	#[frame_support::pallet]</span>
+<span class="doccomment">/// 	pub mod pallet {</span>
 <span class="doccomment">/// 		pub use frame_support::pallet_prelude::*;</span>
 <span class="doccomment">/// 		pub use frame_system::pallet_prelude::*;</span>
 <span class="doccomment">/// 		use super::*;</span>
@@ -3777,7 +3931,7 @@
 <span class="doccomment">/// 	}</span>
 <span class="doccomment">/// 	```</span>
 <span class="doccomment">/// 	and write inside all the call in decl_module with a few changes in the signature:</span>
-<span class="doccomment">/// 	- origin must now be written completly, e.g. `origin: OriginFor&lt;T&gt;`</span>
+<span class="doccomment">/// 	- origin must now be written completely, e.g. `origin: OriginFor&lt;T&gt;`</span>
 <span class="doccomment">/// 	- result type must be `DispatchResultWithPostInfo`, you need to write it and also you might</span>
 <span class="doccomment">/// 	need to put `Ok(().into())` at the end or the function.</span>
 <span class="doccomment">/// 	- `#[compact]` must now be written `#[pallet::compact]`</span>
@@ -3871,6 +4025,20 @@
 <span class="doccomment">/// 	Thus any use of this pallet in `construct_runtime!` should be careful to update name in</span>
 <span class="doccomment">/// 	order not to break storage or to upgrade storage (moreover for instantiable pallet).</span>
 <span class="doccomment">/// 	If pallet is published, make sure to warn about this breaking change.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Notes when macro fails to show proper error message spans:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Rustc loses span for some macro input. Some tips to fix it:</span>
+<span class="doccomment">/// * do not use inner attribute:</span>
+<span class="doccomment">/// 	```ignore</span>
+<span class="doccomment">/// 	#[pallet]</span>
+<span class="doccomment">/// 	pub mod pallet {</span>
+<span class="doccomment">/// 		//! This inner attribute will make span fail</span>
+<span class="doccomment">/// 		..</span>
+<span class="doccomment">/// 	}</span>
+<span class="doccomment">/// 	```</span>
+<span class="doccomment">/// * use the newest nightly possible.</span>
+<span class="doccomment">///</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support_procedural</span>::<span class="ident">pallet</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "frame_support";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

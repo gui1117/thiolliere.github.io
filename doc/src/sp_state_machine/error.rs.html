@@ -85,18 +85,18 @@
 <span class="doccomment">/// would not be executed unless externalities were available. This is included for completeness,</span>
 <span class="doccomment">/// and as a transition away from the pre-existing framework.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">derive</span>(<span class="ident">thiserror</span>::<span class="ident">Error</span>))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ExecutionError</span> {
-	<span class="doccomment">/// Backend error.</span>
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Backend error {0:?}&quot;</span>))]</span>
 	<span class="ident">Backend</span>(<span class="kw">crate</span>::<span class="ident">DefaultError</span>),
-	<span class="doccomment">/// The entry `:code` doesn&#39;t exist in storage so there&#39;s no way we can execute anything.</span>
+
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;`:code` entry does not exist in storage&quot;</span>))]</span>
 	<span class="ident">CodeEntryDoesNotExist</span>,
-	<span class="doccomment">/// Backend is incompatible with execution proof generation process.</span>
+
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Unable to generate proof&quot;</span>))]</span>
 	<span class="ident">UnableToGenerateProof</span>,
-	<span class="doccomment">/// Invalid execution proof.</span>
+
 	<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">error</span>(<span class="string">&quot;Invalid execution proof&quot;</span>))]</span>
 	<span class="ident">InvalidProof</span>,
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/procedural/src/construct_runtime/parse.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>parse.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../frame_support_procedural/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../frame_support_procedural/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -366,16 +366,10 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2019-2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2019-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -404,7 +398,6 @@
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">NodeBlock</span>);
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">UncheckedExtrinsic</span>);
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">Module</span>);
-	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">Pallet</span>);
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">Call</span>);
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">Storage</span>);
 	<span class="ident">syn</span>::<span class="macro">custom_keyword</span><span class="macro">!</span>(<span class="ident">Event</span>);
@@ -597,7 +590,6 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ModulePartKeyword</span> {
 	<span class="ident">Module</span>(<span class="ident">keyword</span>::<span class="ident">Module</span>),
-	<span class="ident">Pallet</span>(<span class="ident">keyword</span>::<span class="ident">Pallet</span>),
 	<span class="ident">Call</span>(<span class="ident">keyword</span>::<span class="ident">Call</span>),
 	<span class="ident">Storage</span>(<span class="ident">keyword</span>::<span class="ident">Storage</span>),
 	<span class="ident">Event</span>(<span class="ident">keyword</span>::<span class="ident">Event</span>),
@@ -613,8 +605,6 @@
 
 		<span class="kw">if</span> <span class="ident">lookahead</span>.<span class="ident">peek</span>(<span class="ident">keyword</span>::<span class="ident">Module</span>) {
 			<span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>))
-		} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">lookahead</span>.<span class="ident">peek</span>(<span class="ident">keyword</span>::<span class="ident">Pallet</span>) {
-			<span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Pallet</span>(<span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>))
 		} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">lookahead</span>.<span class="ident">peek</span>(<span class="ident">keyword</span>::<span class="ident">Call</span>) {
 			<span class="prelude-val">Ok</span>(<span class="self">Self</span>::<span class="ident">Call</span>(<span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>))
 		} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">lookahead</span>.<span class="ident">peek</span>(<span class="ident">keyword</span>::<span class="ident">Storage</span>) {
@@ -640,7 +630,6 @@
 	<span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
 		<span class="kw">match</span> <span class="self">self</span> {
 			<span class="self">Self</span>::<span class="ident">Module</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Module&quot;</span>,
-			<span class="self">Self</span>::<span class="ident">Pallet</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Pallet&quot;</span>,
 			<span class="self">Self</span>::<span class="ident">Call</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Call&quot;</span>,
 			<span class="self">Self</span>::<span class="ident">Storage</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Storage&quot;</span>,
 			<span class="self">Self</span>::<span class="ident">Event</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;Event&quot;</span>,
@@ -671,7 +660,6 @@
 	<span class="kw">fn</span> <span class="ident">span</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Span</span> {
 		<span class="kw">match</span> <span class="self">self</span> {
 			<span class="self">Self</span>::<span class="ident">Module</span>(<span class="ident">inner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner</span>.<span class="ident">span</span>(),
-			<span class="self">Self</span>::<span class="ident">Pallet</span>(<span class="ident">inner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner</span>.<span class="ident">span</span>(),
 			<span class="self">Self</span>::<span class="ident">Call</span>(<span class="ident">inner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner</span>.<span class="ident">span</span>(),
 			<span class="self">Self</span>::<span class="ident">Storage</span>(<span class="ident">inner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner</span>.<span class="ident">span</span>(),
 			<span class="self">Self</span>::<span class="ident">Event</span>(<span class="ident">inner</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inner</span>.<span class="ident">span</span>(),
@@ -714,7 +702,7 @@
 
 <span class="kw">impl</span> <span class="ident">ModulePart</span> {
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_names</span>(<span class="ident">names</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-		<span class="kw">let</span> <span class="ident">res</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">names</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;`{}`&quot;</span>, <span class="ident">s</span>)).<span class="ident">collect</span>();
+		<span class="kw">let</span> <span class="ident">res</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;`{}`&quot;</span>, <span class="ident">s</span>)).<span class="ident">collect</span>();
 		<span class="ident">res</span>.<span class="ident">join</span>(<span class="string">&quot;, &quot;</span>)
 	}
 

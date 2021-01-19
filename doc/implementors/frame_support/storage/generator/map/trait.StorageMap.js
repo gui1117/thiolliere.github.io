@@ -1,4 +1,3 @@
 (function() {var implementors = {};
 implementors["frame_system"] = [{"text":"impl&lt;T:&nbsp;Config&gt; StorageMap&lt;&lt;T as Config&gt;::AccountId, AccountInfo&lt;&lt;T as Config&gt;::Index, &lt;T as Config&gt;::AccountData&gt;&gt; for Account&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Config&gt; StorageMap&lt;&lt;T as Config&gt;::BlockNumber, &lt;T as Config&gt;::Hash&gt; for BlockHash&lt;T&gt;","synthetic":false,"types":[]}];
-implementors["pallet_elections_phragmen"] = [{"text":"impl&lt;T:&nbsp;Config&gt; StorageMap&lt;&lt;T as Config&gt;::AccountId, Voter&lt;&lt;T as Config&gt;::AccountId, &lt;&lt;T as Config&gt;::Currency as Currency&lt;&lt;T as Config&gt;::AccountId&gt;&gt;::Balance&gt;&gt; for Voting&lt;T&gt;","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

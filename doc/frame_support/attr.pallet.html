@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `pallet` attr in crate `frame_support`."><meta name="keywords" content="rust, rustlang, rust-lang, pallet"><title>frame_support::pallet - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc attr"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../frame_support/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><div class="sidebar-elems"><p class="location"><a href="index.html">frame_support</a></p><script>window.sidebarCurrent = {name: "pallet", ty: "attr", relpath: ""};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
-                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/frame_support_procedural/lib.rs.html#313" title="goto source code">[src]</a></span><span class="in-band">Attribute Macro <a href="index.html">frame_support</a>::<wbr><a class="attr" href="">pallet</a></span></h1><pre class="rust attr">#[pallet]</pre><div class="docblock"><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc attr"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../frame_support/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><div class="sidebar-elems"><p class="location"><a href="index.html">frame_support</a></p><script>window.sidebarCurrent = {name: "pallet", ty: "attr", relpath: ""};</script><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/frame_support_procedural/lib.rs.html#312" title="goto source code">[src]</a></span><span class="in-band">Attribute Macro <a href="index.html">frame_support</a>::<wbr><a class="attr" href="">pallet</a></span></h1><pre class="rust attr">#[pallet]</pre><div class="docblock"><p><code>pallet</code> attribute macro allows to define a pallet to be used in <code>construct_runtime!</code>.</p>
 <p>It is define by a module item:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet</span> {
 ...
@@ -16,7 +16,7 @@ instance work see below example.</p>
 <p>Note various type can be automatically imported using pallet_prelude in frame_support and
 frame_system:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet</span> {
 	<span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>;
@@ -27,7 +27,7 @@ frame_system:</p>
 <p>The trait defining generics of the pallet.</p>
 <p>Item must be defined as</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">frame_system</span>::<span class="ident">Config</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optionally_some_other_supertraits</span>
 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span>
@@ -40,7 +40,7 @@ optionally other supertrait and where clause.</p>
 <code>IsType&lt;&lt;Self as frame_system::Config&gt;::Event&gt;</code>, see <code>#[pallet::event]</code> for more information.</p>
 <p>To put <code>Get</code> associated type into metadatas, use the attribute <code>#[pallet::constant]</code>, e.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">frame_system</span>::<span class="ident">Config</span> {
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">constant</span>]</span>
@@ -49,7 +49,7 @@ optionally other supertrait and where clause.</p>
 <p>To bypass the <code>frame_system::Config</code> supertrait check, use the attribute
 <code>#[pallet::disable_frame_system_supertrait_check]</code>, e.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">disable_frame_system_supertrait_check</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">pallet_timestamp</span>::<span class="ident">Config</span> {}</pre></div>
@@ -59,14 +59,14 @@ optionally other supertrait and where clause.</p>
 <p>The placeholder struct, on which is implemented pallet informations.</p>
 <p>Item must be defined as followed:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">pallet</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);</pre></div>
 <p>I.e. a regular struct definition named <code>Pallet</code>, with generic T and no where clause.</p>
 <p>To generate a <code>Store</code> trait associating all storages, use the attribute
 <code>#[pallet::generate_store($vis trait Store)]</code>, e.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">pallet</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generate_store</span>(<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">trait</span> <span class="ident">Store</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);</pre></div>
@@ -77,7 +77,7 @@ for <code>Pallet</code> allowing to access the storage from pallet struct.</p>
 <h3 id="macro-expansion-1" class="section-header"><a href="#macro-expansion-1">Macro expansion:</a></h3>
 <p>The macro add this attribute to the struct definition:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">derive</span>(
 	<span class="ident">frame_support</span>::<span class="ident">CloneNoBound</span>,
 	<span class="ident">frame_support</span>::<span class="ident">EqNoBound</span>,
@@ -86,16 +86,17 @@ for <code>Pallet</code> allowing to access the storage from pallet struct.</p>
 )]</span></pre></div>
 <p>It implements on pallet:</p>
 <ul>
-<li>[<code>GetPalletVersion</code>]</li>
-<li>[<code>OnGenesis</code>]: contains some logic to write pallet version into storage.</li>
-<li>[<code>ModuleErrorMetadata</code>]: using error declared or no metadata.</li>
+<li><a href="../frame_support/traits/trait.GetPalletVersion.html" title="traits::GetPalletVersion"><code>traits::GetPalletVersion</code></a></li>
+<li><a href="../frame_support/traits/trait.OnGenesis.html" title="traits::OnGenesis"><code>traits::OnGenesis</code></a>: contains some logic to write pallet version into storage.</li>
+<li><code>ModuleErrorMetadata</code>: using error declared or no metadata.</li>
 </ul>
+<p>It declare <code>type Module</code> type alias for <code>Pallet</code>, used by <a href="../frame_support/macro.construct_runtime.html" title="construct_runtime"><code>construct_runtime</code></a>.</p>
 <p>If attribute generate_store then macro create the trait <code>Store</code> and implement it on <code>Pallet</code>.</p>
 <h1 id="hooks-pallethooks-mandatory" class="section-header"><a href="#hooks-pallethooks-mandatory">Hooks: <code>#[pallet::hooks]</code> mandatory</a></h1>
 <p>Implementation of <code>Hooks</code> on <code>Pallet</code> allowing to define some specific pallet logic.</p>
 <p>Item must be defined as</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">hooks</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Hooks</span><span class="op">&lt;</span><span class="ident">BlockNumberFor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> {
 }</pre></div>
@@ -111,7 +112,7 @@ logic. E.g. logic to write pallet version into storage.</p>
 <p>Implementation of pallet dispatchables.</p>
 <p>Item must be defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">call</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 	<span class="doccomment">/// $some_doc</span>
@@ -147,7 +148,7 @@ returns the dispatchable metadatas.</p>
 <p>Allow to define some extra constants to put into constant metadata.</p>
 <p>Item must be defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">extra_constants</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> {
 	<span class="doccomment">/// $some_doc</span>
@@ -165,14 +166,16 @@ returns the dispatchable metadatas.</p>
 This error type informations are put into metadata.</p>
 <p>Item must be defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">error</span>]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 	<span class="doccomment">/// $some_optional_doc</span>
 	<span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeFieldLessVariant</span>,
 	...
 }</pre></div>
-<p>I.e. a regular rust enum named <code>Error</code>, with generic <code>T</code> and fieldless variants.</p>
+<p>I.e. a regular rust enum named <code>Error</code>, with generic <code>T</code> and fieldless variants.
+The generic <code>T</code> mustn't bound anything and where clause is not allowed. But bounds and where
+clause shouldn't be needed for any usecase.</p>
 <h3 id="macro-expansion-5" class="section-header"><a href="#macro-expansion-5">Macro expansion</a></h3>
 <p>The macro implements <code>Debug</code> trait and functions <code>as_u8</code> using variant position, and <code>as_str</code>
 using variant doc.</p>
@@ -185,7 +188,7 @@ pallet.</p>
 removed in next block).</p>
 <p>Item is defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">event</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">metadata</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeType</span> <span class="op">=</span> <span class="string">&quot;$Metadata&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">SomeOtherType</span> <span class="op">=</span> <span class="string">&quot;$Metadata&quot;</span>, ..)]</span> <span class="comment">// Optional</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generate_deposit</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visbility</span> <span class="kw">fn</span> <span class="ident">deposit_event</span>)]</span> <span class="comment">// Optional</span>
@@ -208,7 +211,7 @@ The attribute <code>#[pallet::metadata(..)]</code> allows to specify the metadat
 </ul>
 <p>E.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">event</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">metadata</span>(<span class="ident">u32</span> <span class="op">=</span> <span class="string">&quot;SpecialU32&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Event</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> {
@@ -236,7 +239,7 @@ function on <code>Pallet</code> to deposit event.</p>
 This attribute can be used multiple times.</p>
 <p>Item is defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">storage</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">getter</span>(<span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">getter_name</span>)]</span> <span class="comment">// optional</span>
 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">vis</span> <span class="kw">type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">StorageName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span>
@@ -252,7 +255,7 @@ prefix: <code>Twox128(b&quot;MyExample&quot;) ++ Twox128(b&quot;Foo&quot;)</code
 getter function on <code>Pallet</code>.</p>
 <p>E.g:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">storage</span>]</span>
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">getter</span>(<span class="kw">fn</span> <span class="ident">my_storage</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type</span> <span class="ident">MyStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u32</span>, <span class="ident">u32</span><span class="op">&gt;</span>;</pre></div>
@@ -264,26 +267,33 @@ manually.</p>
 <code>_GeneratedPrefixForStorage$NameOfStorage</code>, implements <code>StorageInstance</code> on it using pallet
 name and storage name. And use it as first generic of the aliased type.</p>
 <p>The macro implement the function <code>storage_metadata</code> on <code>Pallet</code> implementing the metadata for
-storages.</p>
+storages:</p>
+<ul>
+<li>for storage value the type for value is copied into metadata</li>
+<li>for storage map the type for value and the type for key is copied into metadata</li>
+<li>for storage double map the type for value, key1, and key2 is copied into
+metadata.</li>
+</ul>
 <h1 id="type-value-pallettype_value-optional" class="section-header"><a href="#type-value-pallettype_value-optional">Type value: <code>#[pallet::type_value]</code> optional</a></h1>
 <p>Helper to define a struct implementing <code>Get</code> trait. To ease use of storage types.
 This attribute can be used multiple time.</p>
 <p>Item is defined as</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">type_value</span>]</span>
 <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">MyDefaultName</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">some_generic</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">default_type</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">optional_where_clause</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span> }</pre></div>
 <p>I.e.: a function definition with generics none or <code>T: Config</code> and a returned type.</p>
 <p>E.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">type_value</span>]</span>
 <span class="kw">fn</span> <span class="ident">MyDefault</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>::<span class="ident">Balance</span> { <span class="number">3</span>.<span class="ident">into</span>() }</pre></div>
 <p>NOTE: This attribute is meant to be used alongside <code>#[pallet::storage]</code> to defined some
 specific default value in storage.</p>
 <h3 id="macro-expansion-8" class="section-header"><a href="#macro-expansion-8">Macro expansion</a></h3>
-<p>Macro generate struct with the name of the function and its generic, and implement
-<code>Get&lt;$ReturnType&gt;</code> on it using the provided function block.</p>
+<p>Macro renames the function to some internal name, generate a struct with the original name of
+the function and its generic, and implement <code>Get&lt;$ReturnType&gt;</code> by calling the user defined
+function.</p>
 <h1 id="genesis-config-palletgenesis_config-optional" class="section-header"><a href="#genesis-config-palletgenesis_config-optional">Genesis config: <code>#[pallet::genesis_config]</code> optional</a></h1>
 <p>Allow to define the genesis configuration of the pallet.</p>
 <p>Item is defined as either an enum or a struct.
@@ -291,7 +301,7 @@ It needs to be public and implement trait GenesisBuild with <code>#[pallet::gene
 The type generics is constrained to be either none, or <code>T</code> or <code>T: Config</code>.</p>
 <p>E.g:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_config</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GenesisConfig</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> {
 	<span class="ident">_myfield</span>: <span class="ident">BalanceOf</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -310,7 +320,7 @@ The type generics is constrained to be either none, or <code>T</code> or <code>T
 <p>Allow to define how genesis_configuration is built.</p>
 <p>Item is defined as</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_build</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">GenesisBuild</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GenesisConfig</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">maybe_generics</span><span class="op">&gt;</span> {
 	<span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span> }
@@ -319,7 +329,7 @@ The type generics is constrained to be either none, or <code>T</code> or <code>T
 <code>GenesisConfig</code> with generics none or <code>T</code>.</p>
 <p>E.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_build</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">GenesisBuild</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GenesisConfig</span> {
 	<span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
@@ -335,7 +345,7 @@ non-instantiable pallets.</p>
 <p>Allow the pallet to provide some inherent:</p>
 <p>Item is defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">inherent</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">ProvideInherent</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 	<span class="comment">// ... regular trait implementation</span>
@@ -349,7 +359,7 @@ future to give information directly to construct_runtime.</p>
 <p>Allow the pallet to validate some unsigned transaction:</p>
 <p>Item is defined as:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">validate_unsigned</span>]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">ValidateUnsigned</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 	<span class="comment">// ... regular trait implementation</span>
@@ -366,7 +376,7 @@ future to give information directly to construct_runtime.</p>
 <p>Item must be either a type alias or an enum or a struct. It needs to be public.</p>
 <p>E.g.:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">origin</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Origin</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">T</span>)<span class="op">&gt;</span>);</pre></div>
 <p><strong>WARNING</strong>: modifying origin changes the outer runtime origin. This outer runtime origin can
@@ -386,17 +396,17 @@ important to bound <code>= ()</code> on every types.</p>
 <h1 id="example-for-pallet-without-instance" class="section-header"><a href="#example-for-pallet-without-instance">Example for pallet without instance.</a></h1>
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">frame_support</span>::<span class="ident">pallet</span>]</span>
-<span class="comment">// NOTE: Example is name of the pallet, it will be used as unique identifier for storage</span>
+<span class="comment">// NOTE: The name of the pallet will be provided by construct_runtime, and will be used as</span>
+<span class="comment">// unique identifier for storage. It is not defined in the pallet itself.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet</span> {
 	<span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>; <span class="comment">// Import various types used in pallet definition</span>
-	<span class="kw">use</span> <span class="ident">frame_system</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>; <span class="comment">// OriginFor helper type for implementing dispatchables.</span>
+	<span class="kw">use</span> <span class="ident">frame_system</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>; <span class="comment">// Import some system helper types.</span>
 
 	<span class="kw">type</span> <span class="ident">BalanceOf</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Config</span><span class="op">&gt;</span>::<span class="ident">Balance</span>;
 
 	<span class="comment">// Define the generic parameter of the pallet</span>
-	<span class="comment">// The macro checks trait generics: is expected none or `I = ()`.</span>
-	<span class="comment">// The macro parses `#[pallet::constant]` attributes: used to generate constant metadata,</span>
-	<span class="comment">// expected syntax is `type $IDENT: Get&lt;$TYPE&gt;;`.</span>
+	<span class="comment">// The macro parses `#[pallet::constant]` attributes, and use them to generate constant</span>
+	<span class="comment">// metadata,</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">config</span>]</span>
 	<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Config</span>: <span class="ident">frame_system</span>::<span class="ident">Config</span> {
 		<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">constant</span>]</span> <span class="comment">// put the constant in metadata</span>
@@ -413,15 +423,11 @@ important to bound <code>= ()</code> on every types.</p>
 	}
 
 	<span class="comment">// Define the pallet struct placeholder, various pallet function are implemented on it.</span>
-	<span class="comment">// The macro checks struct generics: is expected `T` or `T, I = DefaultInstance`</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">pallet</span>]</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generate_store</span>(<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">trait</span> <span class="ident">Store</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
 	<span class="comment">// Implement on the pallet hooks on pallet.</span>
-	<span class="comment">// The macro checks:</span>
-	<span class="comment">// * trait is `Hooks` (imported from pallet_prelude)</span>
-	<span class="comment">// * struct is `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;`</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">hooks</span>]</span>
 	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Hooks</span><span class="op">&lt;</span><span class="ident">BlockNumberFor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 	}
@@ -431,25 +437,15 @@ important to bound <code>= ()</code> on every types.</p>
 	<span class="comment">// WARNING: Each parameter used in functions must implement: Clone, Debug, Eq, PartialEq,</span>
 	<span class="comment">// Codec.</span>
 	<span class="comment">//</span>
-	<span class="comment">// The macro checks:</span>
-	<span class="comment">// * pallet is `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;`</span>
-	<span class="comment">// * trait is `Call`</span>
-	<span class="comment">// * each dispatchable functions first argument is `origin: OriginFor&lt;T&gt;` (OriginFor is</span>
-	<span class="comment">//   imported from frame_system.</span>
-	<span class="comment">//</span>
-	<span class="comment">// The macro parse `#[pallet::compact]` attributes, function parameter with this attribute</span>
-	<span class="comment">// will be encoded/decoded using compact codec in implementation of codec for the enum</span>
-	<span class="comment">// `Call`.</span>
-	<span class="comment">//</span>
-	<span class="comment">// The macro generate the enum `Call` with a variant for each dispatchable and implements</span>
-	<span class="comment">// codec, Eq, PartialEq, Clone and Debug.</span>
+	<span class="comment">// The macro parses `#[pallet::compact]` attributes on function arguments, and use it to</span>
+	<span class="comment">// implement `Call` encoding/decoding.</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">call</span>]</span>
 	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 		<span class="doccomment">/// Doc comment put in metadata</span>
 		<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">weight</span>(<span class="number">0</span>)]</span> <span class="comment">// Defines weight for call (function parameters are in scope)</span>
 		<span class="kw">fn</span> <span class="ident">toto</span>(
 			<span class="ident">origin</span>: <span class="ident">OriginFor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
-			<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">compact</span>]</span> <span class="ident">_foo</span>: <span class="ident">u32</span>
+			<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">compact</span>]</span> <span class="ident">_foo</span>: <span class="ident">u32</span>,
 		) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DispatchResultWithPostInfo</span> {
 			<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">origin</span>;
 			<span class="macro">unimplemented</span><span class="macro">!</span>();
@@ -457,7 +453,6 @@ important to bound <code>= ()</code> on every types.</p>
 	}
 
 	<span class="comment">// Declare pallet Error enum. (this is optional)</span>
-	<span class="comment">// The macro checks enum generics and that each variant is unit.</span>
 	<span class="comment">// The macro generate error metadata using doc comment on each variant.</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">error</span>]</span>
 	<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -487,19 +482,19 @@ important to bound <code>= ()</code> on every types.</p>
 		<span class="ident">Something</span>(<span class="ident">u32</span>),
 	}
 
-	<span class="comment">// Define a struct which implements `frame_support::traits::Get&lt;T::Balance&gt;`</span>
+	<span class="comment">// Define a struct which implements `frame_support::traits::Get&lt;T::Balance&gt;`. (optional)</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">type_value</span>]</span>
 	<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">MyDefault</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>::<span class="ident">Balance</span> { <span class="number">3</span>.<span class="ident">into</span>() }
 
-	<span class="comment">// Declare a storage, any amount of storage can be declared.</span>
+	<span class="comment">// Declare a storage, any amount of storage can be declared. (optional)</span>
 	<span class="comment">//</span>
 	<span class="comment">// Is expected either `StorageValue`, `StorageMap` or `StorageDoubleMap`.</span>
-	<span class="comment">// The macro generates for struct `$identP` (for storage of name `$ident`) and implement</span>
-	<span class="comment">// storage instance on it.</span>
+	<span class="comment">// The macro generates the prefix type and replace first generic `_`.</span>
+	<span class="comment">//</span>
 	<span class="comment">// The macro macro expand the metadata for the storage with the type used:</span>
-	<span class="comment">// * For storage value the type for value will be copied into metadata</span>
-	<span class="comment">// * For storage map the type for value and the type for key will be copied into metadata</span>
-	<span class="comment">// * For storage double map the type for value, key1, and key2 will be copied into</span>
+	<span class="comment">// * for storage value the type for value is copied into metadata</span>
+	<span class="comment">// * for storage map the type for value and the type for key is copied into metadata</span>
+	<span class="comment">// * for storage double map the type for value, key1, and key2 is copied into</span>
 	<span class="comment">//   metadata.</span>
 	<span class="comment">//</span>
 	<span class="comment">// NOTE: for storage hasher, the type is not copied because storage hasher trait already</span>
@@ -508,14 +503,14 @@ important to bound <code>= ()</code> on every types.</p>
 	<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type</span> <span class="ident">MyStorageValue</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="op">=</span>
 		<span class="ident">StorageValue</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">T</span>::<span class="ident">Balance</span>, <span class="ident">ValueQuery</span>, <span class="ident">MyDefault</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-	<span class="comment">// Another declaration</span>
+	<span class="comment">// Another storage declaration</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">storage</span>]</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">getter</span>(<span class="kw">fn</span> <span class="ident">my_storage</span>)]</span>
 	<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type</span> <span class="ident">MyStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Blake2_128Concat</span>, <span class="ident">u32</span>, <span class="ident">u32</span><span class="op">&gt;</span>;
 
 	<span class="comment">// Declare genesis config. (This is optional)</span>
 	<span class="comment">//</span>
-	<span class="comment">// The macro accept either type alias or struct or enum, it checks generics are consistent.</span>
+	<span class="comment">// The macro accept either struct or enum, it checks generics are consistent.</span>
 	<span class="comment">//</span>
 	<span class="comment">// Type must implement `Default` traits</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_config</span>]</span>
@@ -536,7 +531,7 @@ important to bound <code>= ()</code> on every types.</p>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">origin</span>]</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Origin</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
-	<span class="comment">// Declare validate_unsigned implementation.</span>
+	<span class="comment">// Declare validate_unsigned implementation. (this is optional)</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">validate_unsigned</span>]</span>
 	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">ValidateUnsigned</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 		<span class="kw">type</span> <span class="ident">Call</span> <span class="op">=</span> <span class="ident">Call</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
@@ -549,8 +544,6 @@ important to bound <code>= ()</code> on every types.</p>
 	}
 
 	<span class="comment">// Declare inherent provider for pallet. (this is optional)</span>
-	<span class="comment">//</span>
-	<span class="comment">// The macro checks pallet is `Pallet&lt;T&gt;` or `Pallet&lt;T, I&gt;` and trait is `ProvideInherent`</span>
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">inherent</span>]</span>
 	<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">ProvideInherent</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 		<span class="kw">type</span> <span class="ident">Call</span> <span class="op">=</span> <span class="ident">Call</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
@@ -703,9 +696,6 @@ important to bound <code>= ()</code> on every types.</p>
 <h2 id="upgrade-guidelines" class="section-header"><a href="#upgrade-guidelines">Upgrade guidelines:</a></h2>
 <ol>
 <li>
-<p>make crate compiling: rename usage of frame_system::Trait to frame_system::Config.</p>
-</li>
-<li>
 <p>export metadata of the pallet for later checks</p>
 </li>
 <li>
@@ -715,10 +705,10 @@ This template can be used as information it contains all information for storage
 config and genesis build.</p>
 </li>
 <li>
-<p>reorganize pallet to have trait Trait, decl_* macros, ValidateUnsigned, ProvideInherent,
-Origin all together in one file. suggested order:</p>
+<p>reorganize pallet to have trait <code>Config</code>, <code>decl_*</code> macros, <code>ValidateUnsigned</code>,
+<code>ProvideInherent</code>, <code>Origin</code> all together in one file. suggested order:</p>
 <ul>
-<li>trait,</li>
+<li>Config,</li>
 <li>decl_module,</li>
 <li>decl_event,</li>
 <li>decl_error,</li>
@@ -732,17 +722,17 @@ so far it should compile and all be correct.</li>
 <li>
 <p>start writing new pallet module</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pallet</span>::<span class="kw-2">*</span>;
 
 <span class="attribute">#[<span class="ident">frame_support</span>::<span class="ident">pallet</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet</span> {
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>;
-	<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">frame_system</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>;
+	<span class="kw">use</span> <span class="ident">frame_support</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>;
+	<span class="kw">use</span> <span class="ident">frame_system</span>::<span class="ident">pallet_prelude</span>::<span class="kw-2">*</span>;
 	<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
 	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">pallet</span>]</span>
-	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generete</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visibility_of_trait_store</span> <span class="kw">trait</span> <span class="ident">Store</span>)]</span>
+	<span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">generate_store</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visibility_of_trait_store</span> <span class="kw">trait</span> <span class="ident">Store</span>)]</span>
 	<span class="comment">// NOTE: if the visibility of trait store is private but you want to make it available</span>
 	<span class="comment">// in super, then use `pub(super)` or `pub(crate)` to make it available in crate.</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
@@ -750,25 +740,24 @@ so far it should compile and all be correct.</li>
 }</pre></div>
 </li>
 <li>
-<p><strong>migrate trait</strong>: move trait into the module with</p>
+<p><strong>migrate Config</strong>: move trait into the module with</p>
 <ul>
-<li>rename <code>Trait</code> to <code>Config</code></li>
 <li>all const in decl_module to <code>#[pallet::constant]</code></li>
 </ul>
 </li>
 <li>
 <p><strong>migrate decl_module</strong>: write:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">hooks</span>]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="ident">Hooks</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Hooks</span> <span class="kw">for</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 }</pre></div>
 <p>and write inside on_initialize/on_finalize/on_runtime_upgrade/offchain_worker/integrity_test</p>
 <p>then write:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">call</span>]</span>
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Trait</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Config</span><span class="op">&gt;</span> <span class="ident">Pallet</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 }</pre></div>
 <p>and write inside all the call in decl_module with a few changes in the signature:</p>
 <ul>
@@ -795,7 +784,7 @@ build and default implementation of genesis config can be taken from it directly
 <p>Otherwise here is the manual process:</p>
 <p>first migrate the genesis logic. write:</p>
 
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">genesis_config</span>]</span>
 <span class="kw">struct</span> <span class="ident">GenesisConfig</span> {
 	<span class="comment">// fields of add_extra_genesis</span>
@@ -826,7 +815,7 @@ and generic <code>QueryKind</code> being <code>OptionQuery</code> (note: this is
 <li>for storage with default value: <code>= $expr;</code> provide some specific OnEmpty generic. To do so
 use of <code>#[pallet::type_value]</code> to generate the wanted struct to put.
 example: <code>MyStorage: u32 = 3u32</code> would be written:
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">type_value</span>]</span> <span class="kw">fn</span> <span class="ident">MyStorageOnEmpty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> { <span class="number">3u32</span> }
 <span class="attribute">#[<span class="ident">pallet</span>::<span class="ident">storage</span>]</span>
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">type</span> <span class="ident">MyStorage</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">StorageValue</span><span class="op">&lt;</span><span class="ident">u32</span>, <span class="ident">ValueQuery</span>, <span class="ident">MyStorageOnEmpty</span><span class="op">&gt;</span>;</pre></div>
@@ -849,7 +838,7 @@ module under <code>#[pallet::validate_unsigned]</code></p>
 module under <code>#[pallet::provide_inherent]</code></p>
 </li>
 <li>
-<p>rename the usage of Module to Pallet and the usage of Config to Trait inside the crate.</p>
+<p>rename the usage of <code>Module</code> to <code>Pallet</code> inside the crate.</p>
 </li>
 <li>
 <p>migration is done, now double check migration with the checking migration guidelines.</p>
@@ -868,20 +857,20 @@ module under <code>#[pallet::provide_inherent]</code></p>
 </li>
 <li>manually check that:
 <ul>
-<li>Origin is moved inside macro unser <code>#[pallet::origin]</code> if it exists</li>
-<li>ValidateUnsigned is moved inside macro under <code>#[pallet::validate_unsigned)]</code> if it exists</li>
-<li>ProvideInherent is moved inside macro under <code>#[pallet::inherent)]</code> if it exists</li>
-<li>on_initialize/on_finalize/on_runtime_upgrade/offchain_worker are moved to Hooks
+<li><code>Origin</code> is moved inside macro unser <code>#[pallet::origin]</code> if it exists</li>
+<li><code>ValidateUnsigned</code> is moved inside macro under <code>#[pallet::validate_unsigned)]</code> if it exists</li>
+<li><code>ProvideInherent</code> is moved inside macro under <code>#[pallet::inherent)]</code> if it exists</li>
+<li><code>on_initialize</code>/<code>on_finalize</code>/<code>on_runtime_upgrade</code>/<code>offchain_worker</code> are moved to <code>Hooks</code>
 implementation</li>
-<li>storages with <code>config(..)</code> are converted to genesis_config field, and their default is
+<li>storages with <code>config(..)</code> are converted to <code>GenesisConfig</code> field, and their default is
 <code>= $expr;</code> if the storage have default value</li>
-<li>storages with <code>build($expr)</code> or <code>config(..)</code> are built in genesis_build</li>
-<li>add_extra_genesis fields are converted to genesis_config field with their correct default
-if specified</li>
-<li>add_extra_genesis build is written into genesis_build</li>
+<li>storages with <code>build($expr)</code> or <code>config(..)</code> are built in <code>GenesisBuild::build</code></li>
+<li><code>add_extra_genesis</code> fields are converted to <code>GenesisConfig</code> field with their correct
+default if specified</li>
+<li><code>add_extra_genesis</code> build is written into <code>GenesisBuild::build</code></li>
 </ul>
 </li>
-<li>storages now use PalletInfo for module_prefix instead of the one given to decl_storage:
+<li>storages now use <code>PalletInfo</code> for <code>module_prefix</code> instead of the one given to <code>decl_storage</code>:
 Thus any use of this pallet in <code>construct_runtime!</code> should be careful to update name in
 order not to break storage or to upgrade storage (moreover for instantiable pallet).
 If pallet is published, make sure to warn about this breaking change.</li>
@@ -890,7 +879,7 @@ If pallet is published, make sure to warn about this breaking change.</li>
 <p>Rustc loses span for some macro input. Some tips to fix it:</p>
 <ul>
 <li>do not use inner attribute:
-<div class='information'><div class='tooltip ignore'>ⓘ<span class='tooltiptext'>This example is not tested</span></div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
+<div class='information'><div class='tooltip ignore'>ⓘ</div></div><div class="example-wrap"><pre class="rust rust-example-rendered ignore">
 <span class="attribute">#[<span class="ident">pallet</span>]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pallet</span> {
 	<span class="doccomment">//! This inner attribute will make span fail</span>

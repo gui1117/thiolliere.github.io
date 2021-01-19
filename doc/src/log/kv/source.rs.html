@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.11/src/kv/source.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>source.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../log/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/thiolliere/.cargo/registry/src/github.com-1ecc6299db9ec823/log-0.4.11/src/kv/source.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>source.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="https://www.rust-lang.org/favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../log/index.html'><div class='logo-container'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -393,38 +393,38 @@
 <span id="392">392</span>
 <span id="393">393</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Sources for key-value pairs.</span>
+<span class="doccomment">//! Sources for key-value pairs.</span>
 
 <span class="kw">use</span> <span class="ident">kv</span>::{<span class="ident">Error</span>, <span class="ident">Key</span>, <span class="ident">ToKey</span>, <span class="ident">ToValue</span>, <span class="ident">Value</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
-<span class="doccomment">/// A source of key-value pairs.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.</span>
-<span class="doccomment">/// Use the [`Visitor`](trait.Visitor.html) trait to inspect the structured data</span>
-<span class="doccomment">/// in a source.</span>
+<span class="doccomment">/// A source of key-value pairs.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.</span>
+<span class="doccomment">/// Use the [`Visitor`](trait.Visitor.html) trait to inspect the structured data</span>
+<span class="doccomment">/// in a source.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Source</span> {
-    <span class="doccomment">/// Visit key-value pairs.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A source doesn&#39;t have to guarantee any ordering or uniqueness of key-value pairs.</span>
-    <span class="doccomment">/// If the given visitor returns an error then the source may early-return with it,</span>
-    <span class="doccomment">/// even if there are more key-value pairs.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implementation notes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A source should yield the same key-value pairs to a subsequent visitor unless</span>
-    <span class="doccomment">/// that visitor itself fails.</span>
+    <span class="doccomment">/// Visit key-value pairs.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A source doesn&#39;t have to guarantee any ordering or uniqueness of key-value pairs.</span>
+    <span class="doccomment">/// If the given visitor returns an error then the source may early-return with it,</span>
+    <span class="doccomment">/// even if there are more key-value pairs.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Implementation notes</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A source should yield the same key-value pairs to a subsequent visitor unless</span>
+    <span class="doccomment">/// that visitor itself fails.</span>
     <span class="kw">fn</span> <span class="ident">visit</span><span class="op">&lt;</span><span class="lifetime">&#39;kvs</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;kvs</span> <span class="self">self</span>, <span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">dyn</span> <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;kvs</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">/// Get the value for a given key.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If the key appears multiple times in the source then which key is returned</span>
-    <span class="doccomment">/// is implementation specific.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implementation notes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A source that can provide a more efficient implementation of this method</span>
-    <span class="doccomment">/// should override it.</span>
+    <span class="doccomment">/// Get the value for a given key.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the key appears multiple times in the source then which key is returned</span>
+    <span class="doccomment">/// is implementation specific.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Implementation notes</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A source that can provide a more efficient implementation of this method</span>
+    <span class="doccomment">/// should override it.</span>
     <span class="kw">fn</span> <span class="ident">get</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;v</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;v</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">struct</span> <span class="ident">Get</span><span class="op">&lt;</span><span class="lifetime">&#39;k</span>, <span class="lifetime">&#39;v</span><span class="op">&gt;</span> {
             <span class="ident">key</span>: <span class="ident">Key</span><span class="op">&lt;</span><span class="lifetime">&#39;k</span><span class="op">&gt;</span>,
@@ -447,15 +447,15 @@
         <span class="ident">get</span>.<span class="ident">found</span>
     }
 
-    <span class="doccomment">/// Count the number of key-value pairs that can be visited.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Implementation notes</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A source that knows the number of key-value pairs upfront may provide a more</span>
-    <span class="doccomment">/// efficient implementation.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// A subsequent call to `visit` should yield the same number of key-value pairs</span>
-    <span class="doccomment">/// to the visitor, unless that visitor fails part way through.</span>
+    <span class="doccomment">/// Count the number of key-value pairs that can be visited.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Implementation notes</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A source that knows the number of key-value pairs upfront may provide a more</span>
+    <span class="doccomment">/// efficient implementation.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A subsequent call to `visit` should yield the same number of key-value pairs</span>
+    <span class="doccomment">/// to the visitor, unless that visitor fails part way through.</span>
     <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="kw">struct</span> <span class="ident">Count</span>(<span class="ident">usize</span>);
 
@@ -546,9 +546,9 @@
     }
 }
 
-<span class="doccomment">/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).</span>
+<span class="doccomment">/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;kvs</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Visit a key-value pair.</span>
+    <span class="doccomment">/// Visit a key-value pair.</span>
     <span class="kw">fn</span> <span class="ident">visit_pair</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Key</span><span class="op">&lt;</span><span class="lifetime">&#39;kvs</span><span class="op">&gt;</span>, <span class="ident">value</span>: <span class="ident">Value</span><span class="op">&lt;</span><span class="lifetime">&#39;kvs</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>;
 }
 

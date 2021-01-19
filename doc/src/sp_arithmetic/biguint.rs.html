@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `primitives/arithmetic/src/biguint.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>biguint.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_arithmetic/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_arithmetic/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -750,17 +750,33 @@
 <span id="747">747</span>
 <span id="748">748</span>
 <span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2019-2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2019-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="comment">// you may not use this file except in compliance with the License.</span>
 <span class="comment">// You may obtain a copy of the License at</span>
 <span class="comment">//</span>
-<span class="comment">// 	http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//	http://www.apache.org/licenses/LICENSE-2.0</span>
 <span class="comment">//</span>
 <span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
 <span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
@@ -965,9 +981,9 @@
 				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">needs_borrow</span> <span class="op">=</span> <span class="bool-val">false</span>;
 				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="number">0</span>;
 
-				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span> <span class="ident">u</span>.<span class="ident">checked_sub</span>(<span class="ident">v</span>) {
-					<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v2</span>) <span class="op">=</span> <span class="ident">v</span>.<span class="ident">checked_sub</span>(<span class="ident">k</span>) {
-						<span class="ident">t</span> <span class="op">=</span> <span class="ident">v2</span> <span class="op">%</span> <span class="ident">B</span>;
+				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v1</span>) <span class="op">=</span> <span class="ident">u</span>.<span class="ident">checked_sub</span>(<span class="ident">v</span>) {
+					<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v2</span>) <span class="op">=</span> <span class="ident">v1</span>.<span class="ident">checked_sub</span>(<span class="ident">k</span>) {
+						<span class="ident">t</span> <span class="op">=</span> <span class="ident">v2</span>;
 						<span class="ident">k</span> <span class="op">=</span> <span class="number">0</span>;
 					} <span class="kw">else</span> {
 						<span class="ident">needs_borrow</span> <span class="op">=</span> <span class="bool-val">true</span>;
@@ -981,9 +997,9 @@
 				}
 				<span class="ident">t</span>
 			};
-			<span class="comment">// PROOF: t either comes from `v2 % B`, or from `u + B - v - k`. The former is</span>
+			<span class="comment">// PROOF: t either comes from `v2`, or from `u + B - v - k`. The former is</span>
 			<span class="comment">// trivial. The latter will not overflow this branch will only happen if the sum of</span>
-			<span class="comment">// `u - v - k` part has been negative, hence `u + B - v - k &lt; b`.</span>
+			<span class="comment">// `u - v - k` part has been negative, hence `u + B - v - k &lt; B`.</span>
 			<span class="ident">w</span>.<span class="ident">set</span>(<span class="ident">j</span>, <span class="ident">s</span> <span class="kw">as</span> <span class="ident">Single</span>);
 		}
 
@@ -1040,9 +1056,9 @@
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">with_capacity</span>(<span class="ident">n</span>);
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span>: <span class="ident">Single</span> <span class="op">=</span> <span class="number">0</span>;
 		<span class="comment">// PROOF: (B-1) * B + (B-1) still fits in double</span>
-		<span class="kw">let</span> <span class="ident">with_r</span> <span class="op">=</span> <span class="op">|</span><span class="ident">x</span>: <span class="ident">Double</span>, <span class="ident">r</span>: <span class="ident">Single</span><span class="op">|</span> { <span class="ident">Double</span>::<span class="ident">from</span>(<span class="ident">r</span>) <span class="op">*</span> <span class="ident">B</span> <span class="op">+</span> <span class="ident">x</span> };
+		<span class="kw">let</span> <span class="ident">with_r</span> <span class="op">=</span> <span class="op">|</span><span class="ident">x</span>: <span class="ident">Single</span>, <span class="ident">r</span>: <span class="ident">Single</span><span class="op">|</span> { <span class="ident">Double</span>::<span class="ident">from</span>(<span class="ident">r</span>) <span class="op">*</span> <span class="ident">B</span> <span class="op">+</span> <span class="ident">Double</span>::<span class="ident">from</span>(<span class="ident">x</span>) };
 		<span class="kw">for</span> <span class="ident">d</span> <span class="kw">in</span> (<span class="number">0</span>..<span class="ident">n</span>).<span class="ident">rev</span>() {
-			<span class="kw">let</span> (<span class="ident">q</span>, <span class="ident">rr</span>) <span class="op">=</span> <span class="ident">div_single</span>(<span class="ident">with_r</span>(<span class="self">self</span>.<span class="ident">get</span>(<span class="ident">d</span>).<span class="ident">into</span>(), <span class="ident">r</span>), <span class="ident">other</span>) ;
+			<span class="kw">let</span> (<span class="ident">q</span>, <span class="ident">rr</span>) <span class="op">=</span> <span class="ident">div_single</span>(<span class="ident">with_r</span>(<span class="self">self</span>.<span class="ident">get</span>(<span class="ident">d</span>), <span class="ident">r</span>), <span class="ident">other</span>) ;
 			<span class="ident">out</span>.<span class="ident">set</span>(<span class="ident">d</span>, <span class="ident">q</span> <span class="kw">as</span> <span class="ident">Single</span>);
 			<span class="ident">r</span> <span class="op">=</span> <span class="ident">rr</span>;
 		}
@@ -1334,13 +1350,24 @@
 	}
 
 	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">shift_check</span>() {
+		<span class="kw">let</span> <span class="ident">shift</span> <span class="op">=</span> <span class="ident">sp_std</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">Double</span><span class="op">&gt;</span>() <span class="op">-</span> <span class="ident">sp_std</span>::<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">Single</span><span class="op">&gt;</span>();
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">shift</span> <span class="op">*</span> <span class="number">8</span>, <span class="ident">SHIFT</span>);
+	}
+
+	<span class="attribute">#[<span class="ident">test</span>]</span>
 	<span class="kw">fn</span> <span class="ident">split_works</span>() {
 		<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">SHIFT</span> <span class="op">/</span> <span class="number">2</span>;
 		<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">SHIFT</span> <span class="op">*</span> <span class="number">3</span> <span class="op">/</span> <span class="number">2</span>;
 		<span class="kw">let</span> <span class="ident">num</span>: <span class="ident">Double</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">a</span> <span class="op">|</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">b</span>;
-		<span class="comment">// example when `Single = u8`</span>
-		<span class="comment">// assert_eq!(num, 0b_0001_0000_0001_0000)</span>
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">num</span>, <span class="number">0x_0001_0000_0001_0000</span>);
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">split</span>(<span class="ident">num</span>), (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">a</span>, <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">a</span>));
+
+		<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">SHIFT</span> <span class="op">/</span> <span class="number">2</span> <span class="op">+</span> <span class="number">4</span>;
+		<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">SHIFT</span> <span class="op">/</span> <span class="number">2</span> <span class="op">-</span> <span class="number">4</span>;
+		<span class="kw">let</span> <span class="ident">num</span>: <span class="ident">Double</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> (<span class="ident">SHIFT</span> <span class="op">+</span> <span class="ident">a</span>) <span class="op">|</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">b</span>;
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">num</span>, <span class="number">0x_0010_0000_0000_1000</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">split</span>(<span class="ident">num</span>), (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">a</span>, <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">b</span>));
 	}
 
 	<span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1487,6 +1514,7 @@
 	<span class="kw">fn</span> <span class="ident">div_unit_works</span>() {
 		<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">BigUint</span> { <span class="ident">digits</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">100</span>] };
 		<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">BigUint</span> { <span class="ident">digits</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">100</span>] };
+		<span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">BigUint</span> { <span class="ident">digits</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">14</span>, <span class="number">28</span>, <span class="number">100</span>] };
 
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">1</span>), <span class="ident">a</span>);
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">0</span>), <span class="ident">a</span>);
@@ -1498,6 +1526,10 @@
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">2</span>), <span class="ident">BigUint</span>::<span class="ident">from</span>(((<span class="ident">B</span> <span class="op">+</span> <span class="number">100</span>) <span class="op">/</span> <span class="number">2</span>) <span class="kw">as</span> <span class="ident">Single</span>));
 		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">7</span>), <span class="ident">BigUint</span>::<span class="ident">from</span>(((<span class="ident">B</span> <span class="op">+</span> <span class="number">100</span>) <span class="op">/</span> <span class="number">7</span>) <span class="kw">as</span> <span class="ident">Single</span>));
 
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">1</span>), <span class="ident">c</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">0</span>), <span class="ident">c</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">2</span>), <span class="ident">BigUint</span> { <span class="ident">digits</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">7</span>, <span class="number">14</span>, <span class="number">50</span>] });
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">clone</span>().<span class="ident">div_unit</span>(<span class="number">7</span>), <span class="ident">BigUint</span> { <span class="ident">digits</span>: <span class="macro">vec</span><span class="macro">!</span>[<span class="number">2</span>, <span class="number">4</span>, <span class="number">14</span>] });
 	}
 }
 </pre></div>

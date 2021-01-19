@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -2090,10 +2090,12 @@
 <span id="2087">2087</span>
 <span id="2088">2088</span>
 <span id="2089">2089</span>
+<span id="2090">2090</span>
+<span id="2091">2091</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2019-2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2019-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -2120,7 +2122,7 @@
 	<span class="ident">traits</span>::{
 		<span class="ident">MaybeSerializeDeserialize</span>, <span class="ident">AtLeast32Bit</span>, <span class="ident">Saturating</span>, <span class="ident">TrailingZeroInput</span>, <span class="ident">Bounded</span>, <span class="ident">Zero</span>,
 		<span class="ident">BadOrigin</span>, <span class="ident">AtLeast32BitUnsigned</span>, <span class="ident">UniqueSaturatedFrom</span>, <span class="ident">UniqueSaturatedInto</span>,
-		<span class="ident">SaturatedConversion</span>,
+		<span class="ident">SaturatedConversion</span>, <span class="ident">StoredMapError</span>,
 	},
 };
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dispatch</span>::<span class="ident">Parameter</span>;
@@ -2223,7 +2225,7 @@
 			<span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">traits</span>::{<span class="ident">swap</span>, <span class="ident">take</span>, <span class="ident">RefCell</span>, <span class="ident">Vec</span>, <span class="ident">Box</span>, <span class="ident">Filter</span>, <span class="ident">FilterStack</span>};
 
 			<span class="macro">thread_local</span><span class="macro">!</span> {
-				<span class="kw">static</span> <span class="ident">FILTER</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">new</span>());
+				<span class="kw">static</span> <span class="ident">FILTER</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">new</span>());
 			}
 
 			<span class="kw">impl</span> <span class="ident">Filter</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
@@ -2234,7 +2236,7 @@
 			}
 
 			<span class="kw">impl</span> <span class="ident">FilterStack</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
-				<span class="kw">type</span> <span class="ident">Stack</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+				<span class="kw">type</span> <span class="ident">Stack</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 				<span class="kw">fn</span> <span class="ident">push</span>(<span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
 					<span class="ident">FILTER</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">filter</span><span class="op">|</span> <span class="ident">filter</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">f</span>)));
 				}
@@ -2256,7 +2258,7 @@
 			<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 			<span class="kw">use</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">traits</span>::{<span class="ident">swap</span>, <span class="ident">take</span>, <span class="ident">RefCell</span>, <span class="ident">Vec</span>, <span class="ident">Box</span>, <span class="ident">Filter</span>, <span class="ident">FilterStack</span>};
 
-			<span class="kw">struct</span> <span class="ident">ThisFilter</span>(<span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>);
+			<span class="kw">struct</span> <span class="ident">ThisFilter</span>(<span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 			<span class="comment">// NOTE: Safe only in wasm (guarded above) because there&#39;s only one thread.</span>
 			<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Send</span> <span class="kw">for</span> <span class="ident">ThisFilter</span> {}
 			<span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">ThisFilter</span> {}
@@ -2270,7 +2272,7 @@
 			}
 
 			<span class="kw">impl</span> <span class="ident">FilterStack</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
-				<span class="kw">type</span> <span class="ident">Stack</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+				<span class="kw">type</span> <span class="ident">Stack</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 				<span class="kw">fn</span> <span class="ident">push</span>(<span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">call</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) {
 					<span class="ident">FILTER</span>.<span class="number">0</span>.<span class="ident">borrow_mut</span>().<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">f</span>));
 				}
@@ -2393,41 +2395,60 @@
 
 <span class="doccomment">/// An abstraction of a value stored within storage, but possibly as part of a larger composite</span>
 <span class="doccomment">/// item.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">StoredMap</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">StoredMap</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">T</span>: <span class="ident">Default</span><span class="op">&gt;</span> {
 	<span class="doccomment">/// Get the item, or its default if it doesn&#39;t yet exist; we make no distinction between the</span>
 	<span class="doccomment">/// two.</span>
 	<span class="kw">fn</span> <span class="ident">get</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
-	<span class="doccomment">/// Get whether the item takes up any storage. If this is `false`, then `get` will certainly</span>
-	<span class="doccomment">/// return the `T::default()`. If `true`, then there is no implication for `get` (i.e. it</span>
-	<span class="doccomment">/// may return any value, including the default).</span>
-	<span class="doccomment">///</span>
-	<span class="doccomment">/// NOTE: This may still be `true`, even after `remove` is called. This is the case where</span>
-	<span class="doccomment">/// a single storage entry is shared between multiple `StoredMap` items single, without</span>
-	<span class="doccomment">/// additional logic to enforce it, deletion of any one them doesn&#39;t automatically imply</span>
-	<span class="doccomment">/// deletion of them all.</span>
-	<span class="kw">fn</span> <span class="ident">is_explicit</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-	<span class="doccomment">/// Mutate the item.</span>
-	<span class="kw">fn</span> <span class="ident">mutate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>;
-	<span class="doccomment">/// Mutate the item, removing or resetting to default value if it has been mutated to `None`.</span>
-	<span class="kw">fn</span> <span class="ident">mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>;
+
 	<span class="doccomment">/// Maybe mutate the item only if an `Ok` value is returned from `f`. Do nothing if an `Err` is</span>
 	<span class="doccomment">/// returned. It is removed or reset to default value if it has been mutated to `None`</span>
-	<span class="kw">fn</span> <span class="ident">try_mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>;
+	<span class="kw">fn</span> <span class="ident">try_mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">StoredMapError</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+		<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>,
+		<span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>,
+	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>;
+
+	<span class="comment">// Everything past here has a default implementation.</span>
+
+	<span class="doccomment">/// Mutate the item.</span>
+	<span class="kw">fn</span> <span class="ident">mutate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
+		<span class="self">Self</span>::<span class="ident">mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">maybe_account</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">maybe_account</span> {
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">account</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>(<span class="ident">account</span>),
+			<span class="ident">x</span> @ <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">account</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+				<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">account</span>);
+				<span class="kw-2">*</span><span class="ident">x</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">account</span>);
+				<span class="ident">r</span>
+			}
+		})
+	}
+
+	<span class="doccomment">/// Mutate the item, removing or resetting to default value if it has been mutated to `None`.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// This is infallible as long as the value does not get destroyed.</span>
+	<span class="kw">fn</span> <span class="ident">mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(
+		<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>,
+		<span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
+	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
+		<span class="self">Self</span>::<span class="ident">try_mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">StoredMapError</span><span class="op">&gt;</span> { <span class="prelude-val">Ok</span>(<span class="ident">f</span>(<span class="ident">x</span>)) })
+	}
+
 	<span class="doccomment">/// Set the item to something new.</span>
-	<span class="kw">fn</span> <span class="ident">insert</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">t</span>: <span class="ident">T</span>) { <span class="self">Self</span>::<span class="ident">mutate</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">i</span> <span class="op">=</span> <span class="ident">t</span>); }
+	<span class="kw">fn</span> <span class="ident">insert</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> { <span class="self">Self</span>::<span class="ident">mutate</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">i</span> <span class="op">=</span> <span class="ident">t</span>) }
+
 	<span class="doccomment">/// Remove the item or otherwise replace it with its default value; we don&#39;t care which.</span>
-	<span class="kw">fn</span> <span class="ident">remove</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>);
+	<span class="kw">fn</span> <span class="ident">remove</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> { <span class="self">Self</span>::<span class="ident">mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span> <span class="op">=</span> <span class="prelude-val">None</span>) }
 }
 
 <span class="doccomment">/// A simple, generic one-parameter event notifier/handler.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Happened</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="doccomment">/// The thing happened.</span>
-	<span class="kw">fn</span> <span class="ident">happened</span>(<span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>);
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HandleLifetime</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+	<span class="doccomment">/// An account was created.</span>
+	<span class="kw">fn</span> <span class="ident">created</span>(<span class="ident">_t</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> { <span class="prelude-val">Ok</span>(()) }
+
+	<span class="doccomment">/// An account was killed.</span>
+	<span class="kw">fn</span> <span class="ident">killed</span>(<span class="ident">_t</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> { <span class="prelude-val">Ok</span>(()) }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Happened</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> () {
-	<span class="kw">fn</span> <span class="ident">happened</span>(<span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) {}
-}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">HandleLifetime</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> () {}
 
 <span class="doccomment">/// A shim for placing around a storage item in order to use it as a `StoredValue`. Ideally this</span>
 <span class="doccomment">/// wouldn&#39;t be needed as `StorageValue`s should blanket implement `StoredValue`s, however this</span>
@@ -2440,68 +2461,63 @@
 <span class="doccomment">/// be the default value), or where the account is being removed or reset back to the default value</span>
 <span class="doccomment">/// where previously it did exist (though may have been in a default state). This works well with</span>
 <span class="doccomment">/// system module&#39;s `CallOnCreatedAccount` and `CallKillAccount`.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StorageMapShim</span><span class="op">&lt;</span>
-	<span class="ident">S</span>,
-	<span class="ident">Created</span>,
-	<span class="ident">Removed</span>,
-	<span class="ident">K</span>,
-	<span class="ident">T</span>
-<span class="op">&gt;</span>(<span class="ident">sp_std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">S</span>, <span class="ident">Created</span>, <span class="ident">Removed</span>, <span class="ident">K</span>, <span class="ident">T</span>)<span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StorageMapShim</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">L</span>, <span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">sp_std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">S</span>, <span class="ident">L</span>, <span class="ident">K</span>, <span class="ident">T</span>)<span class="op">&gt;</span>);
 <span class="kw">impl</span><span class="op">&lt;</span>
 	<span class="ident">S</span>: <span class="ident">StorageMap</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">T</span>, <span class="ident">Query</span><span class="op">=</span><span class="ident">T</span><span class="op">&gt;</span>,
-	<span class="ident">Created</span>: <span class="ident">Happened</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>,
-	<span class="ident">Removed</span>: <span class="ident">Happened</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>,
+	<span class="ident">L</span>: <span class="ident">HandleLifetime</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span>,
 	<span class="ident">K</span>: <span class="ident">FullCodec</span>,
-	<span class="ident">T</span>: <span class="ident">FullCodec</span>,
-<span class="op">&gt;</span> <span class="ident">StoredMap</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StorageMapShim</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Created</span>, <span class="ident">Removed</span>, <span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+	<span class="ident">T</span>: <span class="ident">FullCodec</span> <span class="op">+</span> <span class="ident">Default</span>,
+<span class="op">&gt;</span> <span class="ident">StoredMap</span><span class="op">&lt;</span><span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StorageMapShim</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">L</span>, <span class="ident">K</span>, <span class="ident">T</span><span class="op">&gt;</span> {
 	<span class="kw">fn</span> <span class="ident">get</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> { <span class="ident">S</span>::<span class="ident">get</span>(<span class="ident">k</span>) }
-	<span class="kw">fn</span> <span class="ident">is_explicit</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="ident">k</span>) }
-	<span class="kw">fn</span> <span class="ident">insert</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">t</span>: <span class="ident">T</span>) {
-		<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>);
+	<span class="kw">fn</span> <span class="ident">insert</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
+		<span class="kw">if</span> <span class="op">!</span><span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>) {
+			<span class="ident">L</span>::<span class="ident">created</span>(<span class="ident">k</span>)<span class="question-mark">?</span>;
+		}
 		<span class="ident">S</span>::<span class="ident">insert</span>(<span class="ident">k</span>, <span class="ident">t</span>);
-		<span class="kw">if</span> <span class="op">!</span><span class="ident">existed</span> {
-			<span class="ident">Created</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
-		}
+		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="kw">fn</span> <span class="ident">remove</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) {
-		<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>);
-		<span class="ident">S</span>::<span class="ident">remove</span>(<span class="ident">k</span>);
-		<span class="kw">if</span> <span class="ident">existed</span> {
-			<span class="ident">Removed</span>::<span class="ident">happened</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>);
+	<span class="kw">fn</span> <span class="ident">remove</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
+		<span class="kw">if</span> <span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>) {
+			<span class="ident">L</span>::<span class="ident">killed</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>)<span class="question-mark">?</span>;
+			<span class="ident">S</span>::<span class="ident">remove</span>(<span class="ident">k</span>);
 		}
+		<span class="prelude-val">Ok</span>(())
 	}
-	<span class="kw">fn</span> <span class="ident">mutate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
-		<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>);
-		<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">S</span>::<span class="ident">mutate</span>(<span class="ident">k</span>, <span class="ident">f</span>);
-		<span class="kw">if</span> <span class="op">!</span><span class="ident">existed</span> {
-			<span class="ident">Created</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
+	<span class="kw">fn</span> <span class="ident">mutate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
+		<span class="kw">if</span> <span class="op">!</span><span class="ident">S</span>::<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>) {
+			<span class="ident">L</span>::<span class="ident">created</span>(<span class="ident">k</span>)<span class="question-mark">?</span>;
 		}
-		<span class="ident">r</span>
+		<span class="prelude-val">Ok</span>(<span class="ident">S</span>::<span class="ident">mutate</span>(<span class="ident">k</span>, <span class="ident">f</span>))
 	}
-	<span class="kw">fn</span> <span class="ident">mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span> {
-		<span class="kw">let</span> (<span class="ident">existed</span>, <span class="ident">exists</span>, <span class="ident">r</span>) <span class="op">=</span> <span class="ident">S</span>::<span class="ident">mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">maybe_value</span><span class="op">|</span> {
-			<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">maybe_value</span>.<span class="ident">is_some</span>();
-			<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">maybe_value</span>);
-			(<span class="ident">existed</span>, <span class="ident">maybe_value</span>.<span class="ident">is_some</span>(), <span class="ident">r</span>)
-		});
-		<span class="kw">if</span> <span class="op">!</span><span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="ident">exists</span> {
-			<span class="ident">Created</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
-		} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">exists</span> {
-			<span class="ident">Removed</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
-		}
-		<span class="ident">r</span>
-	}
-	<span class="kw">fn</span> <span class="ident">try_mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span> {
+	<span class="kw">fn</span> <span class="ident">mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>, <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">StoredMapError</span><span class="op">&gt;</span> {
 		<span class="ident">S</span>::<span class="ident">try_mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">maybe_value</span><span class="op">|</span> {
 			<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">maybe_value</span>.<span class="ident">is_some</span>();
-			<span class="ident">f</span>(<span class="ident">maybe_value</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> (<span class="ident">existed</span>, <span class="ident">maybe_value</span>.<span class="ident">is_some</span>(), <span class="ident">v</span>))
-		}).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">existed</span>, <span class="ident">exists</span>, <span class="ident">v</span>)<span class="op">|</span> {
+			<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">maybe_value</span>);
+			<span class="kw">let</span> <span class="ident">exists</span> <span class="op">=</span> <span class="ident">maybe_value</span>.<span class="ident">is_some</span>();
+
 			<span class="kw">if</span> <span class="op">!</span><span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="ident">exists</span> {
-				<span class="ident">Created</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
+				<span class="ident">L</span>::<span class="ident">created</span>(<span class="ident">k</span>)<span class="question-mark">?</span>;
 			} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">exists</span> {
-				<span class="ident">Removed</span>::<span class="ident">happened</span>(<span class="ident">k</span>);
+				<span class="ident">L</span>::<span class="ident">killed</span>(<span class="ident">k</span>)<span class="question-mark">?</span>;
 			}
-			<span class="ident">v</span>
+			<span class="prelude-val">Ok</span>(<span class="ident">r</span>)
+		})
+	}
+	<span class="kw">fn</span> <span class="ident">try_mutate_exists</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">StoredMapError</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+		<span class="ident">k</span>: <span class="kw-2">&amp;</span><span class="ident">K</span>,
+		<span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>,
+	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span> {
+		<span class="ident">S</span>::<span class="ident">try_mutate_exists</span>(<span class="ident">k</span>, <span class="op">|</span><span class="ident">maybe_value</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="ident">existed</span> <span class="op">=</span> <span class="ident">maybe_value</span>.<span class="ident">is_some</span>();
+			<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">f</span>(<span class="ident">maybe_value</span>)<span class="question-mark">?</span>;
+			<span class="kw">let</span> <span class="ident">exists</span> <span class="op">=</span> <span class="ident">maybe_value</span>.<span class="ident">is_some</span>();
+
+			<span class="kw">if</span> <span class="op">!</span><span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="ident">exists</span> {
+				<span class="ident">L</span>::<span class="ident">created</span>(<span class="ident">k</span>).<span class="ident">map_err</span>(<span class="ident">E</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
+			} <span class="kw">else</span> <span class="kw">if</span> <span class="ident">existed</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">exists</span> {
+				<span class="ident">L</span>::<span class="ident">killed</span>(<span class="ident">k</span>).<span class="ident">map_err</span>(<span class="ident">E</span>::<span class="ident">from</span>)<span class="question-mark">?</span>;
+			}
+			<span class="prelude-val">Ok</span>(<span class="ident">r</span>)
 		})
 	}
 }
@@ -2598,18 +2614,6 @@
 	<span class="kw">fn</span> <span class="ident">min_len</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
 	<span class="doccomment">/// Maximum number of elements contained</span>
 	<span class="kw">fn</span> <span class="ident">max_len</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
-}
-
-<span class="doccomment">/// Determiner to say whether a given account is unused.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IsDeadAccount</span><span class="op">&lt;</span><span class="ident">AccountId</span><span class="op">&gt;</span> {
-	<span class="doccomment">/// Is the given account dead?</span>
-	<span class="kw">fn</span> <span class="ident">is_dead_account</span>(<span class="ident">who</span>: <span class="kw-2">&amp;</span><span class="ident">AccountId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">AccountId</span><span class="op">&gt;</span> <span class="ident">IsDeadAccount</span><span class="op">&lt;</span><span class="ident">AccountId</span><span class="op">&gt;</span> <span class="kw">for</span> () {
-	<span class="kw">fn</span> <span class="ident">is_dead_account</span>(<span class="ident">_who</span>: <span class="kw-2">&amp;</span><span class="ident">AccountId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-		<span class="bool-val">true</span>
-	}
 }
 
 <span class="doccomment">/// Handler for when a new account has been created.</span>
@@ -4067,7 +4071,7 @@
 
 	<span class="doccomment">/// Returns the storage key for a pallet version.</span>
 	<span class="doccomment">///</span>
-	<span class="doccomment">/// See [`PALLET_VERSION_STORAGE_KEY_POSTIFX`] on how this key is built.</span>
+	<span class="doccomment">/// See [`PALLET_VERSION_STORAGE_KEY_POSTFIX`] on how this key is built.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns `None` if the given `PI` returned a `None` as name for the given</span>
 	<span class="doccomment">/// `Pallet`.</span>

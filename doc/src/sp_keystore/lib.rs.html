@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `primitives/keystore/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_keystore/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_keystore/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -369,7 +369,7 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2020-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -421,37 +421,37 @@
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CryptoStore</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
 	<span class="doccomment">/// Returns all sr25519 public keys for the given key type.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sr25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">sr25519</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sr25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">sr25519</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
 	<span class="doccomment">/// Generate a new sr25519 key pair for the given key type and an optional seed.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// If the given seed is `Some(_)`, the key pair will only be stored in memory.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns the public key of the generated key pair.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sr25519_generate_new</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sr25519_generate_new</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">sr25519</span>::<span class="ident">Public</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 	<span class="doccomment">/// Returns all ed25519 public keys for the given key type.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">ed25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ed25519</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ed25519_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ed25519</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
 	<span class="doccomment">/// Generate a new ed25519 key pair for the given key type and an optional seed.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// If the given seed is `Some(_)`, the key pair will only be stored in memory.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns the public key of the generated key pair.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">ed25519_generate_new</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ed25519_generate_new</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ed25519</span>::<span class="ident">Public</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 	<span class="doccomment">/// Returns all ecdsa public keys for the given key type.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">ecdsa_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ecdsa</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ecdsa_public_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ecdsa</span>::<span class="ident">Public</span><span class="op">&gt;</span>;
 	<span class="doccomment">/// Generate a new ecdsa key pair for the given key type and an optional seed.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// If the given seed is `Some(_)`, the key pair will only be stored in memory.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns the public key of the generated key pair.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">ecdsa_generate_new</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ecdsa_generate_new</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">seed</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
@@ -463,18 +463,18 @@
 	<span class="doccomment">/// Places it into the file system store.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// `Err` if there&#39;s some sort of weird filesystem error, but should generally be `Ok`.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">insert_unknown</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">insert_unknown</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
-		<span class="ident">_key_type</span>: <span class="ident">KeyTypeId</span>,
-		<span class="ident">_suri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-		<span class="ident">_public</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]
+		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
+		<span class="ident">suri</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+		<span class="ident">public</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span>;
 
 	<span class="doccomment">/// Find intersection between provided keys and supported keys</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Provided a list of (CryptoTypeId,[u8]) pairs, this would return</span>
 	<span class="doccomment">/// a filtered set of public keys which are supported by the keystore.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">supported_keys</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">supported_keys</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CryptoTypePublicPair</span><span class="op">&gt;</span>
@@ -482,12 +482,12 @@
 	<span class="doccomment">/// List all supported keys</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns a set of public keys the signer supports.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CryptoTypePublicPair</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">id</span>: <span class="ident">KeyTypeId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CryptoTypePublicPair</span><span class="op">&gt;</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 	<span class="doccomment">/// Checks if the private keys for the given public key and key type combinations exist.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns `true` iff all private keys could be found.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">has_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">public_keys</span>: <span class="kw-2">&amp;</span>[(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">KeyTypeId</span>)]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">has_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">public_keys</span>: <span class="kw-2">&amp;</span>[(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">KeyTypeId</span>)]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
 	<span class="doccomment">/// Sign with key</span>
 	<span class="doccomment">///</span>
@@ -496,7 +496,7 @@
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns the SCALE encoded signature if key is found &amp; supported,</span>
 	<span class="doccomment">/// an error otherwise.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sign_with</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sign_with</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">CryptoTypePublicPair</span>,
@@ -509,17 +509,17 @@
 	<span class="doccomment">/// sign the provided message with that key.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns a tuple of the used key and the SCALE encoded signature.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sign_with_any</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sign_with_any</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CryptoTypePublicPair</span><span class="op">&gt;</span>,
 		<span class="ident">msg</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">CryptoTypePublicPair</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>), <span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="kw">if</span> <span class="ident">keys</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
-			<span class="kw">return</span> <span class="self">self</span>.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">keys</span>[<span class="number">0</span>], <span class="ident">msg</span>).<span class="ident">await</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> (<span class="ident">keys</span>[<span class="number">0</span>].<span class="ident">clone</span>(), <span class="ident">s</span>));
+			<span class="kw">return</span> <span class="self">self</span>.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">keys</span>[<span class="number">0</span>], <span class="ident">msg</span>).<span class="kw">await</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> (<span class="ident">keys</span>[<span class="number">0</span>].<span class="ident">clone</span>(), <span class="ident">s</span>));
 		} <span class="kw">else</span> {
-			<span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">supported_keys</span>(<span class="ident">id</span>, <span class="ident">keys</span>).<span class="ident">await</span><span class="question-mark">?</span> {
-				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">sign</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">msg</span>).<span class="ident">await</span> {
+			<span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">supported_keys</span>(<span class="ident">id</span>, <span class="ident">keys</span>).<span class="kw">await</span><span class="question-mark">?</span> {
+				<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">sign</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">msg</span>).<span class="kw">await</span> {
 					<span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">k</span>, <span class="ident">sign</span>));
 				}
 			}
@@ -534,7 +534,7 @@
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// Returns a list of `Result`s each representing the SCALE encoded</span>
 	<span class="doccomment">/// signature of each key or a Error for non-supported keys.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sign_with_all</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sign_with_all</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">id</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">keys</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CryptoTypePublicPair</span><span class="op">&gt;</span>,
@@ -543,7 +543,7 @@
 		<span class="kw">let</span> <span class="ident">futs</span> <span class="op">=</span> <span class="ident">keys</span>.<span class="ident">iter</span>()
 			.<span class="ident">map</span>(<span class="op">|</span><span class="ident">k</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">sign_with</span>(<span class="ident">id</span>, <span class="ident">k</span>, <span class="ident">msg</span>));
 
-		<span class="prelude-val">Ok</span>(<span class="ident">join_all</span>(<span class="ident">futs</span>).<span class="ident">await</span>)
+		<span class="prelude-val">Ok</span>(<span class="ident">join_all</span>(<span class="ident">futs</span>).<span class="kw">await</span>)
 	}
 
 	<span class="doccomment">/// Generate VRF signature for given transcript data.</span>
@@ -560,7 +560,7 @@
 	<span class="doccomment">/// the public key and key type provided do not match a private</span>
 	<span class="doccomment">/// key in the keystore. Or, in the context of remote signing</span>
 	<span class="doccomment">/// an error could be a network one.</span>
-	<span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sr25519_vrf_sign</span>(
+	<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sr25519_vrf_sign</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">key_type</span>: <span class="ident">KeyTypeId</span>,
 		<span class="ident">public</span>: <span class="kw-2">&amp;</span><span class="ident">sr25519</span>::<span class="ident">Public</span>,
@@ -726,7 +726,7 @@
 }
 
 <span class="doccomment">/// A pointer to a keystore.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SyncCryptoStorePtr</span> <span class="op">=</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">SyncCryptoStore</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SyncCryptoStorePtr</span> <span class="op">=</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">SyncCryptoStore</span><span class="op">&gt;</span>;
 
 <span class="ident">sp_externalities</span>::<span class="macro">decl_extension</span><span class="macro">!</span> {
 	<span class="doccomment">/// The keystore extension to register/retrieve from the externalities.</span>

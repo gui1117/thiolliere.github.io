@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `primitives/io/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_io/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../sp_io/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1542,10 +1542,38 @@
 <span id="1539">1539</span>
 <span id="1540">1540</span>
 <span id="1541">1541</span>
+<span id="1542">1542</span>
+<span id="1543">1543</span>
+<span id="1544">1544</span>
+<span id="1545">1545</span>
+<span id="1546">1546</span>
+<span id="1547">1547</span>
+<span id="1548">1548</span>
+<span id="1549">1549</span>
+<span id="1550">1550</span>
+<span id="1551">1551</span>
+<span id="1552">1552</span>
+<span id="1553">1553</span>
+<span id="1554">1554</span>
+<span id="1555">1555</span>
+<span id="1556">1556</span>
+<span id="1557">1557</span>
+<span id="1558">1558</span>
+<span id="1559">1559</span>
+<span id="1560">1560</span>
+<span id="1561">1561</span>
+<span id="1562">1562</span>
+<span id="1563">1563</span>
+<span id="1564">1564</span>
+<span id="1565">1565</span>
+<span id="1566">1566</span>
+<span id="1567">1567</span>
+<span id="1568">1568</span>
+<span id="1569">1569</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2017-2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2017-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -1824,7 +1852,35 @@
 		<span class="ident">storage_key</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 	) {
 		<span class="kw">let</span> <span class="ident">child_info</span> <span class="op">=</span> <span class="ident">ChildInfo</span>::<span class="ident">new_default</span>(<span class="ident">storage_key</span>);
-		<span class="self">self</span>.<span class="ident">kill_child_storage</span>(<span class="kw-2">&amp;</span><span class="ident">child_info</span>);
+		<span class="self">self</span>.<span class="ident">kill_child_storage</span>(<span class="kw-2">&amp;</span><span class="ident">child_info</span>, <span class="prelude-val">None</span>);
+	}
+
+	<span class="doccomment">/// Clear a child storage key.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Deletes all keys from the overlay and up to `limit` keys from the backend if</span>
+	<span class="doccomment">/// it is set to `Some`. No limit is applied when `limit` is set to `None`.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// The limit can be used to partially delete a child trie in case it is too large</span>
+	<span class="doccomment">/// to delete in one go (block).</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// It returns false iff some keys are remaining in</span>
+	<span class="doccomment">/// the child trie after the functions returns.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// # Note</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Please note that keys that are residing in the overlay for that child trie when</span>
+	<span class="doccomment">/// issuing this call are all deleted without counting towards the `limit`. Only keys</span>
+	<span class="doccomment">/// written during the current block are part of the overlay. Deleting with a `limit`</span>
+	<span class="doccomment">/// mostly makes sense with an empty overlay for that child trie.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Calling this function multiple times per block for the same `storage_key` does</span>
+	<span class="doccomment">/// not make much sense because it is not cumulative when called inside the same block.</span>
+	<span class="doccomment">/// Use this function to distribute the deletion of a single child trie across multiple</span>
+	<span class="doccomment">/// blocks.</span>
+	<span class="attribute">#[<span class="ident">version</span>(<span class="number">2</span>)]</span>
+	<span class="kw">fn</span> <span class="ident">storage_kill</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">storage_key</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">limit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+		<span class="kw">let</span> <span class="ident">child_info</span> <span class="op">=</span> <span class="ident">ChildInfo</span>::<span class="ident">new_default</span>(<span class="ident">storage_key</span>);
+		<span class="self">self</span>.<span class="ident">kill_child_storage</span>(<span class="kw-2">&amp;</span><span class="ident">child_info</span>, <span class="ident">limit</span>)
 	}
 
 	<span class="doccomment">/// Check a child storage key.</span>
@@ -1905,11 +1961,6 @@
 <span class="doccomment">/// Interface that provides miscellaneous functions for communicating between the runtime and the node.</span>
 <span class="attribute">#[<span class="ident">runtime_interface</span>]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Misc</span> {
-	<span class="doccomment">/// The current relay chain identifier.</span>
-	<span class="kw">fn</span> <span class="ident">chain_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
-		<span class="ident">sp_externalities</span>::<span class="ident">Externalities</span>::<span class="ident">chain_id</span>(<span class="kw-2">*</span><span class="self">self</span>)
-	}
-
 	<span class="doccomment">/// Print a number.</span>
 	<span class="kw">fn</span> <span class="ident">print_num</span>(<span class="ident">val</span>: <span class="ident">u64</span>) {
 		<span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="ident">target</span>: <span class="string">&quot;runtime&quot;</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">val</span>);
@@ -2250,6 +2301,11 @@
 	<span class="doccomment">/// Conduct a 256-bit Keccak hash.</span>
 	<span class="kw">fn</span> <span class="ident">keccak_256</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u8</span>; <span class="number">32</span>] {
 		<span class="ident">sp_core</span>::<span class="ident">hashing</span>::<span class="ident">keccak_256</span>(<span class="ident">data</span>)
+	}
+
+	<span class="doccomment">/// Conduct a 512-bit Keccak hash.</span>
+	<span class="kw">fn</span> <span class="ident">keccak_512</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u8</span>; <span class="number">64</span>] {
+		<span class="ident">sp_core</span>::<span class="ident">hashing</span>::<span class="ident">keccak_512</span>(<span class="ident">data</span>)
 	}
 
 	<span class="doccomment">/// Conduct a 256-bit Sha2 hash.</span>

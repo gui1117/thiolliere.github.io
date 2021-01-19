@@ -14,7 +14,7 @@ implementors["futures_task"] = [{"text":"impl Error for SpawnError","synthetic":
 implementors["futures_util"] = [{"text":"impl Error for Aborted","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Any, Item&gt; Error for ReuniteError&lt;T, Item&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Any&gt; Error for ReuniteError&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Any&gt; Error for ReuniteError&lt;T&gt;","synthetic":false,"types":[]}];
 implementors["getrandom"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["hex"] = [{"text":"impl Error for FromHexError","synthetic":false,"types":[]}];
-implementors["log"] = [{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for SetLoggerError","synthetic":false,"types":[]},{"text":"impl Error for ParseLevelError","synthetic":false,"types":[]}];
+implementors["log"] = [{"text":"impl Error for SetLoggerError","synthetic":false,"types":[]},{"text":"impl Error for ParseLevelError","synthetic":false,"types":[]}];
 implementors["num_bigint"] = [{"text":"impl Error for ParseBigIntError","synthetic":false,"types":[]}];
 implementors["num_rational"] = [{"text":"impl Error for ParseRatioError","synthetic":false,"types":[]}];
 implementors["parity_scale_codec"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
@@ -41,7 +41,7 @@ implementors["toml"] = [{"text":"impl Error for Error","synthetic":false,"types"
 implementors["tracing_core"] = [{"text":"impl Error for SetGlobalDefaultError","synthetic":false,"types":[]},{"text":"impl Error for ParseLevelError","synthetic":false,"types":[]},{"text":"impl Error for ParseLevelFilterError","synthetic":false,"types":[]}];
 implementors["tracing_subscriber"] = [{"text":"impl Error for ParseError","synthetic":false,"types":[]},{"text":"impl Error for BadName","synthetic":false,"types":[]},{"text":"impl Error for FromEnvError","synthetic":false,"types":[]},{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for TryInitError","synthetic":false,"types":[]}];
 implementors["trie_db"] = [{"text":"impl&lt;HO:&nbsp;Debug, CE:&nbsp;Error + 'static&gt; Error for Error&lt;HO, CE&gt;","synthetic":false,"types":[]},{"text":"impl&lt;T, E&gt; Error for TrieError&lt;T, E&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Debug,<br>&nbsp;&nbsp;&nbsp;&nbsp;E: Error,&nbsp;</span>","synthetic":false,"types":[]}];
-implementors["uint"] = [{"text":"impl Error for FromDecStrErr","synthetic":false,"types":[]}];
+implementors["uint"] = [{"text":"impl Error for FromStrRadixErr","synthetic":false,"types":[]},{"text":"impl Error for FromDecStrErr","synthetic":false,"types":[]},{"text":"impl Error for FromHexError","synthetic":false,"types":[]}];
 implementors["wasmi"] = [{"text":"impl Error for Trap","synthetic":false,"types":[]},{"text":"impl Error for Error","synthetic":false,"types":[]}];
 implementors["wasmi_validation"] = [{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for Error","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `frame/support/src/storage/types/double_map.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>double_map.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../frame_support/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -602,10 +602,22 @@
 <span id="599">599</span>
 <span id="600">600</span>
 <span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file is part of Substrate.</span>
 
-<span class="comment">// Copyright (C) 2017-2020 Parity Technologies (UK) Ltd.</span>
+<span class="comment">// Copyright (C) 2017-2021 Parity Technologies (UK) Ltd.</span>
 <span class="comment">// SPDX-License-Identifier: Apache-2.0</span>
 
 <span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
@@ -744,6 +756,16 @@
 		<span class="ident">KArg2</span>: <span class="ident">EncodeLike</span><span class="op">&lt;</span><span class="ident">Key2</span><span class="op">&gt;</span>,
 	{
 		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageDoubleMap</span><span class="op">&lt;</span><span class="ident">Key1</span>, <span class="ident">Key2</span>, <span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">get</span>(<span class="ident">k1</span>, <span class="ident">k2</span>)
+	}
+
+	<span class="doccomment">/// Try to get the value for the given key from the double map.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Returns `Ok` if it exists, `Err` if not.</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_get</span><span class="op">&lt;</span><span class="ident">KArg1</span>, <span class="ident">KArg2</span><span class="op">&gt;</span>(<span class="ident">k1</span>: <span class="ident">KArg1</span>, <span class="ident">k2</span>: <span class="ident">KArg2</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Value</span>, ()<span class="op">&gt;</span>
+	<span class="kw">where</span>
+		<span class="ident">KArg1</span>: <span class="ident">EncodeLike</span><span class="op">&lt;</span><span class="ident">Key1</span><span class="op">&gt;</span>,
+		<span class="ident">KArg2</span>: <span class="ident">EncodeLike</span><span class="op">&lt;</span><span class="ident">Key2</span><span class="op">&gt;</span> {
+		<span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">storage</span>::<span class="ident">StorageDoubleMap</span><span class="op">&lt;</span><span class="ident">Key1</span>, <span class="ident">Key2</span>, <span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">try_get</span>(<span class="ident">k1</span>, <span class="ident">k2</span>)
 	}
 
 	<span class="doccomment">/// Take a value from storage, removing it afterwards.</span>
@@ -1119,6 +1141,7 @@
 			});
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="bool-val">true</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">get</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="prelude-val">Some</span>(<span class="number">100</span>));
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">try_get</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="prelude-val">Ok</span>(<span class="number">100</span>));
 			<span class="kw">let</span> <span class="kw">_</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">try_mutate_exists</span>(<span class="number">2</span>, <span class="number">20</span>, <span class="op">|</span><span class="ident">v</span><span class="op">|</span> {
 				<span class="kw-2">*</span><span class="ident">v</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>.<span class="ident">unwrap</span>() <span class="op">*</span> <span class="number">10</span>);
 				<span class="prelude-val">Err</span>(())
@@ -1132,6 +1155,7 @@
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="bool-val">false</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">AValueQueryWithAnOnEmpty</span>::<span class="ident">take</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="number">97</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">contains_key</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="bool-val">false</span>);
+			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">try_get</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="prelude-val">Err</span>(()));
 
 			<span class="ident">B</span>::<span class="ident">insert</span>(<span class="number">2</span>, <span class="number">20</span>, <span class="number">10</span>);
 			<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">A</span>::<span class="ident">migrate_keys</span>::<span class="op">&lt;</span><span class="ident">Blake2_256</span>, <span class="ident">Twox128</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="number">2</span>, <span class="number">20</span>), <span class="prelude-val">Some</span>(<span class="number">10</span>));

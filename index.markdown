@@ -5,6 +5,7 @@
 layout: home
 title: Préambule
 list_title: Notes
+order: 1
 ---
 
 Ici trouve mes notes, et quelques faits:

@@ -6,4 +6,4 @@ order: 2
 ---
 
 Ci gît l'espace d'expression de Guillaume Yu Thiolliere.
-N'y trouvez rien.
+N'y trouve rien.

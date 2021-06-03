@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Première note"
-date:   2021-06-03 00:00:00
+date:   2021-06-03 00:00:00 +0200
 categories: causerie
 ---
 

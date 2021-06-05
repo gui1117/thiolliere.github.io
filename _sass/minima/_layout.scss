@@ -51,6 +51,7 @@
     top: 9px;
     right: $spacing-unit / 2;
     background-color: $background-color;
+    background-image: linear-gradient(rgba(0, 0, 0, $background-image-darken), rgba(0, 0, 0, $background-image-darken)), $background-image;
     border: 1px solid $grey-color-light;
     border-radius: 5px;
     text-align: right;

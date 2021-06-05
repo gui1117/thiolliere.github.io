@@ -3,11 +3,10 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
+title: Préambule
 list_title: Notes
 order: 1
 ---
-
-# Préambule
 
 Ici trouve mes notes, et quelques faits:
 * [des vidéos d'ébauches de jeux](https://www.youtube.com/user/ZoobTheElement),

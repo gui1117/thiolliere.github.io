@@ -1,0 +1,8 @@
+<script>
+	if(!(window.doNotTrack === "1" || navigator.doNotTrack === "1" || navigator.doNotTrack === "yes" || navigator.msDoNotTrack === "1")) {
+		if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0) {
+			fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"thiolliere",utcoffset:"2"}))
+		};
+		sessionStorage.setItem("_swa","1");
+	};
+</script>

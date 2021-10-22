@@ -5,5 +5,4 @@ permalink: /about/
 order: 2
 ---
 
-Ci gît l'espace d'expression de Guillaume Yu Thiolliere.
-N'y trouve rien.
+Ici gît l'espace d'expression de Guillaume Yu Thiollière.

@@ -5,4 +5,4 @@ permalink: /about/
 order: 2
 ---
 
-Ici gît l'espace d'expression de Guillaume Yu Thiollière.
+Je suis Guillaume Yu Thiollière, ce site contient quelques liens et quelques notes.

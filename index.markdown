@@ -8,6 +8,5 @@ list_title: Notes
 order: 1
 ---
 
-Ici se trouvent mes notes et des liens vers quelques travaux:
 * [Des vidéos d'ébauches de jeux](https://www.youtube.com/user/ZoobTheElement),
 * [HyperZen Training](https://store.steampowered.com/app/884160/HyperZen_Training/): jeu de tir sommaire et singulier.

@@ -1,0 +1,45 @@
+<html><head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/index-3e47fee2d950bc39.css">
+	
+
+<link rel="modulepreload" href="/index-19138272c7404c92.js"></head>
+	<body>
+		<div progress-text="" style="font-size:300%;text-align:center;background-color:black;color:white">
+		</div>
+			<script type="module">
+				import { progressiveFetch } from './tools.js';
+
+const progressText = document.querySelector('[progress-text]');
+
+if (navigator.userAgent.indexOf("Chrome") == -1 ) {
+	progressText.textContent = '⚠️  browser not supported: requires Chrome';
+	async function loadingBarFetch(resource) {}
+	window.guiLoadingBarFetch = loadingBarFetch;
+} else {
+	async function decompressBlob(blob) {
+	  let ds = new DecompressionStream("gzip");
+	  let decompressedStream = blob.body.pipeThrough(ds);
+	  return new Response(decompressedStream);
+	}
+	async function loadingBarFetch(resource) {
+		return progressiveFetch(resource, {
+			start: ({ filename }) => {
+				progressText.textContent = 'loading 0%';
+			},
+			update: ({ isIndeterminate, loadedPercent }) => {
+				progressText.textContent = 'loading ' + loadedPercent + '%';
+			},
+			finish: () => {
+				progressText.style.display = 'none';
+			}
+		});
+	}
+	window.guiLoadingBarFetch = loadingBarFetch;
+	window.guiDecompressBlob = decompressBlob;
+}
+			</script>
+			<canvas id="dodo"></canvas>
+	
+
+<script type="module">import init from '/index-19138272c7404c92.js';init();</script></body></html>

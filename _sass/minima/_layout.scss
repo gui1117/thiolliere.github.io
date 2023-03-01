@@ -50,8 +50,7 @@
     position: absolute;
     top: 9px;
     right: $spacing-unit / 2;
-    background-color: $background-color;
-    background-image: linear-gradient(rgba(0, 0, 0, $background-image-darken), rgba(0, 0, 0, $background-image-darken)), $background-image;
+    background-color: $background-color-darken;
     border: 1px solid $grey-color-light;
     border-radius: 5px;
     text-align: right;
